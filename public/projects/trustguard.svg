@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="shield-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <pattern id="grid-tg" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E293B" stroke-width="0.8" opacity="0.6"/>
+    </pattern>
+  </defs>
+  
+  <rect width="800" height="450" fill="#080B12"/>
+  <rect width="800" height="450" fill="url(#grid-tg)"/>
+
+  <!-- Left Shield Graphic -->
+  <g transform="translate(100, 70)">
+    <circle cx="140" cy="140" r="120" fill="#141C2A" stroke="#263244" stroke-width="2"/>
+    <circle cx="140" cy="140" r="100" stroke="#38BDF8" stroke-dasharray="8 6" stroke-width="2" opacity="0.5"/>
+    <path d="M 140 60 L 210 95 V 155 C 210 195 140 225 140 225 C 140 225 70 195 70 155 V 95 Z" fill="#0F172A" stroke="url(#shield-grad)" stroke-width="3"/>
+    <path d="M 115 140 L 132 158 L 168 118" stroke="#38BDF8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Right Dashboard Cards -->
+  <g transform="translate(420, 60)">
+    <rect width="320" height="90" rx="12" fill="#141C2A" stroke="#263244" stroke-width="1.5"/>
+    <text x="24" y="32" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="11">THREAT ENGINE HEURISTICS</text>
+    <text x="24" y="60" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-weight="600" font-size="20">0.04s Verification Time</text>
+    <rect x="230" y="32" width="70" height="24" rx="12" fill="#10B981" fill-opacity="0.2"/>
+    <text x="244" y="48" fill="#10B981" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="600">SECURE</text>
+
+    <!-- Async Tasks Card -->
+    <rect y="110" width="320" height="90" rx="12" fill="#141C2A" stroke="#263244" stroke-width="1.5"/>
+    <text x="24" y="142" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="11">REDIS &amp; CELERY QUEUE</text>
+    <text x="24" y="170" fill="#38BDF8" font-family="Space Grotesk, sans-serif" font-weight="600" font-size="20">Active Tasks: 0 Backlog</text>
+
+    <!-- Telemetry feed -->
+    <rect y="220" width="320" height="120" rx="12" fill="#141C2A" stroke="#263244" stroke-width="1.5"/>
+    <text x="24" y="250" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="11">LIVE INCIDENT WEBSOCKET STREAM</text>
+    <circle cx="34" cy="280" r="4" fill="#38BDF8"/>
+    <text x="48" y="284" fill="#E2E8F0" font-family="JetBrains Mono, monospace" font-size="11">Suspicious URL scanned: Safe</text>
+    <circle cx="34" cy="308" r="4" fill="#F59E0B"/>
+    <text x="48" y="312" fill="#E2E8F0" font-family="JetBrains Mono, monospace" font-size="11">Fraudulent QR payload blocked</text>
+  </g>
+
+  <!-- Title Footer -->
+  <text x="80" y="380" fill="#F8FAFC" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="22">TRUSTGUARD SUPER APP</text>
+  <text x="80" y="405" fill="#94A3B8" font-family="Inter, sans-serif" font-size="14">Real-time scam detection, fraud prevention &amp; community trust platform</text>
+</svg>

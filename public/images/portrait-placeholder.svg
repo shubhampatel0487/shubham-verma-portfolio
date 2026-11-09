@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="avatar-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E1726"/>
+      <stop offset="100%" stop-color="#141C2A"/>
+    </linearGradient>
+    <linearGradient id="cyber-ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="50%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background container with rounded hex geometry -->
+  <rect width="500" height="500" rx="32" fill="url(#avatar-bg)"/>
+  <rect x="8" y="8" width="484" height="484" rx="28" stroke="#263244" stroke-width="2"/>
+
+  <!-- Orbital circles & Technical markings -->
+  <circle cx="250" cy="250" r="210" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="12 16" opacity="0.4"/>
+  <circle cx="250" cy="250" r="175" stroke="#8B5CF6" stroke-width="1" stroke-dasharray="6 8" opacity="0.3"/>
+  <circle cx="250" cy="250" r="140" fill="#080B12" stroke="#263244" stroke-width="2"/>
+
+  <!-- Geometric Engineering Silhouette -->
+  <!-- Shoulders -->
+  <path d="M 140 420 C 140 330, 200 320, 250 320 C 300 320, 360 330, 360 420 Z" fill="#1A2436" stroke="#384860" stroke-width="2"/>
+  
+  <!-- Neck -->
+  <rect x="230" y="270" width="40" height="60" rx="4" fill="#202D42"/>
+
+  <!-- Head -->
+  <ellipse cx="250" cy="220" rx="65" ry="75" fill="#202D42" stroke="#384860" stroke-width="2"/>
+
+  <!-- Cybernetic Visor / Focus Beam -->
+  <rect x="205" y="200" width="90" height="18" rx="6" fill="#080B12" stroke="#38BDF8" stroke-width="2"/>
+  <line x1="215" y1="209" x2="285" y2="209" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="250" cy="209" r="4" fill="#8B5CF6"/>
+
+  <!-- Monogram Initials Tag -->
+  <g transform="translate(185, 435)">
+    <rect width="130" height="34" rx="8" fill="#080B12" stroke="#38BDF8" stroke-width="1.5"/>
+    <text x="65" y="22" fill="#38BDF8" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" text-anchor="middle" letter-spacing="1.5">SHUBHAM PATEL</text>
+  </g>
+
+  <!-- Technical coordinates badge -->
+  <text x="250" y="55" fill="#94A3B8" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle" letter-spacing="2">ROBOTICS &amp; AI SYSTEMS</text>
+  <text x="250" y="75" fill="#64748B" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">REPLACE WITH PORTRAIT: /public/images/profile.jpg</text>
+</svg>

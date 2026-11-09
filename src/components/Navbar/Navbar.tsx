@@ -10,18 +10,34 @@ import {
   Cpu,
   Brain,
   Send,
-  Film
+  Film,
+  Mic,
+  Briefcase,
+  Languages,
+  Layers,
+  Play,
+  BookOpen,
+  Network
 } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, WhatsAppIcon } from '../UI/Icons';
+import { WhatsAppIcon } from '../UI/Icons';
 import { personalProfile } from '../../data/portfolioData';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface NavbarProps {
   currentName: string;
   onOpenResume: () => void;
   onOpenTerminal: () => void;
+  onOpenRecruiterMode: () => void;
+  onOpenVoiceNav: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  currentName,
+  onOpenResume,
+  onOpenRecruiterMode,
+  onOpenVoiceNav,
+}) => {
+  const { language, setLanguage, t } = useLanguage();
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -50,6 +66,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume }) => 
         'video-library',
         'code-explorer',
         'diagrams',
+        'knowledge-graph',
+        'exploded-view',
+        'playground',
+        'blog',
+        'github',
         'education',
         'contact'
       ];
@@ -92,14 +113,17 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume }) => 
     { title: "Drone Flight (PX4 SITL)", href: "#engineering-lab", icon: Navigation },
     { title: "Kali Linux Terminal", href: "#engineering-lab", icon: Terminal },
     { title: "Embedded ESP32 Interlock", href: "#engineering-lab", icon: Cpu },
-    { title: "AI & PINN Convergence", href: "#engineering-lab", icon: Brain }
+    { title: "AI & PINN Convergence", href: "#engineering-lab", icon: Brain },
+    { title: "Knowledge Graph", href: "#knowledge-graph", icon: Network },
+    { title: "3D Exploded Teardown", href: "#exploded-view", icon: Layers },
+    { title: "Code Playground", href: "#playground", icon: Play }
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#070A12]/90 backdrop-blur-md border-b border-[#253247] shadow-xl py-2.5'
+          ? 'bg-[#070A12]/95 backdrop-blur-md border-b border-[#253247] shadow-xl py-2.5'
           : 'bg-transparent py-4'
       }`}
     >
@@ -132,37 +156,37 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume }) => 
             <a
               href="#home"
               onClick={(e) => { e.preventDefault(); handleNavClick('#home'); }}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
+              className={`px-2.5 py-1.5 rounded-lg transition-colors ${
                 activeSection === 'home'
                   ? 'text-[#38BDF8] font-bold bg-[#111B2B]'
                   : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
-              Home
+              {t('nav_home')}
             </a>
 
             <a
               href="#about"
               onClick={(e) => { e.preventDefault(); handleNavClick('#about'); }}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
+              className={`px-2.5 py-1.5 rounded-lg transition-colors ${
                 activeSection === 'about'
                   ? 'text-[#38BDF8] font-bold bg-[#111B2B]'
                   : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
-              About
+              {t('nav_about')}
             </a>
 
             <a
               href="#skills"
               onClick={(e) => { e.preventDefault(); handleNavClick('#skills'); }}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
+              className={`px-2.5 py-1.5 rounded-lg transition-colors ${
                 activeSection === 'skills'
                   ? 'text-[#38BDF8] font-bold bg-[#111B2B]'
                   : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
-              Expertise
+              {t('nav_skills')}
             </a>
 
             {/* Engineering Lab Dropdown */}
@@ -173,18 +197,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume }) => 
             >
               <button
                 onClick={() => handleNavClick('#engineering-lab')}
-                className={`px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors ${
-                  activeSection === 'engineering-lab'
+                className={`px-2.5 py-1.5 rounded-lg flex items-center gap-1 transition-colors ${
+                  activeSection === 'engineering-lab' || activeSection === 'knowledge-graph' || activeSection === 'exploded-view' || activeSection === 'playground'
                     ? 'text-[#38BDF8] font-bold bg-[#111B2B]'
                     : 'text-[#94A3B8] hover:text-[#F8FAFC]'
                 }`}
               >
-                <span>Engineering Lab</span>
+                <span>{t('nav_labs')}</span>
                 <ChevronDown className="w-3.5 h-3.5" />
               </button>
 
               {labsDropdownOpen && (
-                <div className="absolute top-full left-0 w-56 rounded-xl bg-[#0C1220] border border-[#253247] shadow-2xl py-1.5 space-y-0.5 z-50">
+                <div className="absolute top-full left-0 w-60 rounded-xl bg-[#0C1220] border border-[#253247] shadow-2xl py-1.5 space-y-0.5 z-50">
                   {labItems.map((lab, i) => {
                     const Icon = lab.icon;
                     return (
@@ -211,13 +235,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume }) => 
             >
               <button
                 onClick={() => handleNavClick('#featured-showcase')}
-                className={`px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors ${
+                className={`px-2.5 py-1.5 rounded-lg flex items-center gap-1 transition-colors ${
                   activeSection === 'featured-showcase' || activeSection === 'projects'
                     ? 'text-[#38BDF8] font-bold bg-[#111B2B]'
                     : 'text-[#94A3B8] hover:text-[#F8FAFC]'
                 }`}
               >
-                <span>Projects</span>
+                <span>{t('nav_projects')}</span>
                 <ChevronDown className="w-3.5 h-3.5" />
               </button>
 
@@ -243,90 +267,90 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume }) => 
             <a
               href="#video-library"
               onClick={(e) => { e.preventDefault(); handleNavClick('#video-library'); }}
-              className={`px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 ${
+              className={`px-2.5 py-1.5 rounded-lg transition-colors flex items-center gap-1 ${
                 activeSection === 'video-library'
                   ? 'text-[#38BDF8] font-bold bg-[#111B2B]'
                   : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
               <Film className="w-3.5 h-3.5 text-[#38BDF8]" />
-              <span>Video Library</span>
+              <span>{t('nav_videos')}</span>
             </a>
 
             <a
               href="#code-explorer"
               onClick={(e) => { e.preventDefault(); handleNavClick('#code-explorer'); }}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
+              className={`px-2.5 py-1.5 rounded-lg transition-colors ${
                 activeSection === 'code-explorer'
                   ? 'text-[#38BDF8] font-bold bg-[#111B2B]'
                   : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
-              Code Explorer
+              Code
             </a>
 
             <a
-              href="#diagrams"
-              onClick={(e) => { e.preventDefault(); handleNavClick('#diagrams'); }}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                activeSection === 'diagrams'
+              href="#blog"
+              onClick={(e) => { e.preventDefault(); handleNavClick('#blog'); }}
+              className={`px-2.5 py-1.5 rounded-lg transition-colors flex items-center gap-1 ${
+                activeSection === 'blog'
                   ? 'text-[#38BDF8] font-bold bg-[#111B2B]'
                   : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
-              Diagrams
+              <BookOpen className="w-3.5 h-3.5 text-[#8B5CF6]" />
+              <span>Articles</span>
             </a>
 
             <a
-              href="#education"
-              onClick={(e) => { e.preventDefault(); handleNavClick('#education'); }}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                activeSection === 'education'
+              href="#github"
+              onClick={(e) => { e.preventDefault(); handleNavClick('#github'); }}
+              className={`px-2.5 py-1.5 rounded-lg transition-colors ${
+                activeSection === 'github'
                   ? 'text-[#38BDF8] font-bold bg-[#111B2B]'
                   : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
-              Education
+              GitHub
             </a>
           </nav>
 
           {/* Right Action Icons & Buttons */}
-          <div className="hidden lg:flex items-center gap-2.5">
-            {/* Social quick links */}
-            <a
-              href={personalProfile.contact.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-lg bg-[#111B2B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#253247] transition-colors"
-              title="GitHub"
+          <div className="hidden lg:flex items-center gap-2">
+            
+            {/* Language Switcher Pill (EN | HI) */}
+            <button
+              onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
+              className="px-2.5 py-1.5 rounded-xl bg-[#111B2B] hover:bg-[#162338] text-xs font-mono text-[#CBD5E1] hover:text-[#38BDF8] border border-[#253247] flex items-center gap-1.5 transition-colors"
+              title="Toggle Language (English / हिन्दी)"
             >
-              <GithubIcon className="w-3.5 h-3.5" />
-            </a>
+              <Languages className="w-3.5 h-3.5 text-[#38BDF8]" />
+              <span>{language === 'en' ? 'हिन्दी' : 'English'}</span>
+            </button>
 
-            <a
-              href={personalProfile.contact.linkedinUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-lg bg-[#111B2B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#253247] transition-colors"
-              title="LinkedIn"
+            {/* Voice Navigation Trigger */}
+            <button
+              onClick={onOpenVoiceNav}
+              className="p-2 rounded-xl bg-[#111B2B] hover:bg-[#162338] text-[#94A3B8] hover:text-[#38BDF8] border border-[#253247] transition-colors"
+              title="Activate Voice Navigation"
             >
-              <LinkedinIcon className="w-3.5 h-3.5" />
-            </a>
+              <Mic className="w-3.5 h-3.5 text-[#38BDF8]" />
+            </button>
 
-            <a
-              href={personalProfile.contact.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-lg bg-[#111B2B] text-[#94A3B8] hover:text-emerald-400 border border-[#253247] transition-colors"
-              title="WhatsApp Direct"
+            {/* Recruiter Mode Trigger */}
+            <button
+              onClick={onOpenRecruiterMode}
+              className="px-3 py-1.5 rounded-xl bg-[#8B5CF6]/20 hover:bg-[#8B5CF6]/30 text-xs font-mono font-bold text-[#C4B5FD] border border-[#8B5CF6]/40 flex items-center gap-1.5 transition-colors shadow-sm"
+              title="Open Executive Recruiter Quick View"
             >
-              <WhatsAppIcon className="w-3.5 h-3.5" />
-            </a>
+              <Briefcase className="w-3.5 h-3.5 text-[#8B5CF6]" />
+              <span>{t('recruiter_mode')}</span>
+            </button>
 
             {/* Resume Action */}
             <button
               onClick={onOpenResume}
-              className="px-3.5 py-1.5 rounded-xl bg-[#111B2B] text-[#F8FAFC] hover:text-[#38BDF8] hover:bg-[#162338] border border-[#253247] text-xs font-mono flex items-center gap-1.5 transition-all shadow-sm"
+              className="px-3 py-1.5 rounded-xl bg-[#111B2B] text-[#F8FAFC] hover:text-[#38BDF8] hover:bg-[#162338] border border-[#253247] text-xs font-mono flex items-center gap-1.5 transition-all shadow-sm"
             >
               <FileText className="w-3.5 h-3.5 text-[#38BDF8]" />
               <span>Resume</span>
@@ -346,8 +370,21 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume }) => 
           {/* Mobile Hamburger Toggle Button */}
           <div className="flex xl:hidden items-center gap-2">
             <button
+              onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
+              className="px-2 py-1 rounded-lg bg-[#111B2B] text-[11px] font-mono text-[#38BDF8] border border-[#253247]"
+            >
+              {language === 'en' ? 'HI' : 'EN'}
+            </button>
+            <button
+              onClick={onOpenRecruiterMode}
+              className="p-2 rounded-lg bg-[#8B5CF6]/20 text-[#C4B5FD] border border-[#8B5CF6]/40"
+              title="Recruiter Mode"
+            >
+              <Briefcase className="w-4 h-4" />
+            </button>
+            <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 rounded-xl bg-[#111B2B] text-[#F8FAFC] border border-[#253247] transition-colors"
+              className="p-2 rounded-xl bg-[#111B2B] text-[#F8FAFC] border border-[#253247] transition-colors"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5 text-[#38BDF8]" /> : <Menu className="w-5 h-5" />}
@@ -361,15 +398,20 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume }) => 
       {mobileMenuOpen && (
         <div className="fixed inset-0 top-[60px] bg-[#070A12]/98 backdrop-blur-2xl z-50 overflow-y-auto px-6 py-8 border-t border-[#253247] space-y-6 xl:hidden">
           
-          <nav className="space-y-2 text-sm font-mono">
+          <nav className="space-y-1.5 text-sm font-mono">
             {[
               { name: 'Home', href: '#home' },
               { name: 'About Me', href: '#about' },
               { name: 'Technical Expertise', href: '#skills' },
-              { name: 'Engineering Lab (5 Labs)', href: '#engineering-lab' },
-              { name: 'Featured Projects (Showcase)', href: '#featured-showcase' },
+              { name: 'Engineering Labs (5 Labs)', href: '#engineering-lab' },
+              { name: 'Knowledge Graph', href: '#knowledge-graph' },
+              { name: '3D Hardware Teardown', href: '#exploded-view' },
+              { name: 'Code Playground', href: '#playground' },
+              { name: 'Featured Projects', href: '#featured-showcase' },
               { name: 'Project Video Library', href: '#video-library' },
               { name: 'Source Code Explorer', href: '#code-explorer' },
+              { name: 'Technical Articles & Blog', href: '#blog' },
+              { name: 'GitHub Repositories', href: '#github' },
               { name: 'Technical Diagrams & Pinouts', href: '#diagrams' },
               { name: 'Industrial Training', href: '#training' },
               { name: 'Education', href: '#education' },
@@ -381,7 +423,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume }) => 
                 key={link.href}
                 href={link.href}
                 onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                className="block py-2.5 px-4 rounded-xl text-[#CBD5E1] hover:text-[#38BDF8] hover:bg-[#111B2B] transition-colors border border-transparent hover:border-[#253247]"
+                className="block py-2 px-3.5 rounded-xl text-[#CBD5E1] hover:text-[#38BDF8] hover:bg-[#111B2B] transition-colors border border-transparent hover:border-[#253247]"
               >
                 {link.name}
               </a>
@@ -389,10 +431,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume }) => 
           </nav>
 
           {/* Mobile CTA Buttons */}
-          <div className="pt-4 border-t border-[#253247] space-y-3">
+          <div className="pt-4 border-t border-[#253247] space-y-2.5">
+            <button
+              onClick={() => { setMobileMenuOpen(false); onOpenVoiceNav(); }}
+              className="w-full py-2.5 rounded-xl bg-[#111B2B] text-[#38BDF8] border border-[#253247] text-xs font-mono font-bold flex items-center justify-center gap-2"
+            >
+              <Mic className="w-4 h-4 text-[#38BDF8]" />
+              <span>Voice Navigation</span>
+            </button>
+
             <button
               onClick={() => { setMobileMenuOpen(false); onOpenResume(); }}
-              className="w-full py-3 rounded-xl bg-[#111B2B] text-[#F8FAFC] border border-[#253247] text-xs font-mono font-bold flex items-center justify-center gap-2"
+              className="w-full py-2.5 rounded-xl bg-[#111B2B] text-[#F8FAFC] border border-[#253247] text-xs font-mono font-bold flex items-center justify-center gap-2"
             >
               <FileText className="w-4 h-4 text-[#38BDF8]" />
               <span>Download Technical Resume (PDF)</span>
@@ -402,7 +452,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume }) => 
               href={personalProfile.contact.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono font-bold flex items-center justify-center gap-2"
+              className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono font-bold flex items-center justify-center gap-2"
             >
               <WhatsAppIcon className="w-4 h-4" />
               <span>Chat on WhatsApp (+91 6307510099)</span>

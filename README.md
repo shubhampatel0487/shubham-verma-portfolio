@@ -167,3 +167,4 @@ Place your updated resume inside `public/resume/Shubham_Patel_Resume.pdf`.
   - Diploma in Computer Science & Engineering (2023–2026, Chhatrapati Shahu Ji Maharaj Govt Polytechnic)
 - **Honest Skill Proficiency:** Skills feature granular descriptions explaining real-world lab and coursework application.
 - **No Unearned Certifications:** Dedicated empty state and study roadmap provided without fake certificates.
+

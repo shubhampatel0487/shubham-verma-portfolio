@@ -47,15 +47,15 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 Official Curriculum Vitae Preview
               </h2>
               <p className="text-xs text-[#94A3B8] font-mono">
-                {personalProfile.resume.filename} • Verified Academic Profile
+                {personalProfile.resume.originalFilename} • Verified Academic Profile
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <a
-              href={personalProfile.resume.path}
-              download={personalProfile.resume.filename}
+              href={personalProfile.resume.originalPath}
+              download={personalProfile.resume.originalFilename}
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#38BDF8] text-[#080B12] text-xs font-semibold hover:bg-[#7dd3fc] transition-colors shadow-lg shadow-[#38BDF8]/10"
             >
               <Download className="w-3.5 h-3.5" /> Download PDF
@@ -183,8 +183,8 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             100% verified academic profile — No fabricated experience
           </span>
           <a
-            href={personalProfile.resume.path}
-            download={personalProfile.resume.filename}
+            href={personalProfile.resume.originalPath}
+            download={personalProfile.resume.originalFilename}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#38BDF8] text-[#080B12] text-xs font-bold hover:bg-[#7dd3fc] transition-colors"
           >
             <Download className="w-4 h-4" /> Download PDF Resume

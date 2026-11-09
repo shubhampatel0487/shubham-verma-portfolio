@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle2, AlertCircle, Copy, Check, MapPin, Sparkles } from 'lucide-react';
+import { Send, CheckCircle2, AlertCircle, Copy, Check, MapPin, MessageSquare, Smartphone } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { personalProfile } from '../../data/portfolioData';
+import { soundFX } from '../../utils/audio';
 
 export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +15,7 @@ export const Contact: React.FC = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedType, setCopiedType] = useState<string | null>(null);
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
@@ -43,26 +44,31 @@ export const Contact: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(personalProfile.contact.email);
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2500);
+  const handleCopy = (text: string, type: string) => {
+    soundFX.playClick();
+    navigator.clipboard.writeText(text);
+    setCopiedType(type);
+    setTimeout(() => setCopiedType(null), 2500);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
+    if (!validate()) {
+      soundFX.playBeep(300, 0.1);
+      return;
+    }
 
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      await new Promise((resolve) => setTimeout(resolve, 1100));
 
+      soundFX.playSuccess();
       try {
         confetti({
-          particleCount: 60,
-          spread: 70,
+          particleCount: 70,
+          spread: 80,
           origin: { y: 0.8 },
           colors: ['#38BDF8', '#8B5CF6', '#10B981']
         });
@@ -76,17 +82,15 @@ export const Contact: React.FC = () => {
       )}&body=${encodeURIComponent(
         `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
       )}`;
-      
-      console.log('Contact inquiry received:', formData);
 
       setTimeout(() => {
         const wantsMailApp = window.confirm(
-          "Your message payload has been validated! Would you also like to launch your default email client to send this message directly?"
+          "Your message is validated! Would you also like to open your default email app to send it immediately?"
         );
         if (wantsMailApp) {
           window.location.href = mailtoUrl;
         }
-      }, 800);
+      }, 700);
 
       setFormData({ name: '', email: '', subject: '', message: '' });
       setErrors({});
@@ -98,19 +102,19 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-24 relative z-10 border-t border-[#263244]/40">
+    <section id="contact" className="py-24 relative z-10 border-t border-[#263244]/40 bg-[#080B12]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <span className="text-xs font-mono tracking-widest text-[#38BDF8] uppercase bg-[#141C2A] px-3.5 py-1 rounded-full border border-[#38BDF8]/20">
-            09 // Get in Touch
+            Get in Touch
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#F8FAFC]">
-            Initiate Engineering Collaboration
+            Direct Engineering Contact &amp; Messaging
           </h2>
           <p className="text-sm sm:text-base text-[#94A3B8]">
-            Whether you are discussing robotics research, technical internships, embedded projects, or AI modeling, feel free to send a message.
+            Reach out directly via WhatsApp, email, or send a detailed technical inquiry using the form below.
           </p>
         </div>
 
@@ -122,26 +126,48 @@ export const Contact: React.FC = () => {
             <div className="p-6 sm:p-8 rounded-2xl bg-[#0E1420] border border-[#263244] shadow-xl space-y-6">
               <div>
                 <h3 className="text-xl font-bold text-[#F8FAFC] font-sans">
-                  Direct Inquiries
+                  Direct Contact Channels
                 </h3>
                 <p className="text-xs sm:text-sm text-[#94A3B8] mt-1">
-                  I typically respond within 24–48 hours for academic and engineering discussions.
+                  Active for technical discussions, robotics research, internships, and embedded systems prototyping.
                 </p>
               </div>
+
+              {/* Direct WhatsApp Action Button */}
+              <a
+                href={personalProfile.contact.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold text-xs sm:text-sm transition-all shadow-lg shadow-emerald-500/20 group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-black/20">
+                    <MessageSquare className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] uppercase tracking-wider text-emerald-100 font-mono">Immediate Chat</span>
+                    <span className="text-sm font-bold">WhatsApp: {personalProfile.contact.phone}</span>
+                  </div>
+                </div>
+                <span className="text-xs font-mono bg-white/20 px-2.5 py-1 rounded-md">Open App →</span>
+              </a>
 
               {/* Email Pill with One-Click Copy */}
               <div className="p-4 rounded-xl bg-[#141C2A] border border-[#263244] space-y-2">
                 <span className="text-[11px] font-mono text-[#94A3B8] uppercase">Email Address</span>
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-sm font-mono text-[#38BDF8] truncate">
+                  <a
+                    href={`mailto:${personalProfile.contact.email}`}
+                    className="text-xs sm:text-sm font-mono text-[#38BDF8] truncate hover:underline"
+                  >
                     {personalProfile.contact.email}
-                  </span>
+                  </a>
                   <button
-                    onClick={handleCopyEmail}
+                    onClick={() => handleCopy(personalProfile.contact.email, 'email')}
                     className="p-2 rounded-lg bg-[#0E1420] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#263244] transition-colors flex items-center gap-1.5 text-xs font-mono"
                     aria-label="Copy Email Address"
                   >
-                    {copiedEmail ? (
+                    {copiedType === 'email' ? (
                       <>
                         <Check className="w-3.5 h-3.5 text-emerald-400" />
                         <span className="text-emerald-400">Copied</span>
@@ -156,6 +182,33 @@ export const Contact: React.FC = () => {
                 </div>
               </div>
 
+              {/* Phone Pill with One-Click Copy */}
+              <div className="p-4 rounded-xl bg-[#141C2A] border border-[#263244] space-y-2">
+                <span className="text-[11px] font-mono text-[#94A3B8] uppercase">Mobile Number</span>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs sm:text-sm font-mono text-[#F8FAFC] truncate">
+                    {personalProfile.contact.phone}
+                  </span>
+                  <button
+                    onClick={() => handleCopy(personalProfile.contact.phone, 'phone')}
+                    className="p-2 rounded-lg bg-[#0E1420] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#263244] transition-colors flex items-center gap-1.5 text-xs font-mono"
+                    aria-label="Copy Phone Number"
+                  >
+                    {copiedType === 'phone' ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <span className="text-emerald-400">Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Smartphone className="w-3.5 h-3.5" />
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
               {/* Location Pill */}
               <div className="p-4 rounded-xl bg-[#141C2A] border border-[#263244] flex items-center gap-3">
                 <div className="p-2.5 rounded-lg bg-[#0E1420] text-[#38BDF8]">
@@ -163,18 +216,10 @@ export const Contact: React.FC = () => {
                 </div>
                 <div>
                   <span className="text-[11px] font-mono text-[#94A3B8] uppercase block">Location</span>
-                  <span className="text-sm font-semibold text-[#F8FAFC]">
+                  <span className="text-xs sm:text-sm font-semibold text-[#F8FAFC]">
                     {personalProfile.location}
                   </span>
                 </div>
-              </div>
-
-              {/* Status Note */}
-              <div className="p-4 rounded-xl bg-[#141C2A]/60 border border-[#263244] flex items-start gap-3">
-                <Sparkles className="w-5 h-5 text-[#8B5CF6] flex-shrink-0 mt-0.5" />
-                <p className="text-xs text-[#94A3B8] leading-relaxed">
-                  Open for opportunities in <strong>Robotics Engineering, Embedded Firmware, ROS 2 Simulation, and Applied AI</strong>.
-                </p>
               </div>
 
             </div>
@@ -275,7 +320,7 @@ export const Contact: React.FC = () => {
                   <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs sm:text-sm flex items-center gap-2.5">
                     <AlertCircle className="w-5 h-5 flex-shrink-0" />
                     <span>
-                      Submission encountered an issue. Please send an email directly to {personalProfile.contact.email}.
+                      Submission encountered an issue. Please contact directly via WhatsApp or email.
                     </span>
                   </div>
                 )}

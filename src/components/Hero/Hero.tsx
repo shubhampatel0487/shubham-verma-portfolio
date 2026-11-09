@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowDown, Mail, FileText, Cpu, Layers } from 'lucide-react';
+import { ArrowDown, Mail, FileText, Cpu, Layers, MessageSquare, Copy, Check, Smartphone } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../UI/Icons';
 import { personalProfile } from '../../data/portfolioData';
 
 interface HeroProps {
+  currentName: string;
   onOpenResume: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
+export const Hero: React.FC<HeroProps> = ({ currentName, onOpenResume }) => {
   const titles = [
     "Aspiring Robotics & AI Engineer",
     "Computer Science Graduate (2026)",
@@ -19,6 +20,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const [copiedType, setCopiedType] = useState<string | null>(null);
 
   useEffect(() => {
     const fullText = titles[currentTitleIndex];
@@ -41,6 +43,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
     return () => clearTimeout(timer);
   }, [displayedText, isDeleting, currentTitleIndex]);
 
+  const handleCopy = (text: string, type: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedType(type);
+    setTimeout(() => setCopiedType(null), 2500);
+  };
+
   return (
     <section
       id="home"
@@ -62,13 +70,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
               <span>Available for Technical Roles &amp; Engineering Research</span>
             </div>
 
-            {/* Greeting & Name */}
+            {/* Greeting & Confirmed Name */}
             <div className="space-y-2">
               <p className="text-sm sm:text-base font-mono font-medium text-[#94A3B8] tracking-widest uppercase">
                 Hello, I'm
               </p>
               <h1 className="text-4xl sm:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#F8FAFC] font-sans">
-                {personalProfile.name}
+                {currentName}
               </h1>
             </div>
 
@@ -100,20 +108,53 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
               ))}
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+            {/* Primary Action Buttons: View Projects, WhatsApp, Download Resume */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-4">
               <a
                 href="#projects"
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#38BDF8] to-[#0284C7] text-[#080B12] font-bold text-sm tracking-wide shadow-lg shadow-[#38BDF8]/20 hover:opacity-95 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                className="px-5 py-3 rounded-xl bg-gradient-to-r from-[#38BDF8] to-[#0284C7] text-[#080B12] font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-[#38BDF8]/20 hover:opacity-95 hover:scale-[1.02] active:scale-[0.98] transition-all"
               >
                 View Featured Projects
               </a>
+
+              {/* Direct WhatsApp Action Button */}
+              <a
+                href={personalProfile.contact.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span>WhatsApp Contact</span>
+              </a>
+
               <button
                 onClick={onOpenResume}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#141C2A] text-[#F8FAFC] font-semibold text-sm hover:text-[#38BDF8] hover:bg-[#1E293B] border border-[#263244] transition-all"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#141C2A] text-[#F8FAFC] font-semibold text-xs sm:text-sm hover:text-[#38BDF8] hover:bg-[#1E293B] border border-[#263244] transition-all"
               >
                 <FileText className="w-4 h-4 text-[#38BDF8]" />
-                <span>Resume / CV</span>
+                <span>Download Resume</span>
+              </button>
+            </div>
+
+            {/* Quick Copy Pill: Email & WhatsApp Number */}
+            <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs font-mono">
+              <button
+                onClick={() => handleCopy(personalProfile.contact.email, 'email')}
+                className="px-3 py-1.5 rounded-lg bg-[#141C2A] text-[#94A3B8] hover:text-[#38BDF8] border border-[#263244] flex items-center gap-1.5 transition-colors"
+                title="Click to copy email address"
+              >
+                {copiedType === 'email' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedType === 'email' ? 'Copied Email' : personalProfile.contact.email}</span>
+              </button>
+
+              <button
+                onClick={() => handleCopy(personalProfile.contact.phone, 'phone')}
+                className="px-3 py-1.5 rounded-lg bg-[#141C2A] text-[#94A3B8] hover:text-[#38BDF8] border border-[#263244] flex items-center gap-1.5 transition-colors"
+                title="Click to copy phone number"
+              >
+                {copiedType === 'phone' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Smartphone className="w-3.5 h-3.5" />}
+                <span>{copiedType === 'phone' ? 'Copied Number' : personalProfile.contact.phone}</span>
               </button>
             </div>
 
@@ -145,10 +186,17 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
               >
                 <Mail className="w-4 h-4" />
               </a>
+              <a
+                href="/id.html/"
+                className="px-2.5 py-1 rounded-lg bg-[#141C2A] text-[#94A3B8] hover:text-[#38BDF8] border border-[#263244] text-xs font-mono font-bold"
+                title="View id.html Digital Identity"
+              >
+                id.html
+              </a>
             </div>
           </div>
 
-          {/* Right Column: High-End Orbital Technical Portrait & Telemetry Cards */}
+          {/* Right Column: Original Photograph in Orbital Cybernetic Container */}
           <div className="lg:col-span-5 relative flex items-center justify-center">
             
             {/* Outer Orbital Ring */}
@@ -163,15 +211,22 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
                 style={{ animation: 'spin 30s linear infinite reverse' }}
               />
 
-              {/* Main Portrait Container */}
-              <div className="relative w-64 sm:w-80 h-64 sm:h-80 rounded-3xl bg-[#0E1420] border-2 border-[#263244] p-3 shadow-2xl overflow-hidden group">
+              {/* Main Portrait Container — Original Photograph */}
+              <div className="relative w-64 sm:w-80 h-64 sm:h-80 rounded-3xl bg-[#0E1420] border-2 border-[#38BDF8]/60 p-3 shadow-2xl overflow-hidden group">
                 <div className="w-full h-full rounded-2xl bg-[#080B12] overflow-hidden relative flex items-center justify-center">
                   <img
-                    src="/images/portrait-placeholder.svg"
-                    alt="Shubham Patel — Aspiring Robotics & AI Engineer Portrait Placeholder"
+                    src={personalProfile.avatar.thumbnail}
+                    alt={`${currentName} — Aspiring Robotics & AI Engineer Original Photograph`}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#080B12] via-transparent to-transparent opacity-60" />
+                  {/* Subtle holographic gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#080B12]/80 via-transparent to-transparent opacity-50" />
+                  
+                  {/* Verified Photo Badge */}
+                  <div className="absolute bottom-3 left-3 bg-[#080B12]/90 backdrop-blur-md px-2.5 py-1 rounded-md border border-emerald-500/40 text-[10px] font-mono text-emerald-400 font-bold flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>ORIGINAL PHOTO</span>
+                  </div>
                 </div>
               </div>
 

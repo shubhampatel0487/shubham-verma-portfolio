@@ -84,3 +84,4 @@ export const Interests: React.FC = () => {
     </section>
   );
 };
+

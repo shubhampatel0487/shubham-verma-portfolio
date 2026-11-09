@@ -41,7 +41,7 @@ export const Profiles: React.FC<ProfilesProps> = ({ onOpenResume }) => {
     },
     {
       title: "Official Curriculum Vitae",
-      handle: personalProfile.resume.filename,
+      handle: personalProfile.resume.originalFilename,
       description: "Download or preview the complete verified resume detailing education, technical stack, projects, and contact channels.",
       icon: FileText,
       actionText: "Preview / Download CV",

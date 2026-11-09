@@ -9,7 +9,7 @@ export interface SocialLink {
 export interface SkillItem {
   name: string;
   level: string; // e.g. "Practical Knowledge", "Intermediate", "Familiar", "Academic / Lab"
-  category: 'programming' | 'ai_ml' | 'robotics' | 'embedded' | 'backend' | 'tools';
+  category: 'programming' | 'ai_ml' | 'robotics' | 'embedded' | 'backend' | 'tools' | 'hardware';
   description?: string;
   tags?: string[];
 }
@@ -24,23 +24,33 @@ export interface ProjectItem {
   keyFeatures: string[];
   status: 'In Progress' | 'Experimental' | 'Completed' | 'Research Prototype';
   statusBadgeColor?: 'amber' | 'blue' | 'purple' | 'emerald';
-  githubUrl?: string; // If undefined or placeholder, show clean modal indicator
+  githubUrl?: string;
   liveUrl?: string;
   architectureDetails?: string;
   engineeringLearnings?: string[];
   image: string;
-  category: 'AI & PINNs' | 'Full Stack & Security' | 'Web Systems' | 'Embedded & IoT' | 'Robotics Simulation';
+  category: 'AI & Vision' | 'Academic Systems' | 'Embedded & IoT' | 'Python Apps' | 'AI & PINNs' | 'Full Stack & Security' | 'Robotics Simulation';
 }
 
 export interface ExperienceItem {
   id: string;
   period: string;
   title: string;
-  roleType: 'Technical Project' | 'Independent Research' | 'Academic / Lab Work' | 'Hands-on Prototyping';
+  roleType: 'Industrial Training' | 'Technical Project' | 'Independent Research' | 'Academic / Lab Work' | 'Hands-on Prototyping';
   focus: string;
   description: string;
   highlights: string[];
   technologies: string[];
+}
+
+export interface IndustrialTrainingItem {
+  company: string;
+  duration: string;
+  role: string;
+  focus: string;
+  description: string;
+  skillsAcquired: string[];
+  certificatePath?: string;
 }
 
 export interface EducationItem {
@@ -54,6 +64,17 @@ export interface EducationItem {
   highlights: string[];
 }
 
+export interface DownloadDocumentItem {
+  id: string;
+  title: string;
+  category: 'Resume' | 'Industrial Training' | 'Contact Card' | 'Project Documentation';
+  filename: string;
+  path: string;
+  fileSize: string;
+  fileType: 'PDF' | 'VCF';
+  description: string;
+}
+
 export interface CertificationItem {
   id: string;
   title: string;
@@ -65,6 +86,7 @@ export interface CertificationItem {
 
 export interface PersonalProfile {
   name: string;
+  alternateName: string;
   primaryTitle: string;
   secondaryTitle: string;
   location: string;
@@ -79,17 +101,29 @@ export interface PersonalProfile {
   mission: string;
   vision: string;
   engineeringPhilosophy: string[];
+  avatar: {
+    original: string;
+    thumbnail: string;
+    background: string;
+  };
   contact: {
     email: string;
+    phone: string;
+    whatsappNumber: string;
+    whatsappUrl: string;
     githubUsername: string;
     githubUrl: string;
     linkedinUrl: string;
+    naukriUrl?: string;
+    freelancerUrl?: string;
     locationCity: string;
     locationCountry: string;
   };
   resume: {
-    filename: string;
-    path: string;
+    originalFilename: string;
+    originalPath: string;
+    updatedFilename: string;
+    updatedPath: string;
     lastUpdated: string;
   };
 }

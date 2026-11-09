@@ -1,0 +1,37 @@
+{
+  "full_name": "Shubham Patel",
+  "full_name_alternate": "Shubham Verma",
+  "professional_title": "Aspiring Robotics & AI Engineer",
+  "profile_image_path": "/assets/profile/original-photo.jpg",
+  "profile_thumbnail_path": "/assets/profile/profile-thumbnail.jpg",
+  "professional_introduction": "Enthusiastic and dedicated Computer Science student with deep interest in Robotics, Artificial Intelligence, Embedded Systems, and Cybersecurity. Passionate about building intelligent machines, hardware-software integrations, and practical safety systems.",
+  "email": "shubhampatel0487@gmail.com",
+  "whatsapp": "+91 6307510099",
+  "whatsapp_url": "https://wa.me/916307510099",
+  "location": "Ambedkar Nagar, Uttar Pradesh - 224151, India",
+  "social_profiles": {
+    "github": {
+      "platform": "GitHub",
+      "username": "shubhampatel0487",
+      "url": "https://github.com/shubhampatel0487"
+    },
+    "linkedin": {
+      "platform": "LinkedIn",
+      "username": "shubham-patel-234a61356",
+      "url": "https://www.linkedin.com/in/shubham-patel-234a61356"
+    },
+    "naukri": {
+      "platform": "Naukri",
+      "username": "",
+      "url": ""
+    },
+    "freelancer": {
+      "platform": "Freelancer",
+      "username": "",
+      "url": ""
+    }
+  },
+  "resume_download_path": "/documents/Original_Resume_Shubham_Verma.pdf",
+  "updated_resume_path": "/documents/Updated_Resume_Shubham_Patel.pdf",
+  "vcf_download_path": "/documents/Shubham_Patel_Contact.vcf"
+}

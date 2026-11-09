@@ -100,9 +100,9 @@ export const About: React.FC = () => {
                       <span className="text-[10px] font-mono text-[#38BDF8]">{e.period}</span>
                     </div>
                     <p className="text-[#94A3B8] text-[11px] mt-0.5">{e.institution}</p>
-                    {e.grade && (
+                    {(e.score || e.grade) && (
                       <span className="inline-block mt-1 text-[10px] font-mono text-emerald-400 font-medium">
-                        Score: {e.grade}
+                        Score: {e.score || e.grade}
                       </span>
                     )}
                   </div>

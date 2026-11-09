@@ -174,12 +174,12 @@ export const ThreeMainProjects: React.FC = () => {
   };
 
   return (
-    <section id="featured-showcase" className="py-24 relative z-10 border-t border-[#263244]/40 bg-[#080B12]">
+    <section id="featured-showcase" className="py-24 relative z-10 border-t border-[#253247]/40 bg-[#070A12]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <span className="text-xs font-mono tracking-widest text-[#38BDF8] uppercase bg-[#141C2A] px-3.5 py-1 rounded-full border border-[#38BDF8]/20">
+          <span className="text-xs font-mono tracking-widest text-[#38BDF8] uppercase bg-[#111B2B] px-3.5 py-1 rounded-full border border-[#38BDF8]/20">
             Core Engineering Innovations
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#F8FAFC]">
@@ -196,8 +196,8 @@ export const ThreeMainProjects: React.FC = () => {
             onClick={() => setActiveProjectTab('alcohol')}
             className={`inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
               activeProjectTab === 'alcohol'
-                ? 'bg-[#38BDF8] text-[#080B12] shadow-xl shadow-[#38BDF8]/20 scale-[1.02]'
-                : 'bg-[#141C2A] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#263244]'
+                ? 'bg-[#38BDF8] text-[#070A12] shadow-xl shadow-[#38BDF8]/20 scale-[1.02]'
+                : 'bg-[#111B2B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#253247]'
             }`}
           >
             <ShieldAlert className="w-4 h-4" />
@@ -208,8 +208,8 @@ export const ThreeMainProjects: React.FC = () => {
             onClick={() => setActiveProjectTab('assignment')}
             className={`inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
               activeProjectTab === 'assignment'
-                ? 'bg-purple-500 text-[#080B12] shadow-xl shadow-purple-500/20 scale-[1.02]'
-                : 'bg-[#141C2A] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#263244]'
+                ? 'bg-purple-500 text-[#070A12] shadow-xl shadow-purple-500/20 scale-[1.02]'
+                : 'bg-[#111B2B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#253247]'
             }`}
           >
             <GraduationCap className="w-4 h-4" />
@@ -220,8 +220,8 @@ export const ThreeMainProjects: React.FC = () => {
             onClick={() => setActiveProjectTab('onequiz')}
             className={`inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
               activeProjectTab === 'onequiz'
-                ? 'bg-emerald-500 text-[#080B12] shadow-xl shadow-emerald-500/20 scale-[1.02]'
-                : 'bg-[#141C2A] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#263244]'
+                ? 'bg-emerald-500 text-[#070A12] shadow-xl shadow-emerald-500/20 scale-[1.02]'
+                : 'bg-[#111B2B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#253247]'
             }`}
           >
             <Sparkles className="w-4 h-4" />
@@ -233,10 +233,10 @@ export const ThreeMainProjects: React.FC = () => {
         {/* PROJECT 01: AI + IoT BASED ALCOHOL DETECTION SYSTEM           */}
         {/* ============================================================= */}
         {activeProjectTab === 'alcohol' && (
-          <div className="p-6 sm:p-10 rounded-3xl bg-[#0E1420] border-2 border-[#263244] shadow-2xl space-y-8 animate-fadeIn">
+          <div className="p-6 sm:p-10 rounded-3xl bg-[#0C1220] border-2 border-[#253247] shadow-2xl space-y-8 animate-fadeIn">
             
             {/* Header Title & Status */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#263244]">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#253247]">
               <div>
                 <span className="text-xs font-mono text-[#38BDF8] uppercase tracking-wider">
                   PROJECT 01 // EMBEDDED SYSTEMS &bull; IOT &bull; VEHICLE SAFETY
@@ -260,9 +260,9 @@ export const ThreeMainProjects: React.FC = () => {
             </div>
 
             {/* Interactive 8-Stage Architecture Simulator */}
-            <div className="p-6 rounded-2xl bg-[#080B12] border-2 border-[#263244] space-y-6">
+            <div className="p-6 rounded-2xl bg-[#070A12] border-2 border-[#253247] space-y-6">
               
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#263244]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#253247]">
                 <div>
                   <span className="text-xs font-mono text-[#38BDF8] font-bold">
                     STAGE 0{alcoholStage} OF 08 // REAL-TIME SYSTEM WORKFLOW
@@ -291,29 +291,29 @@ export const ThreeMainProjects: React.FC = () => {
 
               {/* Hardware Blocks Display */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
-                <div className="p-3 rounded-xl bg-[#141C2A] border border-[#263244] space-y-1">
+                <div className="p-3 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
                   <span className="text-[#64748B] text-[10px] flex items-center gap-1"><Cpu className="w-3 h-3 text-[#38BDF8]" /> ESP32 MCU</span>
                   <span className="text-emerald-400 font-bold">ACTIVE (240MHz)</span>
                 </div>
-                <div className="p-3 rounded-xl bg-[#141C2A] border border-[#263244] space-y-1">
+                <div className="p-3 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
                   <span className="text-[#64748B] text-[10px] flex items-center gap-1"><Camera className="w-3 h-3 text-[#8B5CF6]" /> AI CAMERA</span>
                   <span className={driverVerified ? "text-emerald-400 font-bold" : "text-amber-400 font-bold"}>
                     {driverVerified ? "VERIFIED DRIVER" : "VERIFYING..."}
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-[#141C2A] border border-[#263244] space-y-1">
+                <div className="p-3 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
                   <span className="text-[#64748B] text-[10px] flex items-center gap-1"><Wind className="w-3 h-3 text-[#38BDF8]" /> AIRFLOW SENSOR</span>
                   <span className={airflowVerified ? "text-emerald-400 font-bold" : "text-amber-400 font-bold"}>
                     {airflowVerified ? "EXHALATION OK" : "NO AIRFLOW"}
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-[#141C2A] border border-[#263244] space-y-1">
+                <div className="p-3 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
                   <span className="text-[#64748B] text-[10px] flex items-center gap-1"><Wind className="w-3 h-3 text-[#38BDF8]" /> MQ-3 SENSOR</span>
                   <span className={alcoholReading > 0.05 ? "text-red-400 font-bold" : "text-emerald-400 font-bold"}>
                     {alcoholReading.toFixed(3)} BAC mg/L
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-[#141C2A] border border-[#263244] space-y-1">
+                <div className="p-3 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
                   <span className="text-[#64748B] text-[10px] flex items-center gap-1"><Bell className="w-3 h-3 text-red-400" /> SAFETY RELAY</span>
                   <span className={ignitionState === 'PERMITTED' ? "text-emerald-400 font-bold" : "text-red-400 font-bold"}>
                     {ignitionState === 'PERMITTED' ? "CIRCUIT CLOSED" : "CUTOFF TRIGGERED"}
@@ -337,7 +337,7 @@ export const ThreeMainProjects: React.FC = () => {
                 </button>
                 <button
                   onClick={resetAlcoholSim}
-                  className="py-2.5 px-4 rounded-xl bg-[#141C2A] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#263244] font-bold text-xs font-mono transition-colors"
+                  className="py-2.5 px-4 rounded-xl bg-[#111B2B] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#253247] font-bold text-xs font-mono transition-colors"
                 >
                   Reset Simulator
                 </button>
@@ -350,13 +350,13 @@ export const ThreeMainProjects: React.FC = () => {
 
             {/* Technical Explanation Tabs */}
             <div className="space-y-4">
-              <div className="flex items-center gap-2 border-b border-[#263244] pb-2 text-xs font-mono">
+              <div className="flex items-center gap-2 border-b border-[#253247] pb-2 text-xs font-mono">
                 {(['workflow', 'hardware', 'overview', 'safety'] as const).map(tab => (
                   <button
                     key={tab}
                     onClick={() => setAlcoholActiveTab(tab)}
                     className={`px-3 py-1.5 rounded-lg uppercase ${
-                      alcoholActiveTab === tab ? 'bg-[#141C2A] text-[#38BDF8] border border-[#38BDF8]/40 font-bold' : 'text-[#94A3B8] hover:text-[#F8FAFC]'
+                      alcoholActiveTab === tab ? 'bg-[#111B2B] text-[#38BDF8] border border-[#38BDF8]/40 font-bold' : 'text-[#94A3B8] hover:text-[#F8FAFC]'
                     }`}
                   >
                     {tab}
@@ -366,19 +366,19 @@ export const ThreeMainProjects: React.FC = () => {
 
               {alcoholActiveTab === 'workflow' && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-[#CBD5E1]">
-                  <div className="p-3.5 rounded-xl bg-[#141C2A] border border-[#263244] space-y-1">
+                  <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
                     <strong className="text-[#38BDF8]">1. Driver Verification:</strong>
                     <p>AI camera confirms that the individual providing the breath sample is the actual registered driver in the driver seat, preventing passenger substitution.</p>
                   </div>
-                  <div className="p-3.5 rounded-xl bg-[#141C2A] border border-[#263244] space-y-1">
+                  <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
                     <strong className="text-[#8B5CF6]">2. Airflow Anti-Bypass:</strong>
                     <p>Pressure / thermistor airflow sensor detects active human pulmonary exhalation, thwarting canned air or hair dryer bypass attempts.</p>
                   </div>
-                  <div className="p-3.5 rounded-xl bg-[#141C2A] border border-[#263244] space-y-1">
+                  <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
                     <strong className="text-emerald-400">3. MQ-3 Analog Reading:</strong>
                     <p>Heating element changes resistance in presence of ethanol gas. The ESP32 ADC pin takes 50 samples with a moving-average noise filter.</p>
                   </div>
-                  <div className="p-3.5 rounded-xl bg-[#141C2A] border border-[#263244] space-y-1">
+                  <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
                     <strong className="text-red-400">4. Isolated Ignition Interlock:</strong>
                     <p>If reading &gt; 0.05 BAC, relay disengages starter solenoid. Never cuts ignition on an already moving vehicle for road safety.</p>
                   </div>
@@ -386,7 +386,7 @@ export const ThreeMainProjects: React.FC = () => {
               )}
 
               {alcoholActiveTab === 'hardware' && (
-                <div className="p-4 rounded-xl bg-[#141C2A] border border-[#263244] text-xs space-y-2 text-[#CBD5E1]">
+                <div className="p-4 rounded-xl bg-[#111B2B] border border-[#253247] text-xs space-y-2 text-[#CBD5E1]">
                   <p><strong>Microcontroller:</strong> ESP32 30-Pin NodeMCU (Dual Core Tensilica 240MHz)</p>
                   <p><strong>Gas Sensor:</strong> MQ-3 Semiconductor Alcohol Sensor (Analog A0 + Digital D0)</p>
                   <p><strong>Safety Switch:</strong> 5V 10A Optocoupler-Isolated Relay Module</p>
@@ -395,7 +395,7 @@ export const ThreeMainProjects: React.FC = () => {
               )}
 
               {alcoholActiveTab === 'safety' && (
-                <div className="p-4 rounded-xl bg-[#141C2A] border border-[#263244] text-xs space-y-2 text-[#CBD5E1]">
+                <div className="p-4 rounded-xl bg-[#111B2B] border border-[#253247] text-xs space-y-2 text-[#CBD5E1]">
                   <p><strong className="text-amber-400">Road Safety Mandate:</strong> The system is designed strictly as a pre-start interlock. Once the vehicle is moving, the relay cannot disrupt power to avoid power-steering or brake loss.</p>
                   <p><strong className="text-[#38BDF8]">Legal Accuracy Disclaimer:</strong> MQ-3 readings are indicative laboratory demonstrations and not certified evidentiary breathalyzers.</p>
                 </div>
@@ -409,9 +409,9 @@ export const ThreeMainProjects: React.FC = () => {
         {/* PROJECT 02: DIGITAL CLASSROOM — ASSIGNMENT CHECKER           */}
         {/* ============================================================= */}
         {activeProjectTab === 'assignment' && (
-          <div className="p-6 sm:p-10 rounded-3xl bg-[#0E1420] border-2 border-[#263244] shadow-2xl space-y-8 animate-fadeIn">
+          <div className="p-6 sm:p-10 rounded-3xl bg-[#0C1220] border-2 border-[#253247] shadow-2xl space-y-8 animate-fadeIn">
             
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#263244]">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#253247]">
               <div>
                 <span className="text-xs font-mono text-purple-400 uppercase tracking-wider">
                   PROJECT 02 // FULL-STACK WEB &bull; EDUCATION TECH &bull; AUTOMATION
@@ -435,14 +435,14 @@ export const ThreeMainProjects: React.FC = () => {
             </div>
 
             {/* Dual Dashboard Interactive Simulator */}
-            <div className="p-6 rounded-2xl bg-[#080B12] border-2 border-[#263244] space-y-6">
+            <div className="p-6 rounded-2xl bg-[#070A12] border-2 border-[#253247] space-y-6">
               
-              <div className="flex items-center justify-between pb-3 border-b border-[#263244]">
+              <div className="flex items-center justify-between pb-3 border-b border-[#253247]">
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setClassroomRole('teacher')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-colors ${
-                      classroomRole === 'teacher' ? 'bg-purple-600 text-white' : 'bg-[#141C2A] text-[#94A3B8]'
+                      classroomRole === 'teacher' ? 'bg-purple-600 text-white' : 'bg-[#111B2B] text-[#94A3B8]'
                     }`}
                   >
                     Teacher Dashboard View
@@ -450,7 +450,7 @@ export const ThreeMainProjects: React.FC = () => {
                   <button
                     onClick={() => setClassroomRole('student')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-colors ${
-                      classroomRole === 'student' ? 'bg-[#38BDF8] text-[#080B12]' : 'bg-[#141C2A] text-[#94A3B8]'
+                      classroomRole === 'student' ? 'bg-[#38BDF8] text-[#070A12]' : 'bg-[#111B2B] text-[#94A3B8]'
                     }`}
                   >
                     Student Dashboard View
@@ -468,7 +468,7 @@ export const ThreeMainProjects: React.FC = () => {
               {/* View Body */}
               {classroomRole === 'teacher' ? (
                 <div className="space-y-4 text-xs font-mono">
-                  <div className="p-4 rounded-xl bg-[#141C2A] border border-[#263244] space-y-2">
+                  <div className="p-4 rounded-xl bg-[#111B2B] border border-[#253247] space-y-2">
                     <span className="text-[#38BDF8] font-bold">ASSIGNMENT MANAGEMENT:</span>
                     <p className="text-[#F8FAFC] text-sm font-semibold">{assignmentTitle}</p>
                     <div className="flex flex-wrap gap-4 text-[#94A3B8] text-[11px] pt-1">
@@ -479,7 +479,7 @@ export const ThreeMainProjects: React.FC = () => {
                   </div>
 
                   {studentSubmitted && (
-                    <div className="p-4 rounded-xl bg-[#0E1420] border border-purple-500/40 space-y-3">
+                    <div className="p-4 rounded-xl bg-[#0C1220] border border-purple-500/40 space-y-3">
                       <div className="flex justify-between items-center">
                         <span className="text-purple-400 font-bold">STUDENT SUBMISSION #104 (SHUBHAM VERMA)</span>
                         <span className="text-emerald-400">● Submitted On Time</span>
@@ -506,7 +506,7 @@ export const ThreeMainProjects: React.FC = () => {
                 </div>
               ) : (
                 <div className="space-y-4 text-xs font-mono">
-                  <div className="p-4 rounded-xl bg-[#141C2A] border border-[#263244] space-y-2">
+                  <div className="p-4 rounded-xl bg-[#111B2B] border border-[#253247] space-y-2">
                     <span className="text-[#38BDF8] font-bold">STUDENT PORTAL — ACTIVE ASSIGNMENTS</span>
                     <p className="text-[#F8FAFC] text-sm font-semibold">{assignmentTitle}</p>
                     <p className="text-[#94A3B8]">Course: CSE 302 — Data Structures Lab</p>
@@ -514,7 +514,7 @@ export const ThreeMainProjects: React.FC = () => {
                     {!studentSubmitted ? (
                       <button
                         onClick={simulateStudentSubmit}
-                        className="mt-2 py-2 px-4 rounded-xl bg-[#38BDF8] hover:bg-[#7dd3fc] text-[#080B12] font-bold"
+                        className="mt-2 py-2 px-4 rounded-xl bg-[#38BDF8] hover:bg-[#7dd3fc] text-[#070A12] font-bold"
                       >
                         Submit Solution Files (.py / .pdf)
                       </button>
@@ -543,13 +543,13 @@ export const ThreeMainProjects: React.FC = () => {
 
             {/* Technical Highlights */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-              <div className="p-3.5 rounded-xl bg-[#141C2A] border border-[#263244]">
+              <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247]">
                 <strong className="text-[#38BDF8]">Session Lock:</strong> Time-based deadline enforcement preventing post-cutoff submissions.
               </div>
-              <div className="p-3.5 rounded-xl bg-[#141C2A] border border-[#263244]">
+              <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247]">
                 <strong className="text-purple-400">Automated Evaluation:</strong> Code similarity and syntax test runner integration.
               </div>
-              <div className="p-3.5 rounded-xl bg-[#141C2A] border border-[#263244]">
+              <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247]">
                 <strong className="text-emerald-400">PDF Generator:</strong> Clean programmatic scorecard compilation for students and department records.
               </div>
             </div>
@@ -561,9 +561,9 @@ export const ThreeMainProjects: React.FC = () => {
         {/* PROJECT 03: 1QUIZ — AI-POWERED LEARNING PLATFORM              */}
         {/* ============================================================= */}
         {activeProjectTab === 'onequiz' && (
-          <div className="p-6 sm:p-10 rounded-3xl bg-[#0E1420] border-2 border-[#263244] shadow-2xl space-y-8 animate-fadeIn">
+          <div className="p-6 sm:p-10 rounded-3xl bg-[#0C1220] border-2 border-[#253247] shadow-2xl space-y-8 animate-fadeIn">
             
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#263244]">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#253247]">
               <div>
                 <span className="text-xs font-mono text-emerald-400 uppercase tracking-wider">
                   PROJECT 03 // PYTHON &bull; AI LEARNING &bull; PERFORMANCE ANALYTICS
@@ -587,12 +587,12 @@ export const ThreeMainProjects: React.FC = () => {
             </div>
 
             {/* Real Playable Quiz Container */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-[#080B12] border-2 border-[#263244] space-y-6">
+            <div className="p-6 sm:p-8 rounded-2xl bg-[#070A12] border-2 border-[#253247] space-y-6">
               
               {!quizFinished ? (
                 <div className="space-y-5">
                   {/* Progress & Score HUD */}
-                  <div className="flex items-center justify-between text-xs font-mono pb-3 border-b border-[#263244]">
+                  <div className="flex items-center justify-between text-xs font-mono pb-3 border-b border-[#253247]">
                     <span className="text-[#38BDF8]">
                       QUESTION 0{currentQIdx + 1} OF 0{quizQuestions.length}
                     </span>
@@ -612,7 +612,7 @@ export const ThreeMainProjects: React.FC = () => {
                   {/* Options */}
                   <div className="grid grid-cols-1 gap-2.5">
                     {quizQuestions[currentQIdx].options.map((opt, idx) => {
-                      let btnStyle = "bg-[#141C2A] text-[#CBD5E1] border-[#263244] hover:border-[#38BDF8]/50";
+                      let btnStyle = "bg-[#111B2B] text-[#CBD5E1] border-[#253247] hover:border-[#38BDF8]/50";
                       if (showFeedback) {
                         if (idx === quizQuestions[currentQIdx].correct) {
                           btnStyle = "bg-emerald-500/20 text-emerald-300 border-emerald-500 font-bold";
@@ -638,13 +638,13 @@ export const ThreeMainProjects: React.FC = () => {
 
                   {/* Feedback Explanation */}
                   {showFeedback && (
-                    <div className="p-4 rounded-xl bg-[#141C2A] border border-[#263244] space-y-2">
+                    <div className="p-4 rounded-xl bg-[#111B2B] border border-[#253247] space-y-2">
                       <p className="text-xs text-[#CBD5E1]">
                         <strong>Explanation:</strong> {quizQuestions[currentQIdx].explanation}
                       </p>
                       <button
                         onClick={handleNextQuestion}
-                        className="py-2 px-4 rounded-xl bg-[#38BDF8] hover:bg-[#7dd3fc] text-[#080B12] font-bold text-xs font-mono transition-colors"
+                        className="py-2 px-4 rounded-xl bg-[#38BDF8] hover:bg-[#7dd3fc] text-[#070A12] font-bold text-xs font-mono transition-colors"
                       >
                         {currentQIdx + 1 < quizQuestions.length ? "Proceed to Next Question →" : "View Final Performance Results →"}
                       </button>
@@ -669,7 +669,7 @@ export const ThreeMainProjects: React.FC = () => {
 
                   <button
                     onClick={resetQuiz}
-                    className="py-2.5 px-6 rounded-xl bg-[#38BDF8] text-[#080B12] font-bold text-xs font-mono hover:bg-[#7dd3fc] transition-colors"
+                    className="py-2.5 px-6 rounded-xl bg-[#38BDF8] text-[#070A12] font-bold text-xs font-mono hover:bg-[#7dd3fc] transition-colors"
                   >
                     Play Quiz Again
                   </button>
@@ -684,15 +684,15 @@ export const ThreeMainProjects: React.FC = () => {
                 AI Learning Concept Pipeline (Roadmap)
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                <div className="p-3.5 rounded-xl bg-[#141C2A] border border-[#263244] space-y-1">
+                <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
                   <strong className="text-[#38BDF8]">1. AI Question Generation:</strong>
                   <p className="text-[#94A3B8]">Topic prompt &rarr; LLM / NLP model &rarr; Verified dynamic question bank.</p>
                 </div>
-                <div className="p-3.5 rounded-xl bg-[#141C2A] border border-[#263244] space-y-1">
+                <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
                   <strong className="text-purple-400">2. Adaptive Difficulty:</strong>
                   <p className="text-[#94A3B8]">Accuracy tallies dynamically tune question complexity for personalized mastery.</p>
                 </div>
-                <div className="p-3.5 rounded-xl bg-[#141C2A] border border-[#263244] space-y-1">
+                <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
                   <strong className="text-emerald-400">3. Knowledge Base:</strong>
                   <p className="text-[#94A3B8]">Persistent SQLite/PostgreSQL database storing categorized subject taxonomies.</p>
                 </div>

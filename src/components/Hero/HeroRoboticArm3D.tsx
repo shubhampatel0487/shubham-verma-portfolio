@@ -39,7 +39,7 @@ export const HeroRoboticArm3D: React.FC = () => {
 
     // Scene, Camera, Renderer
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x080b12, 0.04);
+    scene.fog = new THREE.FogExp2(0x070a12, 0.04);
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     camera.position.set(4.5, 3.8, 5.2);
@@ -53,7 +53,7 @@ export const HeroRoboticArm3D: React.FC = () => {
     container.appendChild(renderer.domElement);
 
     // Advanced Laboratory Lighting
-    const ambientLight = new THREE.AmbientLight(0x0e1726, 2.5);
+    const ambientLight = new THREE.AmbientLight(0x0c1220, 2.5);
     scene.add(ambientLight);
 
     const mainSpot = new THREE.SpotLight(0x38bdf8, 5, 20, Math.PI / 4, 0.3, 1);
@@ -71,14 +71,14 @@ export const HeroRoboticArm3D: React.FC = () => {
     scene.add(cyanRim);
 
     // Grid Floor
-    const grid = new THREE.GridHelper(10, 20, 0x38bdf8, 0x1f293d);
+    const grid = new THREE.GridHelper(10, 20, 0x38bdf8, 0x253247);
     grid.position.y = 0;
     scene.add(grid);
 
     // Pedestal Platform
     const pedestalGeo = new THREE.CylinderGeometry(1.4, 1.6, 0.3, 32);
     const pedestalMat = new THREE.MeshStandardMaterial({
-      color: 0x121c2a,
+      color: 0x111b2b,
       roughness: 0.3,
       metalness: 0.8,
     });
@@ -401,3 +401,4 @@ export const HeroRoboticArm3D: React.FC = () => {
     </div>
   );
 };
+

@@ -9,17 +9,17 @@ export default {
     extend: {
       colors: {
         brand: {
-          bg: '#080B12',
-          bgSecondary: '#0E1420',
-          surface: '#141C2A',
-          surfaceHover: '#1A2538',
-          surfaceLight: '#202D42',
-          border: '#263244',
-          borderLight: '#384860',
+          bg: '#070A12',
+          bgSecondary: '#0C1220',
+          surface: '#111B2B',
+          surfaceHover: '#162338',
+          surfaceLight: '#1C2C45',
+          border: '#253247',
+          borderLight: '#32425E',
           accent: '#38BDF8', // Cyan / Sky
-          accentGlow: 'rgba(56, 189, 248, 0.25)',
+          accentGlow: 'rgba(56, 189, 248, 0.18)',
           purple: '#8B5CF6', // Violet
-          purpleGlow: 'rgba(139, 92, 246, 0.25)',
+          purpleGlow: 'rgba(139, 92, 246, 0.18)',
           emerald: '#10B981',
           amber: '#F59E0B',
           textPrimary: '#F8FAFC',

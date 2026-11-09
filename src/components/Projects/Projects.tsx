@@ -50,12 +50,12 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
   };
 
   return (
-    <section id="projects" className="py-24 relative z-10 border-t border-[#263244]/40">
+    <section id="projects" className="py-24 relative z-10 border-t border-[#253247]/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-          <span className="text-xs font-mono tracking-widest text-[#38BDF8] uppercase bg-[#141C2A] px-3.5 py-1 rounded-full border border-[#38BDF8]/20">
+          <span className="text-xs font-mono tracking-widest text-[#38BDF8] uppercase bg-[#111B2B] px-3.5 py-1 rounded-full border border-[#38BDF8]/20">
             03 // Featured Projects
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#F8FAFC]">
@@ -74,8 +74,8 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
               onClick={() => setSelectedFilter(filter)}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 selectedFilter === filter
-                  ? 'bg-[#38BDF8] text-[#080B12] font-semibold shadow-md shadow-[#38BDF8]/20'
-                  : 'bg-[#141C2A] text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-[#1E293B] border border-[#263244]'
+                  ? 'bg-[#38BDF8] text-[#070A12] font-semibold shadow-md shadow-[#38BDF8]/20'
+                  : 'bg-[#111B2B] text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-[#1E293B] border border-[#253247]'
               }`}
             >
               {filter}
@@ -88,11 +88,11 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
           {filteredProjects.map((project) => (
             <div
               key={project.id}
-              className="rounded-2xl bg-[#0E1420] border border-[#263244] hover:border-[#38BDF8]/50 transition-all duration-300 shadow-xl overflow-hidden flex flex-col group"
+              className="rounded-2xl bg-[#0C1220] border border-[#253247] hover:border-[#38BDF8]/50 transition-all duration-300 shadow-xl overflow-hidden flex flex-col group"
             >
               {/* Card Image Banner */}
               <div 
-                className="relative h-48 bg-[#080B12] overflow-hidden cursor-pointer"
+                className="relative h-48 bg-[#070A12] overflow-hidden cursor-pointer"
                 onClick={() => onSelectProject(project)}
               >
                 <img
@@ -100,7 +100,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                   alt={`${project.title} schematic`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0E1420] via-transparent to-transparent opacity-80" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0C1220] via-transparent to-transparent opacity-80" />
                 
                 {/* Status Pill */}
                 <div className="absolute top-3 right-3">
@@ -109,7 +109,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
 
                 {/* Category Pill */}
                 <div className="absolute bottom-3 left-3">
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#141C2A]/90 text-[#38BDF8] border border-[#38BDF8]/30">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#111B2B]/90 text-[#38BDF8] border border-[#38BDF8]/30">
                     {project.category}
                   </span>
                 </div>
@@ -138,7 +138,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                     {project.technologies.slice(0, 4).map((tech) => (
                       <span
                         key={tech}
-                        className="px-2 py-0.5 text-[10px] rounded bg-[#141C2A] text-[#CBD5E1] border border-[#263244] font-mono"
+                        className="px-2 py-0.5 text-[10px] rounded bg-[#111B2B] text-[#CBD5E1] border border-[#253247] font-mono"
                       >
                         {tech}
                       </span>
@@ -152,7 +152,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                 </div>
 
                 {/* Card Action Bar */}
-                <div className="pt-4 border-t border-[#263244] flex items-center justify-between">
+                <div className="pt-4 border-t border-[#253247] flex items-center justify-between">
                   <button
                     onClick={() => onSelectProject(project)}
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#38BDF8] hover:text-[#7dd3fc] transition-colors"
@@ -167,7 +167,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1.5 rounded-lg bg-[#141C2A] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#263244] transition-colors"
+                        className="p-1.5 rounded-lg bg-[#111B2B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#253247] transition-colors"
                         aria-label="View GitHub Repository"
                       >
                         <GithubIcon className="w-3.5 h-3.5" />
@@ -175,7 +175,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                     ) : (
                       <span
                         title="Repository available upon academic review"
-                        className="p-1.5 rounded-lg bg-[#141C2A]/40 text-[#64748B] border border-[#263244]/40 cursor-help"
+                        className="p-1.5 rounded-lg bg-[#111B2B]/40 text-[#64748B] border border-[#253247]/40 cursor-help"
                       >
                         <GithubIcon className="w-3.5 h-3.5" />
                       </span>
@@ -186,7 +186,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                         href={project.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1.5 rounded-lg bg-[#141C2A] text-[#94A3B8] hover:text-[#38BDF8] border border-[#263244] transition-colors"
+                        className="p-1.5 rounded-lg bg-[#111B2B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#253247] transition-colors"
                         aria-label="View Live Project Demo"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
@@ -194,7 +194,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                     ) : (
                       <span
                         title="Lab & simulation prototype environment"
-                        className="p-1.5 rounded-lg bg-[#141C2A]/40 text-[#64748B] border border-[#263244]/40 cursor-help"
+                        className="p-1.5 rounded-lg bg-[#111B2B]/40 text-[#64748B] border border-[#253247]/40 cursor-help"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
                       </span>

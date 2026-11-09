@@ -9,7 +9,7 @@ export interface SocialLink {
 export interface SkillItem {
   name: string;
   level: string; // e.g. "Practical Knowledge", "Intermediate", "Familiar", "Academic / Lab"
-  category: 'programming' | 'ai_ml' | 'robotics' | 'embedded' | 'backend' | 'tools' | 'hardware';
+  category: 'programming' | 'ai_ml' | 'robotics' | 'embedded' | 'backend' | 'tools' | 'hardware' | 'web';
   description?: string;
   tags?: string[];
 }
@@ -59,6 +59,7 @@ export interface EducationItem {
   institution: string;
   location: string;
   score?: string;
+  grade?: string;
   stream?: string;
   status: 'Ongoing (Completing 2026)' | 'Completed';
   highlights: string[];

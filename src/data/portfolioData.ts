@@ -16,8 +16,8 @@ export const personalProfile: PersonalProfile = {
   secondaryTitle: "Computer Science | Artificial Intelligence | Robotics | Embedded Systems | IoT",
   location: "Ambedkar Nagar, Uttar Pradesh - 224151, India",
   heroTagline: "Engineering Intelligence. Building the Future.",
-  alternativeTagline: "Where Software Meets Hardware, Intelligence Becomes Reality.",
-  bioIntroduction: "I am an aspiring Robotics and AI Engineer with a Diploma background in Computer Science and Engineering. My interests include Artificial Intelligence, Robotics, Embedded Systems, IoT, Drone Technology, Linux and Intelligent Automation. I enjoy developing practical projects that combine hardware, software and intelligent technologies.",
+  alternativeTagline: "Turning Ideas Into Intelligent Systems.",
+  bioIntroduction: "I am an aspiring Robotics and AI Engineer with a background in Computer Science and Engineering. I am passionate about Artificial Intelligence, Robotics, Embedded Systems, IoT, Drone Technology and Software Development. I enjoy exploring emerging technologies and developing practical solutions that combine hardware, software and intelligent systems.",
   fullBio: {
     paragraph1: "My technological exploration began with core computer science and software development principles and quickly expanded into physical electronics, microcontrollers, and intelligent algorithmic models. I believe the future of engineering lies in cyber-physical systems that perceive, reason, and act with precision in the real world.",
     paragraph2: "Currently completing my Diploma in Computer Science & Engineering (2023–2026) at Chhatrapati Shahu Ji Maharaj Government Polytechnic, Ambedkar Nagar, I dedicate my technical time to hands-on experimentation. From AI-driven face recognition attendance systems and ESP32 alcohol-detection vehicle interlocks to physics-informed neural network (PINN) battery models and ROS 2 drone simulations, my focus is bridging theoretical computation with physical reality.",
@@ -73,40 +73,41 @@ export const industrialTrainingData: IndustrialTrainingItem = {
 };
 
 export const skillsData: SkillItem[] = [
-  // Programming Languages
-  { name: "Python", level: "Primary & Applied Competency", category: "programming", description: "Applied across AI modeling, OpenCV face recognition, data processing, backend APIs, and automation scripts." },
-  { name: "C / C++", level: "Intermediate (Embedded & Core)", category: "programming", description: "Firmware programming for ESP32 and Arduino, low-level memory management, and hardware interfacing." },
-  { name: "Java", level: "Academic & Object-Oriented", category: "programming", description: "Core Java programming, OOP paradigms, inheritance, interfaces, and collection frameworks." },
-  { name: "JavaScript", level: "Working Web Knowledge", category: "programming", description: "ES6+ for interactive web interfaces, DOM manipulation, asynchronous fetch APIs, and client-side logic." },
-  { name: "HTML5 & CSS3", level: "Solid Foundation", category: "programming", description: "Semantic markup, modern styling, responsive layouts, flexbox, grid, and accessibility standards." },
+  // 1. Programming
+  { name: "Python", level: "Primary & Applied", category: "programming", description: "Applied across AI modeling, computer vision, backend APIs, data pipelines, and automation scripts." },
+  { name: "C / C++", level: "Intermediate", category: "programming", description: "Firmware programming for ESP32 and Arduino, memory management, and low-level hardware control." },
+  { name: "Java", level: "Academic & OOP", category: "programming", description: "Core Java, object-oriented design paradigms, data structures, and collection frameworks." },
+  { name: "JavaScript", level: "Working Competency", category: "programming", description: "Modern ES6+, DOM manipulation, asynchronous REST integrations, and interactive interfaces." },
 
-  // AI & Machine Learning
-  { name: "OpenCV & Computer Vision", level: "Hands-on Project Experience", category: "ai_ml", description: "Real-time face detection, Haar cascades, facial feature extraction, and automated identity logging." },
-  { name: "Machine Learning Fundamentals", level: "Practical Exploration", category: "ai_ml", description: "Supervised and unsupervised learning, classification, regression, feature scaling, and evaluation metrics." },
-  { name: "Data Science & Basic Analytics", level: "Working Competency", category: "ai_ml", description: "Data wrangling, cleaning, exploratory visualization using Python libraries (NumPy, Pandas, Matplotlib)." },
-  { name: "Physics-Informed Neural Networks (PINNs)", level: "Active Research Project", category: "ai_ml", description: "Embedding differential equations and physical laws into loss functions for battery lifecycle estimation." },
+  // 2. Artificial Intelligence
+  { name: "Machine Learning Fundamentals", level: "Practical Exploration", category: "ai_ml", description: "Supervised and unsupervised learning, regression, classification, feature engineering, and evaluation." },
+  { name: "AI Computer Vision & OpenCV", level: "Hands-on Project", category: "ai_ml", description: "Haar cascade face detection, facial feature extraction, and automated real-time recognition." },
+  { name: "Data Processing & Analytics", level: "Applied Practice", category: "ai_ml", description: "Data wrangling, cleaning, and exploratory numerical analysis using NumPy, Pandas, and Matplotlib." },
+  { name: "Model Training Experiments (PINNs)", level: "Active Research", category: "ai_ml", description: "Physics-Informed Neural Networks embedding differential equations into loss functions for battery lifecycle estimation." },
 
-  // Embedded Systems & IoT
-  { name: "ESP32", level: "Active Prototyping", category: "embedded", description: "Microcontroller architecture, Wi-Fi/Bluetooth stack, dual-core tasks, and automotive safety interlocks." },
-  { name: "Arduino IDE & Platform", level: "Experienced Prototyping", category: "embedded", description: "Sensor polling, actuator drivers, PWM signal generation, serial telemetry, and breadboard circuit design." },
-  { name: "Sensor Interfacing (MQ-3 Gas, IMU)", level: "Hands-on Integration", category: "embedded", description: "Analog/digital gas sensors, threshold calibration, 6-axis IMU sensors, and environmental monitoring." },
-  { name: "Hardware & Circuit Prototyping", level: "Practical Lab Skills", category: "hardware", description: "Basic circuit building, breadboard prototyping, multimeter diagnostics, and hardware debugging." },
+  // 3. Robotics
+  { name: "Robotics Fundamentals", level: "Academic & Lab", category: "robotics", description: "Forward/inverse kinematics, DH parameters, coordinate transformations, and closed-loop control." },
+  { name: "ROS 2 (Robot Operating System)", level: "Simulation & Learning", category: "robotics", description: "DDS middleware, publishers, subscribers, custom message topics, and robot state simulation." },
+  { name: "Drone Technology (PX4 & Gazebo)", level: "Exploratory SITL", category: "robotics", description: "PX4 software-in-the-loop (SITL) flight control, quadcopter dynamics, and autonomous mission planning." },
+  { name: "Intelligent Automation", level: "Applied Prototyping", category: "robotics", description: "Interfacing microcontrollers with safety cutoffs, automated sensors, and physical actuators." },
 
-  // Robotics & Automation
-  { name: "Robotics Fundamentals", level: "Academic & Prototyping", category: "robotics", description: "Kinematics, coordinate frames, actuator control, and closed-loop feedback loops." },
-  { name: "ROS 2 (Robot Operating System)", level: "Learning & Simulation", category: "robotics", description: "Publishers, subscribers, DDS middleware architecture, topics, and robot state visualizers." },
-  { name: "Drone Simulation (PX4 & Gazebo)", level: "Exploratory & Lab Setup", category: "robotics", description: "PX4 autopilot software-in-the-loop (SITL), quadcopter flight dynamics, and virtual test worlds." },
+  // 4. Embedded Systems
+  { name: "ESP32 & ESP8266", level: "Hands-on Prototyping", category: "embedded", description: "Dual-core architectures, Wi-Fi/BLE communication, FreeRTOS tasks, and automotive interlocks." },
+  { name: "Arduino Microcontrollers", level: "Experienced Prototyping", category: "embedded", description: "PWM signal generation, ADC sampling, interrupts, serial debugging, and breadboard circuits." },
+  { name: "Sensors & Actuators", level: "Hardware Integration", category: "embedded", description: "Analog MQ-3 alcohol sensors, IMU accelerometers, ultrasonic transducers, relays, and buzzers." },
+  { name: "Circuit Design & Diagnostics", level: "Practical Lab Skills", category: "embedded", description: "Schematic review, breadboard prototyping, multimeter probing, and power regulation." },
 
-  // Backend & Databases
-  { name: "Flask", level: "Project Implementation", category: "backend", description: "Lightweight microservices, RESTful routing, and database integrations for attendance systems." },
-  { name: "Django & Django REST", level: "Practical Knowledge", category: "backend", description: "Model-View-Template architecture, ORM, authenticated endpoints, and administration portals." },
-  { name: "MySQL & SQLite", level: "Working Relational DB", category: "backend", description: "Relational schema design, queries, table joins, data integrity, and local persistence." },
+  // 5. Web Development
+  { name: "Flask & FastAPI", level: "Project Implementation", category: "web", description: "Lightweight Python microservices, REST endpoints, and local database CRUD operations." },
+  { name: "Django & Django REST", level: "Practical Knowledge", category: "web", description: "Model-View-Template architecture, ORM querysets, admin dashboards, and authenticated APIs." },
+  { name: "HTML5 & CSS3", level: "Solid Foundation", category: "web", description: "Semantic markup, modern styling, responsive layouts, Tailwind CSS, and accessibility standards." },
+  { name: "Relational DBs (SQLite, MySQL)", level: "Working Relational DB", category: "web", description: "Schema normalization, SQL querying, foreign keys, transaction safety, and persistent records." },
 
-  // Operating Systems & Tools
-  { name: "Linux & Terminal", level: "Comfortable Environment", category: "tools", description: "Command-line navigation, package managers, shell utilities, and Linux system administration." },
-  { name: "Windows", level: "Daily Development OS", category: "tools", description: "Development environments, toolchain configuration, and general productivity software." },
-  { name: "Git & GitHub", level: "Daily Workflow", category: "tools", description: "Version control, commits, branching, repository management, and collaboration." },
-  { name: "MS Office & VS Code", level: "Productivity & IDE", category: "tools", description: "Technical documentation, spreadsheet analytics, and IDE debugging extensions." }
+  // 6. Tools
+  { name: "Linux & Kali Linux", level: "Comfortable Workstation", category: "tools", description: "Command-line navigation, system administration, bash scripting, network inspection, and package management." },
+  { name: "Git & GitHub", level: "Daily Workflow", category: "tools", description: "Version control, feature branching, merge workflows, repository hosting, and open-source tracking." },
+  { name: "Docker Containerization", level: "Fundamentals", category: "tools", description: "Dockerfile creation, container isolation for development environments, and reproducible runtimes." },
+  { name: "VS Code & Development Tooling", level: "Daily Workflow", category: "tools", description: "Extension ecosystems, linting, debugging configurations, and integrated terminal workflows." }
 ];
 
 export const projectsData: ProjectItem[] = [

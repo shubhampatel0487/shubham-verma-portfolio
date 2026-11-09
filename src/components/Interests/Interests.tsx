@@ -19,12 +19,12 @@ export const Interests: React.FC = () => {
   };
 
   return (
-    <section id="interests" className="py-24 relative z-10 border-t border-[#263244]/40">
+    <section id="interests" className="py-24 relative z-10 border-t border-[#253247]/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <span className="text-xs font-mono tracking-widest text-[#38BDF8] uppercase bg-[#141C2A] px-3.5 py-1 rounded-full border border-[#38BDF8]/20">
+          <span className="text-xs font-mono tracking-widest text-[#38BDF8] uppercase bg-[#111B2B] px-3.5 py-1 rounded-full border border-[#38BDF8]/20">
             07 // Interests &amp; Vision
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#F8FAFC]">
@@ -36,7 +36,7 @@ export const Interests: React.FC = () => {
         </div>
 
         {/* Future Vision Highlight Statement Banner */}
-        <div className="mb-16 p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-[#0E1420] via-[#141C2A] to-[#0E1420] border-2 border-[#263244] shadow-2xl relative overflow-hidden group">
+        <div className="mb-16 p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-[#0C1220] via-[#111B2B] to-[#0C1220] border-2 border-[#253247] shadow-2xl relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-8 opacity-10">
             <Compass className="w-32 h-32 text-[#38BDF8]" />
           </div>
@@ -58,10 +58,10 @@ export const Interests: React.FC = () => {
           {interestsList.map((item, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-2xl bg-[#0E1420] border border-[#263244] hover:border-[#38BDF8]/50 hover:bg-[#141C2A] transition-all duration-300 shadow-lg group flex flex-col justify-between"
+              className="p-6 rounded-2xl bg-[#0C1220] border border-[#253247] hover:border-[#38BDF8]/50 hover:bg-[#111B2B] transition-all duration-300 shadow-lg group flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#141C2A] border border-[#263244] flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="w-10 h-10 rounded-xl bg-[#111B2B] border border-[#253247] flex items-center justify-center group-hover:scale-110 transition-transform">
                   {getIcon(item.icon)}
                 </div>
                 <h3 className="text-base font-bold text-[#F8FAFC] group-hover:text-[#38BDF8] transition-colors font-sans">
@@ -72,7 +72,7 @@ export const Interests: React.FC = () => {
                 </p>
               </div>
 
-              <div className="pt-4 mt-2 border-t border-[#263244]/60 flex items-center justify-between text-[11px] font-mono text-[#64748B]">
+              <div className="pt-4 mt-2 border-t border-[#253247]/60 flex items-center justify-between text-[11px] font-mono text-[#64748B]">
                 <span>FOCUS DOMAIN</span>
                 <span className="text-[#38BDF8]">0{idx + 1}</span>
               </div>

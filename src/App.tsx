@@ -53,7 +53,7 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#080B12] text-[#F8FAFC] selection:bg-[#38BDF8] selection:text-[#080B12] font-sans overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#070A12] text-[#F8FAFC] selection:bg-[#38BDF8] selection:text-[#070A12] font-sans overflow-x-hidden">
       {/* Top Scroll Progress Indicator */}
       <ScrollProgress />
 

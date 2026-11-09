@@ -4,12 +4,12 @@ import { educationData } from '../../data/portfolioData';
 
 export const Education: React.FC = () => {
   return (
-    <section id="education" className="py-24 relative z-10 border-t border-[#263244]/40">
+    <section id="education" className="py-24 relative z-10 border-t border-[#253247]/40">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <span className="text-xs font-mono tracking-widest text-[#38BDF8] uppercase bg-[#141C2A] px-3.5 py-1 rounded-full border border-[#38BDF8]/20">
+          <span className="text-xs font-mono tracking-widest text-[#38BDF8] uppercase bg-[#111B2B] px-3.5 py-1 rounded-full border border-[#38BDF8]/20">
             05 // Education History
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#F8FAFC]">
@@ -21,22 +21,22 @@ export const Education: React.FC = () => {
         </div>
 
         {/* Education Timeline */}
-        <div className="relative border-l border-[#263244] ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-12">
+        <div className="relative border-l border-[#253247] ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-12">
           {educationData.map((edu, idx) => (
             <div key={idx} className="relative group">
               
               {/* Timeline Indicator Dot */}
-              <div className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-6 h-6 rounded-full bg-[#0E1420] border-2 border-[#8B5CF6] flex items-center justify-center shadow-md shadow-[#8B5CF6]/20 group-hover:scale-110 transition-transform">
+              <div className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-6 h-6 rounded-full bg-[#0C1220] border-2 border-[#8B5CF6] flex items-center justify-center shadow-md shadow-[#8B5CF6]/20 group-hover:scale-110 transition-transform">
                 <GraduationCap className="w-3 h-3 text-[#8B5CF6]" />
               </div>
 
               {/* Education Card */}
-              <div className="p-6 sm:p-8 rounded-2xl bg-[#0E1420] border border-[#263244] hover:border-[#8B5CF6]/40 transition-colors shadow-xl space-y-4">
+              <div className="p-6 sm:p-8 rounded-2xl bg-[#0C1220] border border-[#253247] hover:border-[#8B5CF6]/40 transition-colors shadow-xl space-y-4">
                 
                 {/* Header Info */}
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                   <div>
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-xs font-mono bg-[#141C2A] text-[#8B5CF6] border border-[#8B5CF6]/20 mb-2">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-xs font-mono bg-[#111B2B] text-[#8B5CF6] border border-[#8B5CF6]/20 mb-2">
                       <Calendar className="w-3.5 h-3.5" />
                       <span>{edu.period}</span>
                     </span>
@@ -70,7 +70,7 @@ export const Education: React.FC = () => {
                 </div>
 
                 {/* Highlights List */}
-                <div className="pt-2 border-t border-[#263244] space-y-2">
+                <div className="pt-2 border-t border-[#253247] space-y-2">
                   <h4 className="text-xs font-mono uppercase tracking-wider text-[#94A3B8]">
                     Curriculum &amp; Academic Focus:
                   </h4>

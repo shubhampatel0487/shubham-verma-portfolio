@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://shubhampatel.dev/sitemap.xml
-
+Sitemap: https://github.com/shubhampatel0487/sitemap.xml

@@ -102,12 +102,12 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-24 relative z-10 border-t border-[#263244]/40 bg-[#080B12]">
+    <section id="contact" className="py-24 relative z-10 border-t border-[#253247]/40 bg-[#070A12]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <span className="text-xs font-mono tracking-widest text-[#38BDF8] uppercase bg-[#141C2A] px-3.5 py-1 rounded-full border border-[#38BDF8]/20">
+          <span className="text-xs font-mono tracking-widest text-[#38BDF8] uppercase bg-[#111B2B] px-3.5 py-1 rounded-full border border-[#38BDF8]/20">
             Get in Touch
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#F8FAFC]">
@@ -123,7 +123,7 @@ export const Contact: React.FC = () => {
           {/* Left Column: Direct Info & Quick Copy */}
           <div className="lg:col-span-5 space-y-6">
             
-            <div className="p-6 sm:p-8 rounded-2xl bg-[#0E1420] border border-[#263244] shadow-xl space-y-6">
+            <div className="p-6 sm:p-8 rounded-2xl bg-[#0C1220] border border-[#253247] shadow-xl space-y-6">
               <div>
                 <h3 className="text-xl font-bold text-[#F8FAFC] font-sans">
                   Direct Contact Channels
@@ -153,7 +153,7 @@ export const Contact: React.FC = () => {
               </a>
 
               {/* Email Pill with One-Click Copy */}
-              <div className="p-4 rounded-xl bg-[#141C2A] border border-[#263244] space-y-2">
+              <div className="p-4 rounded-xl bg-[#111B2B] border border-[#253247] space-y-2">
                 <span className="text-[11px] font-mono text-[#94A3B8] uppercase">Email Address</span>
                 <div className="flex items-center justify-between gap-2">
                   <a
@@ -164,7 +164,7 @@ export const Contact: React.FC = () => {
                   </a>
                   <button
                     onClick={() => handleCopy(personalProfile.contact.email, 'email')}
-                    className="p-2 rounded-lg bg-[#0E1420] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#263244] transition-colors flex items-center gap-1.5 text-xs font-mono"
+                    className="p-2 rounded-lg bg-[#0C1220] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#253247] transition-colors flex items-center gap-1.5 text-xs font-mono"
                     aria-label="Copy Email Address"
                   >
                     {copiedType === 'email' ? (
@@ -183,7 +183,7 @@ export const Contact: React.FC = () => {
               </div>
 
               {/* Phone Pill with One-Click Copy */}
-              <div className="p-4 rounded-xl bg-[#141C2A] border border-[#263244] space-y-2">
+              <div className="p-4 rounded-xl bg-[#111B2B] border border-[#253247] space-y-2">
                 <span className="text-[11px] font-mono text-[#94A3B8] uppercase">Mobile Number</span>
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-xs sm:text-sm font-mono text-[#F8FAFC] truncate">
@@ -191,7 +191,7 @@ export const Contact: React.FC = () => {
                   </span>
                   <button
                     onClick={() => handleCopy(personalProfile.contact.phone, 'phone')}
-                    className="p-2 rounded-lg bg-[#0E1420] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#263244] transition-colors flex items-center gap-1.5 text-xs font-mono"
+                    className="p-2 rounded-lg bg-[#0C1220] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#253247] transition-colors flex items-center gap-1.5 text-xs font-mono"
                     aria-label="Copy Phone Number"
                   >
                     {copiedType === 'phone' ? (
@@ -210,8 +210,8 @@ export const Contact: React.FC = () => {
               </div>
 
               {/* Location Pill */}
-              <div className="p-4 rounded-xl bg-[#141C2A] border border-[#263244] flex items-center gap-3">
-                <div className="p-2.5 rounded-lg bg-[#0E1420] text-[#38BDF8]">
+              <div className="p-4 rounded-xl bg-[#111B2B] border border-[#253247] flex items-center gap-3">
+                <div className="p-2.5 rounded-lg bg-[#0C1220] text-[#38BDF8]">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
@@ -228,7 +228,7 @@ export const Contact: React.FC = () => {
 
           {/* Right Column: Contact Form */}
           <div className="lg:col-span-7">
-            <div className="p-6 sm:p-8 rounded-2xl bg-[#0E1420] border border-[#263244] shadow-xl">
+            <div className="p-6 sm:p-8 rounded-2xl bg-[#0C1220] border border-[#253247] shadow-xl">
               
               <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                 
@@ -244,8 +244,8 @@ export const Contact: React.FC = () => {
                       placeholder="e.g. Alex Morgan"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className={`w-full px-4 py-2.5 rounded-xl bg-[#141C2A] text-sm text-[#F8FAFC] placeholder-[#64748B] border ${
-                        errors.name ? 'border-red-500' : 'border-[#263244]'
+                      className={`w-full px-4 py-2.5 rounded-xl bg-[#111B2B] text-sm text-[#F8FAFC] placeholder-[#64748B] border ${
+                        errors.name ? 'border-red-500' : 'border-[#253247]'
                       } focus:outline-none focus:ring-2 focus:ring-[#38BDF8] transition-all`}
                     />
                     {errors.name && <p className="text-xs text-red-400 mt-1">{errors.name}</p>}
@@ -262,8 +262,8 @@ export const Contact: React.FC = () => {
                       placeholder="e.g. alex@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className={`w-full px-4 py-2.5 rounded-xl bg-[#141C2A] text-sm text-[#F8FAFC] placeholder-[#64748B] border ${
-                        errors.email ? 'border-red-500' : 'border-[#263244]'
+                      className={`w-full px-4 py-2.5 rounded-xl bg-[#111B2B] text-sm text-[#F8FAFC] placeholder-[#64748B] border ${
+                        errors.email ? 'border-red-500' : 'border-[#253247]'
                       } focus:outline-none focus:ring-2 focus:ring-[#38BDF8] transition-all`}
                     />
                     {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email}</p>}
@@ -281,8 +281,8 @@ export const Contact: React.FC = () => {
                     placeholder="e.g. Robotics Collaboration / Research Inquiry"
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className={`w-full px-4 py-2.5 rounded-xl bg-[#141C2A] text-sm text-[#F8FAFC] placeholder-[#64748B] border ${
-                      errors.subject ? 'border-red-500' : 'border-[#263244]'
+                    className={`w-full px-4 py-2.5 rounded-xl bg-[#111B2B] text-sm text-[#F8FAFC] placeholder-[#64748B] border ${
+                      errors.subject ? 'border-red-500' : 'border-[#253247]'
                     } focus:outline-none focus:ring-2 focus:ring-[#38BDF8] transition-all`}
                   />
                   {errors.subject && <p className="text-xs text-red-400 mt-1">{errors.subject}</p>}
@@ -299,8 +299,8 @@ export const Contact: React.FC = () => {
                     placeholder="Describe your technical inquiry, project context, or question..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className={`w-full px-4 py-2.5 rounded-xl bg-[#141C2A] text-sm text-[#F8FAFC] placeholder-[#64748B] border ${
-                      errors.message ? 'border-red-500' : 'border-[#263244]'
+                    className={`w-full px-4 py-2.5 rounded-xl bg-[#111B2B] text-sm text-[#F8FAFC] placeholder-[#64748B] border ${
+                      errors.message ? 'border-red-500' : 'border-[#253247]'
                     } focus:outline-none focus:ring-2 focus:ring-[#38BDF8] transition-all resize-none`}
                   />
                   {errors.message && <p className="text-xs text-red-400 mt-1">{errors.message}</p>}
@@ -329,11 +329,11 @@ export const Contact: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#38BDF8] to-[#0284C7] text-[#080B12] font-bold text-sm tracking-wide shadow-lg shadow-[#38BDF8]/20 hover:opacity-95 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#38BDF8] to-[#0284C7] text-[#070A12] font-bold text-sm tracking-wide shadow-lg shadow-[#38BDF8]/20 hover:opacity-95 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <>
-                      <span className="w-4 h-4 border-2 border-[#080B12] border-t-transparent rounded-full animate-spin" />
+                      <span className="w-4 h-4 border-2 border-[#070A12] border-t-transparent rounded-full animate-spin" />
                       <span>Validating Payload...</span>
                     </>
                   ) : (

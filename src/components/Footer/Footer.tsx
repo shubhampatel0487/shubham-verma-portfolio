@@ -22,15 +22,15 @@ export const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="relative z-10 border-t border-[#263244] bg-[#06080E] text-[#94A3B8] py-14">
+    <footer className="relative z-10 border-t border-[#253247] bg-[#06080E] text-[#94A3B8] py-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start pb-12 border-b border-[#263244]/60">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start pb-12 border-b border-[#253247]/60">
           
           {/* Brand & Mission Column */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#141C2A] border border-[#263244] flex items-center justify-center font-mono font-bold text-sm text-[#38BDF8]">
+              <div className="w-10 h-10 rounded-xl bg-[#111B2B] border border-[#253247] flex items-center justify-center font-mono font-bold text-sm text-[#38BDF8]">
                 SP
               </div>
               <div>
@@ -80,7 +80,7 @@ export const Footer: React.FC = () => {
                 href={personalProfile.contact.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl bg-[#141C2A] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#263244] transition-colors"
+                className="p-2.5 rounded-xl bg-[#111B2B] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#253247] transition-colors"
                 aria-label="GitHub Profile"
               >
                 <GithubIcon className="w-4 h-4" />
@@ -89,14 +89,14 @@ export const Footer: React.FC = () => {
                 href={personalProfile.contact.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl bg-[#141C2A] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#263244] transition-colors"
+                className="p-2.5 rounded-xl bg-[#111B2B] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#253247] transition-colors"
                 aria-label="LinkedIn Profile"
               >
                 <LinkedinIcon className="w-4 h-4" />
               </a>
               <a
                 href={`mailto:${personalProfile.contact.email}`}
-                className="p-2.5 rounded-xl bg-[#141C2A] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#263244] transition-colors"
+                className="p-2.5 rounded-xl bg-[#111B2B] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#253247] transition-colors"
                 aria-label="Email Inquiry"
               >
                 <Mail className="w-4 h-4" />
@@ -117,7 +117,7 @@ export const Footer: React.FC = () => {
 
           <button
             onClick={scrollToTop}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#141C2A] text-[#94A3B8] hover:text-[#38BDF8] hover:bg-[#1E293B] border border-[#263244] transition-all"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#111B2B] text-[#94A3B8] hover:text-[#38BDF8] hover:bg-[#1E293B] border border-[#253247] transition-all"
             aria-label="Scroll back to top"
           >
             <span>Back to top</span>

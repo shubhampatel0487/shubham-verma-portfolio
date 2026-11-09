@@ -11,6 +11,9 @@ import { About } from './components/About/About';
 import { Skills } from './components/Skills/Skills';
 import { EngineeringLabs } from './components/EngineeringLabs/EngineeringLabs';
 import { ThreeMainProjects } from './components/FeaturedShowcase/ThreeMainProjects';
+import { VideoLibrary } from './components/VideoLibrary/VideoLibrary';
+import { CodeExplorer } from './components/CodeExplorer/CodeExplorer';
+import { DiagramViewer } from './components/DiagramViewer/DiagramViewer';
 import { Projects } from './components/Projects/Projects';
 import { IndustrialTraining } from './components/IndustrialTraining/IndustrialTraining';
 import { Education } from './components/Education/Education';
@@ -80,6 +83,9 @@ export const App: React.FC = () => {
         <Skills />
         <EngineeringLabs />
         <ThreeMainProjects />
+        <VideoLibrary />
+        <CodeExplorer />
+        <DiagramViewer />
         <Projects onSelectProject={(project) => setSelectedProject(project)} />
         <IndustrialTraining />
         <Education />

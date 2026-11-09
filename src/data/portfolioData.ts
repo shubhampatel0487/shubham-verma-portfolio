@@ -10,14 +10,14 @@ import {
 } from '../types/portfolio';
 
 export const personalProfile: PersonalProfile = {
-  name: "Shubham Patel",
-  alternateName: "Shubham Verma",
+  name: "SHUBHAM VERMA",
+  alternateName: "Shubham Patel",
   primaryTitle: "Aspiring Robotics & AI Engineer",
   secondaryTitle: "Computer Science | Artificial Intelligence | Robotics | Embedded Systems | IoT",
   location: "Ambedkar Nagar, Uttar Pradesh - 224151, India",
   heroTagline: "Engineering Intelligence. Building the Future.",
-  alternativeTagline: "Where Code Meets Machines, Intelligence Meets Reality.",
-  bioIntroduction: "I am an enthusiastic and dedicated Computer Science student with a deep interest in Robotics, Artificial Intelligence, Embedded Systems, and Cybersecurity. I love exploring emerging technologies, integrating hardware with algorithmic software, and building innovative engineering solutions that enhance digital safety and real-world efficiency.",
+  alternativeTagline: "Where Software Meets Hardware, Intelligence Becomes Reality.",
+  bioIntroduction: "I am an aspiring Robotics and AI Engineer with a Diploma background in Computer Science and Engineering. My interests include Artificial Intelligence, Robotics, Embedded Systems, IoT, Drone Technology, Linux and Intelligent Automation. I enjoy developing practical projects that combine hardware, software and intelligent technologies.",
   fullBio: {
     paragraph1: "My technological exploration began with core computer science and software development principles and quickly expanded into physical electronics, microcontrollers, and intelligent algorithmic models. I believe the future of engineering lies in cyber-physical systems that perceive, reason, and act with precision in the real world.",
     paragraph2: "Currently completing my Diploma in Computer Science & Engineering (2023–2026) at Chhatrapati Shahu Ji Maharaj Government Polytechnic, Ambedkar Nagar, I dedicate my technical time to hands-on experimentation. From AI-driven face recognition attendance systems and ESP32 alcohol-detection vehicle interlocks to physics-informed neural network (PINN) battery models and ROS 2 drone simulations, my focus is bridging theoretical computation with physical reality.",
@@ -32,8 +32,8 @@ export const personalProfile: PersonalProfile = {
     "Radical Transparency & Rigor: Honest assessment of system capabilities, avoiding hype in favor of genuine technical substance."
   ],
   avatar: {
-    original: "/assets/profile/original-photo.jpg",
-    thumbnail: "/assets/profile/profile-thumbnail.jpg",
+    original: "/assets/profile/original-photo.png",
+    thumbnail: "/assets/profile/original-photo.png",
     background: "/assets/profile/profile-background.png"
   },
   contact: {

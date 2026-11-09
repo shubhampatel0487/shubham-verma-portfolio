@@ -86,3 +86,4 @@ export const IndustrialTraining: React.FC = () => {
     </section>
   );
 };
+

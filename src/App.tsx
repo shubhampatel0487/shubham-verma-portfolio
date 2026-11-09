@@ -9,6 +9,8 @@ import { Navbar } from './components/Navbar/Navbar';
 import { Hero } from './components/Hero/Hero';
 import { About } from './components/About/About';
 import { Skills } from './components/Skills/Skills';
+import { EngineeringLabs } from './components/EngineeringLabs/EngineeringLabs';
+import { ThreeMainProjects } from './components/FeaturedShowcase/ThreeMainProjects';
 import { Projects } from './components/Projects/Projects';
 import { IndustrialTraining } from './components/IndustrialTraining/IndustrialTraining';
 import { Education } from './components/Education/Education';
@@ -23,7 +25,7 @@ import { ProjectItem } from './types/portfolio';
 import { personalProfile } from './data/portfolioData';
 
 export const App: React.FC = () => {
-  // Configurable name with quick toggle confirmation (Patel vs Verma)
+  // Confirmed Name: SHUBHAM VERMA (with quick toggle confirmation support)
   const [currentName, setCurrentName] = useState<string>(() => {
     return localStorage.getItem('shubham_display_name') || personalProfile.name;
   });
@@ -76,6 +78,8 @@ export const App: React.FC = () => {
         />
         <About />
         <Skills />
+        <EngineeringLabs />
+        <ThreeMainProjects />
         <Projects onSelectProject={(project) => setSelectedProject(project)} />
         <IndustrialTraining />
         <Education />

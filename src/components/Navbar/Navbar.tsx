@@ -19,7 +19,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume, onOpe
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
     { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
+    { name: 'Engineering Lab', href: '#engineering-lab' },
+    { name: 'Projects', href: '#featured-showcase' },
     { name: 'Training', href: '#training' },
     { name: 'Education', href: '#education' },
     { name: 'Digital ID', href: '#digital-id' },
@@ -66,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume, onOpe
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#080B12]/92 backdrop-blur-md border-b border-[#263244]/80 py-2.5 shadow-lg shadow-black/40'
+          ? 'bg-[#080B12]/94 backdrop-blur-md border-b border-[#263244]/80 py-2.5 shadow-lg shadow-black/40'
           : 'bg-transparent py-4'
       }`}
     >
@@ -81,7 +82,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume, onOpe
           >
             <div className="w-9 h-9 rounded-xl bg-[#141C2A] border border-[#263244] flex items-center justify-center relative overflow-hidden group-hover:border-[#38BDF8]/60 transition-colors shadow-md">
               <span className="font-mono font-bold text-xs bg-gradient-to-tr from-[#38BDF8] to-[#8B5CF6] bg-clip-text text-transparent">
-                SP
+                SV
               </span>
               <div className="absolute inset-0 bg-gradient-to-tr from-[#38BDF8]/10 to-[#8B5CF6]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
@@ -96,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume, onOpe
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden xl:flex items-center gap-1">
+          <nav className="hidden 2xl:flex items-center gap-1">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.substring(1);
               return (
@@ -132,7 +133,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume, onOpe
               title="Launch Cyber Terminal (Ctrl+K)"
             >
               <TerminalIcon className="w-3.5 h-3.5" />
-              <span className="hidden md:inline text-[11px]">Terminal</span>
+              <span className="hidden lg:inline text-[11px]">CLI</span>
             </button>
 
             {/* Sound Toggle */}
@@ -185,7 +186,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume, onOpe
           {/* Mobile Hamburger Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="xl:hidden p-2 rounded-lg bg-[#141C2A] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#263244] focus:outline-none focus:ring-2 focus:ring-[#38BDF8]"
+            className="2xl:hidden p-2 rounded-lg bg-[#141C2A] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#263244] focus:outline-none focus:ring-2 focus:ring-[#38BDF8]"
             aria-expanded={mobileMenuOpen}
             aria-label="Toggle Navigation Menu"
           >
@@ -196,7 +197,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentName, onOpenResume, onOpe
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="xl:hidden bg-[#0A0F1A]/98 border-b border-[#263244] px-4 pt-3 pb-6 shadow-2xl backdrop-blur-xl animate-fadeIn">
+        <div className="2xl:hidden bg-[#0A0F1A]/98 border-b border-[#263244] px-4 pt-3 pb-6 shadow-2xl backdrop-blur-xl animate-fadeIn">
           <div className="flex flex-col space-y-1">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.substring(1);

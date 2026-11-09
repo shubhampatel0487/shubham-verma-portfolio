@@ -103,3 +103,4 @@ export const DownloadCentre: React.FC<DownloadCentreProps> = ({ onPreviewResume 
     </section>
   );
 };
+

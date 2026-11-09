@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowDown, Mail, FileText, Cpu, Layers, MessageSquare, Copy, Check, Smartphone } from 'lucide-react';
+import { ArrowDown, Mail, FileText, MessageSquare, Copy, Check, Smartphone, Box, Image as ImageIcon } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../UI/Icons';
 import { personalProfile } from '../../data/portfolioData';
+import { HeroRoboticArm3D } from './HeroRoboticArm3D';
 
 interface HeroProps {
   currentName: string;
@@ -21,6 +22,7 @@ export const Hero: React.FC<HeroProps> = ({ currentName, onOpenResume }) => {
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [copiedType, setCopiedType] = useState<string | null>(null);
+  const [rightViewMode, setRightViewMode] = useState<'3d' | 'photo'>('3d');
 
   useEffect(() => {
     const fullText = titles[currentTitleIndex];
@@ -70,7 +72,7 @@ export const Hero: React.FC<HeroProps> = ({ currentName, onOpenResume }) => {
               <span>Available for Technical Roles &amp; Engineering Research</span>
             </div>
 
-            {/* Greeting & Confirmed Name */}
+            {/* Greeting & Confirmed Display Name */}
             <div className="space-y-2">
               <p className="text-sm sm:text-base font-mono font-medium text-[#94A3B8] tracking-widest uppercase">
                 Hello, I'm
@@ -88,33 +90,23 @@ export const Hero: React.FC<HeroProps> = ({ currentName, onOpenResume }) => {
               </span>
             </div>
 
-            {/* Two-line introduction / Hero Tagline */}
-            <p className="text-base sm:text-lg text-[#94A3B8] max-w-2xl mx-auto lg:mx-0 leading-relaxed font-sans">
-              <strong className="text-[#F8FAFC] font-medium">
-                "{personalProfile.heroTagline}"
-              </strong>{' '}
-              Bridging computer science, physics-informed AI, embedded hardware, and autonomous robotics to engineer real-world intelligent systems.
+            {/* Professional Introduction */}
+            <p className="text-sm sm:text-base text-[#CBD5E1] max-w-2xl mx-auto lg:mx-0 leading-relaxed font-sans">
+              "{personalProfile.bioIntroduction}"
             </p>
 
-            {/* Sub-tagline / Disciplines */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
-              {['Computer Science', 'Artificial Intelligence', 'Robotics', 'Embedded Systems', 'IoT'].map((tag) => (
-                <span
-                  key={tag}
-                  className="px-2.5 py-1 rounded-md text-xs font-mono bg-[#141C2A]/60 border border-[#263244] text-[#94A3B8]"
-                >
-                  {tag}
-                </span>
-              ))}
+            {/* Tagline Badge */}
+            <div className="p-3 rounded-xl bg-[#141C2A]/70 border border-[#263244] max-w-2xl text-xs sm:text-sm font-mono text-[#38BDF8]">
+              ⚡ {personalProfile.heroTagline} — <em>{personalProfile.alternativeTagline}</em>
             </div>
 
             {/* Primary Action Buttons: View Projects, WhatsApp, Download Resume */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-4">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
               <a
                 href="#projects"
                 className="px-5 py-3 rounded-xl bg-gradient-to-r from-[#38BDF8] to-[#0284C7] text-[#080B12] font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-[#38BDF8]/20 hover:opacity-95 hover:scale-[1.02] active:scale-[0.98] transition-all"
               >
-                View Featured Projects
+                Explore My Projects
               </a>
 
               {/* Direct WhatsApp Action Button */}
@@ -125,7 +117,7 @@ export const Hero: React.FC<HeroProps> = ({ currentName, onOpenResume }) => {
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
               >
                 <MessageSquare className="w-4 h-4" />
-                <span>WhatsApp Contact</span>
+                <span>WhatsApp Me</span>
               </a>
 
               <button
@@ -138,7 +130,7 @@ export const Hero: React.FC<HeroProps> = ({ currentName, onOpenResume }) => {
             </div>
 
             {/* Quick Copy Pill: Email & WhatsApp Number */}
-            <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs font-mono">
+            <div className="pt-1 flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs font-mono">
               <button
                 onClick={() => handleCopy(personalProfile.contact.email, 'email')}
                 className="px-3 py-1.5 rounded-lg bg-[#141C2A] text-[#94A3B8] hover:text-[#38BDF8] border border-[#263244] flex items-center gap-1.5 transition-colors"
@@ -196,71 +188,57 @@ export const Hero: React.FC<HeroProps> = ({ currentName, onOpenResume }) => {
             </div>
           </div>
 
-          {/* Right Column: Original Photograph in Orbital Cybernetic Container */}
-          <div className="lg:col-span-5 relative flex items-center justify-center">
+          {/* Right Column: Interactive 3D Robotic Arm / Original Portrait Showcase */}
+          <div className="lg:col-span-5 relative flex flex-col items-center">
             
-            {/* Outer Orbital Ring */}
-            <div className="relative w-72 sm:w-88 md:w-96 aspect-square flex items-center justify-center">
-              
-              {/* Outer Slow Spinning Dashed Ring */}
-              <div className="absolute inset-0 rounded-full border border-dashed border-[#38BDF8]/30 animate-spin-slow pointer-events-none" />
-              
-              {/* Secondary Reverse Ring */}
-              <div 
-                className="absolute inset-6 rounded-full border border-dashed border-[#8B5CF6]/30 pointer-events-none"
-                style={{ animation: 'spin 30s linear infinite reverse' }}
-              />
+            {/* View Mode Switcher: 3D Robotics Lab vs Official Portrait */}
+            <div className="mb-3 flex items-center gap-1.5 p-1 rounded-xl bg-[#141C2A] border border-[#263244] shadow-md z-20">
+              <button
+                onClick={() => setRightViewMode('3d')}
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono transition-all ${
+                  rightViewMode === '3d'
+                    ? 'bg-[#38BDF8] text-[#080B12] font-bold shadow'
+                    : 'text-[#94A3B8] hover:text-[#F8FAFC]'
+                }`}
+              >
+                <Box className="w-3.5 h-3.5" />
+                <span>3D Robotic Arm</span>
+              </button>
+              <button
+                onClick={() => setRightViewMode('photo')}
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono transition-all ${
+                  rightViewMode === 'photo'
+                    ? 'bg-[#8B5CF6] text-white font-bold shadow'
+                    : 'text-[#94A3B8] hover:text-[#F8FAFC]'
+                }`}
+              >
+                <ImageIcon className="w-3.5 h-3.5" />
+                <span>Original Portrait</span>
+              </button>
+            </div>
 
-              {/* Main Portrait Container — Original Photograph */}
-              <div className="relative w-64 sm:w-80 h-64 sm:h-80 rounded-3xl bg-[#0E1420] border-2 border-[#38BDF8]/60 p-3 shadow-2xl overflow-hidden group">
-                <div className="w-full h-full rounded-2xl bg-[#080B12] overflow-hidden relative flex items-center justify-center">
-                  <img
-                    src={personalProfile.avatar.thumbnail}
-                    alt={`${currentName} — Aspiring Robotics & AI Engineer Original Photograph`}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {/* Subtle holographic gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#080B12]/80 via-transparent to-transparent opacity-50" />
-                  
-                  {/* Verified Photo Badge */}
-                  <div className="absolute bottom-3 left-3 bg-[#080B12]/90 backdrop-blur-md px-2.5 py-1 rounded-md border border-emerald-500/40 text-[10px] font-mono text-emerald-400 font-bold flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>ORIGINAL PHOTO</span>
+            {/* View Container */}
+            <div className="w-full">
+              {rightViewMode === '3d' ? (
+                <HeroRoboticArm3D />
+              ) : (
+                <div className="relative w-full max-w-sm mx-auto aspect-square rounded-3xl bg-[#0E1420] border-2 border-[#8B5CF6]/60 p-3 shadow-2xl overflow-hidden group">
+                  <div className="w-full h-full rounded-2xl bg-[#080B12] overflow-hidden relative">
+                    <img
+                      src="/assets/profile/original-photo.png"
+                      alt={`${currentName} Original Professional Portrait`}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#080B12]/80 via-transparent to-transparent opacity-40" />
+                    <div className="absolute bottom-3 left-3 bg-[#080B12]/90 backdrop-blur-md px-3 py-1 rounded-md border border-emerald-500/40 text-[10px] font-mono text-emerald-400 font-bold flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span>ORIGINAL PHOTO // VERIFIED</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Floating Engineering Telemetry Card 1 — Robotics & Simulation */}
-              <div className="absolute -top-3 -right-2 sm:-right-6 p-3 rounded-xl bg-[#141C2A]/90 backdrop-blur-md border border-[#263244] shadow-xl text-left hidden sm:flex items-center gap-3 animate-float">
-                <div className="p-2 rounded-lg bg-[#38BDF8]/10 text-[#38BDF8]">
-                  <Cpu className="w-4 h-4" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-mono uppercase text-[#94A3B8]">Robotics Stack</p>
-                  <p className="text-xs font-bold text-[#F8FAFC]">ROS 2 &amp; PX4 SITL</p>
-                </div>
-              </div>
-
-              {/* Floating Engineering Telemetry Card 2 — PINN Physics AI */}
-              <div 
-                className="absolute -bottom-4 -left-2 sm:-left-6 p-3 rounded-xl bg-[#141C2A]/90 backdrop-blur-md border border-[#263244] shadow-xl text-left hidden sm:flex items-center gap-3"
-                style={{ animation: 'float 7s ease-in-out infinite 1.5s' }}
-              >
-                <div className="p-2 rounded-lg bg-[#8B5CF6]/10 text-[#8B5CF6]">
-                  <Layers className="w-4 h-4" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-mono uppercase text-[#94A3B8]">AI Research</p>
-                  <p className="text-xs font-bold text-[#F8FAFC]">Physics-Informed ML</p>
-                </div>
-              </div>
-
-              {/* Floating Engineering Telemetry Card 3 — Academic Badge */}
-              <div className="absolute top-1/2 -translate-y-1/2 -right-6 sm:-right-10 p-2.5 rounded-xl bg-[#0E1420]/95 backdrop-blur-md border border-[#38BDF8]/30 shadow-xl hidden md:flex flex-col items-center">
-                <span className="text-[10px] font-mono text-[#38BDF8] font-bold">CSE 2026</span>
-                <span className="text-[9px] text-[#94A3B8]">Govt Poly</span>
-              </div>
+              )}
             </div>
+
           </div>
         </div>
 

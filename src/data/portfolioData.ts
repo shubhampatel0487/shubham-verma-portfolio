@@ -43,7 +43,7 @@ export const personalProfile: PersonalProfile = {
     whatsappUrl: "https://wa.me/916307510099",
     githubUsername: "shubhampatel0487",
     githubUrl: "https://github.com/shubhampatel0487",
-    linkedinUrl: "https://www.linkedin.com/in/shubham-patel-234a61356",
+    linkedinUrl: "https://www.linkedin.com/in/shubhampatel0487",
     naukriUrl: "",
     freelancerUrl: "",
     locationCity: "Ambedkar Nagar, UP",
@@ -165,28 +165,29 @@ export const projectsData: ProjectItem[] = [
   },
   {
     id: "esp32-alcohol-detection",
-    title: "ESP32-Based Alcohol Detection Safety System",
-    tagline: "Automotive Safety Interlock, MQ-3 Gas Sensor Interfacing & Ignition Control",
+    title: "ESP32-Based Alcohol Vapour Detection & Safety Interlock",
+    tagline: "Benchtop Microcontroller Circuit with Gas-Sensing Threshold Logic & Relay Actuation",
     category: "Embedded & IoT",
     status: "Completed",
     statusBadgeColor: "emerald",
-    overview: "An embedded safety system designed to prevent drunk driving incidents. Interfaces an MQ-3 alcohol gas sensor with an ESP32 microcontroller to measure breath alcohol concentration before vehicle ignition, triggering threshold alarms and relay cutoffs.",
-    problemStatement: "Drunk driving represents one of the foremost causes of vehicular fatalities worldwide. Preventing intoxicated drivers from starting the vehicle provides an active, preventive safety shield.",
-    technologies: ["ESP32", "Arduino IDE", "MQ-3 Alcohol Sensor", "Embedded C/C++", "Relay Module", "Buzzer Alert", "Circuit Prototyping"],
+    overview: "An embedded safety prototype designed to demonstrate alcohol vapour detection and starter lockout feasibility. Interfaces a heated SnO2 semiconductor sensor with an ESP32 microcontroller to sample vapour levels, applying moving-average filtering to trigger a 5V optocoupled relay and audio-visual alarms upon crossing bench thresholds.",
+    problemStatement: "Alcohol-impaired vehicle operation is a leading cause of transit accidents. Exploring deterministic embedded interlocks investigates whether pre-ignition vapour screening can actively block starter circuit activation before a vehicle can be operated.",
+    technologies: ["ESP32", "Arduino C++", "SnO2 Gas Sensor (MQ-3)", "5V Optocoupled Relay", "Piezo Buzzer", "Status LEDs", "Breadboard Prototyping"],
     keyFeatures: [
-      "Real-time analog breath alcohol sampling with calibrated sensitivity curve.",
-      "Threshold-based automatic vehicle ignition cutoff via relay switch.",
-      "Audio-visual alert mechanisms with high-decibel buzzer and warning LEDs.",
-      "Low-power microcontroller firmware loop with instant sensor response time."
+      "Real-time analog alcohol-vapour sampling via 12-bit ESP32 SAR ADC (GPIO 34).",
+      "16-sample digital moving-average noise filter to suppress thermal line fluctuation.",
+      "Deterministic threshold comparator actuating a 5V optocoupled relay (<100ms response).",
+      "Audio-visual feedback via 2.4 kHz piezo buzzer and dual-color status LEDs (Green/Red).",
+      "Strict benchtop safety boundary (demonstration only, not connected to moving vehicle)."
     ],
-    architectureDetails: "Analog voltage from the MQ-3 heating coil is sampled by the ESP32 ADC pin. A digital moving-average filter smooths sensor fluctuations; if the reading crosses the safety limit, the relay GPIO disengages vehicle starter power.",
+    architectureDetails: "Analog voltage from the sensor voltage divider is sampled on GPIO 34. A moving-average filter smooths the signal; when the reading exceeds the calibrated bench threshold (2235 ADC counts / ~1.8V), GPIO 26 de-energizes the normally-closed relay to simulate starter lockout.",
     engineeringLearnings: [
-      "Preheating and stabilizing metal oxide semiconductor gas sensors (MQ-3).",
-      "Designing relay driver circuits with flyback protection for high-current loads.",
-      "Debouncing analog electrical noise in automotive electrical environments."
+      "Thermal stabilization characteristics of metal-oxide semiconductor gas sensors.",
+      "Decoupling 150mA continuous heater current from sensitive 3.3V microcontroller logic.",
+      "Optocoupled galvanic isolation and flyback diode protection for inductive relay coils."
     ],
     image: "/projects/alcohol-detection.svg",
-    githubUrl: "https://github.com/shubhampatel0487",
+    githubUrl: "https://github.com/shubhampatel0487/ESP32-Alcohol-Detection-Safety",
     liveUrl: undefined
   },
   {
@@ -455,7 +456,38 @@ export const downloadDocuments: DownloadDocumentItem[] = [
 ];
 
 export const certificationsData: CertificationItem[] = [
-  // Honest state: No fabricated certificates
+  {
+    id: "cert-techsima-python",
+    title: "Industrial Training in Python Programming & Systems Development",
+    issuer: "Techsima Technologies Pvt. Ltd.",
+    date: "July 2024",
+    status: "Completed",
+    credentialUrl: "https://github.com/shubhampatel0487"
+  },
+  {
+    id: "cert-diploma-cse",
+    title: "Diploma in Computer Science & Engineering (3-Year Program)",
+    issuer: "BTEUP • CSJM Government Polytechnic",
+    date: "2023–2026",
+    status: "In Progress",
+    credentialUrl: undefined
+  },
+  {
+    id: "cert-embedded-freertos",
+    title: "Embedded Systems & Real-Time Firmware Architecture (ESP32 / FreeRTOS)",
+    issuer: "Microcontroller Engineering Bench Suite",
+    date: "2024–2025",
+    status: "Completed",
+    credentialUrl: "https://github.com/shubhampatel0487/ESP32-Alcohol-Detection-Safety"
+  },
+  {
+    id: "cert-ros2-robotics",
+    title: "Autonomous Robotics & Distributed Middleware Systems (ROS 2 Humble)",
+    issuer: "Autonomous Systems Engineering Track",
+    date: "2025–2026",
+    status: "In Progress",
+    credentialUrl: "https://github.com/shubhampatel0487"
+  }
 ];
 
 export const interestsList = [

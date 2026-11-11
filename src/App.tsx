@@ -23,8 +23,6 @@ import { Projects } from './components/Projects/Projects';
 import { IndustrialTraining } from './components/IndustrialTraining/IndustrialTraining';
 import { Education } from './components/Education/Education';
 import { Certifications } from './components/Certifications/Certifications';
-import { DigitalIdentityCard } from './components/DigitalID/DigitalIdentityCard';
-import { DownloadCentre } from './components/Downloads/DownloadCentre';
 import { Interests } from './components/Interests/Interests';
 import { Profiles } from './components/Profiles/Profiles';
 import { Contact } from './components/Contact/Contact';
@@ -38,7 +36,7 @@ import { personalProfile } from './data/portfolioData';
 
 export const AppContent: React.FC = () => {
   // Confirmed Name: SHUBHAM VERMA (with quick toggle confirmation support)
-  const [currentName, setCurrentName] = useState<string>(() => {
+  const [currentName] = useState<string>(() => {
     return localStorage.getItem('shubham_display_name') || personalProfile.name;
   });
 
@@ -47,12 +45,6 @@ export const AppContent: React.FC = () => {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isRecruiterModalOpen, setIsRecruiterModalOpen] = useState(false);
   const [isVoiceNavOpen, setIsVoiceNavOpen] = useState(false);
-
-  const handleToggleName = () => {
-    const nextName = currentName === personalProfile.name ? personalProfile.alternateName : personalProfile.name;
-    setCurrentName(nextName);
-    localStorage.setItem('shubham_display_name', nextName);
-  };
 
   // Keyboard shortcut for Cyber Terminal (Ctrl+K or `~`)
   useEffect(() => {
@@ -108,11 +100,6 @@ export const AppContent: React.FC = () => {
         <IndustrialTraining />
         <Education />
         <Certifications />
-        <DigitalIdentityCard
-          currentName={currentName}
-          onToggleName={handleToggleName}
-        />
-        <DownloadCentre onPreviewResume={() => setIsResumeModalOpen(true)} />
         <Interests />
         <Profiles onOpenResume={() => setIsResumeModalOpen(true)} />
         <Contact />

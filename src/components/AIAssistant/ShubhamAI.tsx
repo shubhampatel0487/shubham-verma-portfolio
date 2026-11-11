@@ -152,8 +152,8 @@ export const ShubhamAI: React.FC = () => {
       reply = `**Industrial Training at Techsima Pvt. Ltd.**:\n• **Duration**: Intensive 45-day hands-on program in Python programming.\n• **Topics**: Data structures, modular software engineering, REST API architecture, database persistence, and automation scripts.`;
       sources = ['Industrial Training Certification', 'Techsima Pvt. Ltd.'];
     } else if (q.includes("contact") || q.includes("email") || q.includes("phone") || q.includes("whatsapp") || q.includes("hire")) {
-      reply = `**Contact & Recruiter Details**:\n• **Email**: [shubhampatel0487@gmail.com](mailto:${personalProfile.contact.email})\n• **WhatsApp Direct**: [+91 6307510099](${personalProfile.contact.whatsappUrl})\n• **GitHub**: [github.com/shubhampatel0487](${personalProfile.contact.githubUrl})\n• **LinkedIn**: [linkedin.com/in/shubham-patel-234a61356](${personalProfile.contact.linkedinUrl})\n• **Location**: Ambedkar Nagar, Uttar Pradesh, India.`;
-      sources = ['id.html/links.json', 'Personal Profile'];
+      reply = `**Contact & Recruiter Details**:\n• **Email**: [shubhampatel0487@gmail.com](mailto:${personalProfile.contact.email})\n• **WhatsApp Direct**: [+91 6307510099](${personalProfile.contact.whatsappUrl})\n• **GitHub**: [github.com/shubhampatel0487](${personalProfile.contact.githubUrl})\n• **LinkedIn**: [linkedin.com/in/shubhampatel0487](${personalProfile.contact.linkedinUrl})\n• **Location**: Ambedkar Nagar, Uttar Pradesh, India.`;
+      sources = ['Verified Contact Directory', 'Personal Profile'];
     } else if (q.includes("trustguard") || q.includes("scam") || q.includes("security")) {
       reply = `**TrustGuard Anti-Scam Super App**:\n• **Features**: Behavioral intent classification, urgent scam heuristics detection, and vector similarity lookup for phishing queries based on the verified codebase in \`SECURE_AI_PROJECT/ml/intent_model.py\`.`;
       sources = ['SECURE_AI_PROJECT/ml/intent_model.py'];

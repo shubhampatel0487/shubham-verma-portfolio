@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle2, AlertCircle, Copy, Check, MapPin, MessageSquare, Smartphone } from 'lucide-react';
+import { LinkedinIcon } from '../UI/Icons';
 import confetti from 'canvas-confetti';
 import { personalProfile } from '../../data/portfolioData';
 import { soundFX } from '../../utils/audio';
@@ -150,6 +151,25 @@ export const Contact: React.FC = () => {
                   </div>
                 </div>
                 <span className="text-xs font-mono bg-white/20 px-2.5 py-1 rounded-md">Open App →</span>
+              </a>
+
+              {/* Direct LinkedIn Profile Connection Button */}
+              <a
+                href={personalProfile.contact.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-blue-700 to-indigo-600 hover:from-blue-600 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm transition-all shadow-lg shadow-blue-500/20 group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-black/20">
+                    <LinkedinIcon className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] uppercase tracking-wider text-blue-100 font-mono">Professional Network</span>
+                    <span className="text-sm font-bold">LinkedIn: in/shubhampatel0487</span>
+                  </div>
+                </div>
+                <span className="text-xs font-mono bg-white/20 px-2.5 py-1 rounded-md">Connect →</span>
               </a>
 
               {/* Email Pill with One-Click Copy */}

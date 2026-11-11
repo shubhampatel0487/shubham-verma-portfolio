@@ -3,10 +3,11 @@ export interface ProjectVideo {
   projectId: string;
   projectTitle: string;
   title: string;
-  category: 'Introduction' | 'Hardware Demo' | 'Working Principle' | 'Architecture' | 'Features & Roadmap';
+  category: 'Introduction' | 'Hardware Demo' | 'Working Principle' | 'Architecture' | 'Features & Roadmap' | 'Live Simulation';
   duration: string;
   durationSeconds: number;
   thumbnail: string;
+  videoUrl?: string;
   description: string;
   isSimulatedAnimation: boolean;
   simulationNotice?: string;
@@ -15,217 +16,143 @@ export interface ProjectVideo {
 }
 
 export const projectVideos: ProjectVideo[] = [
-  // ── 1. AI + IoT Alcohol Detection System ─────────────────────
+  // ── 1. AI + IoT Alcohol Detection System (1080p Real MP4 Video) ──
   {
-    id: "alc-vid-01",
+    id: "alc-vid-demo",
     projectId: "alcohol-detection",
     projectTitle: "AI + IoT Alcohol Detection System",
-    title: "1. Project Objective & Problem Statement",
-    category: "Introduction",
-    duration: "2:15",
-    durationSeconds: 135,
+    title: "ESP32 Alcohol Detection & Safety Interlock (1080p Full Demo)",
+    category: "Hardware Demo",
+    duration: "0:24",
+    durationSeconds: 24,
     thumbnail: "/projects/alcohol-detection.svg",
-    description: "Overview of drunk driving hazards, sensor response latency, and why intelligent multi-modal verification (Breath + Airflow + Driver Identity) is necessary.",
+    videoUrl: "/videos/alcohol-detection-demo.mp4",
+    description: "Deep 1080p engineering walkthrough: Dual-core FreeRTOS boot, MQ-3 heater calibration, differential airflow validation (>120 Pa), raw vs. filtered dual-trace oscilloscope, 1.20V legal threshold breach, optocoupled relay cutoff (GPIO 26), and 2.4kHz piezo alarm.",
     isSimulatedAnimation: true,
-    simulationNotice: "Concept visualization based on verified project documentation.",
+    simulationNotice: "Deterministic hardware, FreeRTOS telemetry & signal simulation rendered in 1080p 30fps MP4.",
     captions: [
-      { time: 0, text: "Welcome to the AI + IoT Alcohol Detection & Driver Safety System overview." },
-      { time: 6, text: "The primary objective: Prevent vehicle ignition before a driver under the influence can operate the vehicle." },
-      { time: 14, text: "Standard breathalyzers fail due to lack of identity proof and passive airflow bypasses." },
-      { time: 24, text: "Our multi-stage architecture integrates ESP32 microcontrollers, MQ-3 gas sensing, airflow verification, and facial biometric detection." },
-      { time: 35, text: "When alcohol concentration exceeds threshold, an optoisolated relay triggers an immediate ignition cutoff." }
+      { time: 0, text: "Phase 1: ESP32 dual-core boot, Xtensa 240MHz & MQ-3 SnO2 heater pre-heat curve." },
+      { time: 5, text: "Phase 2: Differential airflow sensor validates sustained human exhalation (145 Pa). Ignition PERMITTED." },
+      { time: 10, text: "Phase 3: Alcohol vapor influx detected! 50-sample moving average digital filter running." },
+      { time: 13, text: "Threshold exceeded (>0.05 mg/L BAC, 1.20V). Active-low GPIO 26 cutoff command dispatched." },
+      { time: 17, text: "Phase 4: 5V Optocoupled Relay coil de-energizes! Starter solenoid circuit isolated. Piezo alarm active." },
+      { time: 21, text: "Phase 5: Automotive safety lockout engaged. Telemetry packet serialized and logged." }
     ],
-    keyTopics: ["Problem Statement", "Road Safety Statistics", "Multi-modal Verification", "Hardware Overview"]
+    keyTopics: ["ESP32 Xtensa Dual-Core", "MQ-3 Gas Curve", "Airflow Pressure", "5V Relay Cutoff", "Piezo Alarm", "50-Sample Moving Average"]
   },
+
+  // ── 2. Digital Classroom Assignment Checker (1080p Real MP4 Video) ──
+  {
+    id: "asg-vid-demo",
+    projectId: "assignment-checker",
+    projectTitle: "Digital Classroom Platform",
+    title: "Digital Classroom — Dual-Portal & Evaluation Engine (1080p Full Demo)",
+    category: "Working Principle",
+    duration: "0:24",
+    durationSeconds: 24,
+    thumbnail: "/projects/assignment-checker.svg",
+    videoUrl: "/videos/assignment-checker-demo.mp4",
+    description: "Full demonstration of Teacher Session creation, student Python code editor workspace, cryptographic SHA-256 token verification, 4-tier automated test suite execution, and official vector PDF transcript compilation.",
+    isSimulatedAnimation: true,
+    simulationNotice: "Platform workflow demonstration rendered in 1080p 30fps MP4.",
+    captions: [
+      { time: 0, text: "Phase 1: Instructor initializes session 'CSE-BTEUP-2026' and configures rubric criteria weights." },
+      { time: 6, text: "Phase 2: Student workspace loads quicksort prompt and submits solution with SHA-256 digest." },
+      { time: 12, text: "Phase 3: Automated evaluation engine executes 4 test cases with runtime and memory profiling." },
+      { time: 18, text: "Phase 4: Final score computed (96/100 • Grade A+). Official vector PDF report compiled." }
+    ],
+    keyTopics: ["Teacher Session Generator", "Code Submission Workspace", "SHA-256 Verification", "Automated Rubrics", "PDF Generation", "Test Suite Profiling"]
+  },
+
+  // ── 3. 1QUIZ AI Platform (1080p Real MP4 Video) ──
+  {
+    id: "quiz-vid-demo",
+    projectId: "onequiz",
+    projectTitle: "1QUIZ — AI-Powered Learning Platform",
+    title: "1QUIZ — Adaptive Quiz Engine & Gamification (1080p Full Demo)",
+    category: "Working Principle",
+    duration: "0:24",
+    durationSeconds: 24,
+    thumbnail: "/projects/quiz-game.svg",
+    videoUrl: "/videos/onequiz-platform-demo.mp4",
+    description: "Real-time technical quiz execution: Embedded systems protocol navigation, sub-10ms deterministic answer validation, +450 PTS streak combo multiplier, Item Response Theory (IRT) dynamic difficulty recalibration, and 5-axis competency radar chart.",
+    isSimulatedAnimation: true,
+    simulationNotice: "Quiz engine animation rendered in 1080p 30fps MP4.",
+    captions: [
+      { time: 0, text: "Phase 1: 1QUIZ Lobby countdown and embedded systems question bank query." },
+      { time: 5, text: "Phase 2: Question navigation on I2C bus protocols. Sub-10ms option validation click." },
+      { time: 11, text: "Phase 3: Correct answer verified! +450 PTS speed bonus and 3x streak multiplier applied." },
+      { time: 17, text: "Phase 4: IRT theta recalibrated to +1.42 (Advanced). Multi-axis competency radar rendered." }
+    ],
+    keyTopics: ["IRT Dynamic Difficulty", "Instant Validation", "Streak Multiplier", "Radar Competency Analytics", "Multi-Model AI Router"]
+  },
+
+  // ── 4. Robotics & Drone Engineering (1080p Real MP4 Video) ──
+  {
+    id: "robotics-drone-demo",
+    projectId: "robotics-drone",
+    projectTitle: "Robotics & Drone Systems",
+    title: "Robotics & Drone — 6-DOF Kinematics & PX4 SITL (1080p Full Demo)",
+    category: "Live Simulation",
+    duration: "0:28",
+    durationSeconds: 28,
+    thumbnail: "/projects/ros2-drone.svg",
+    videoUrl: "/videos/robotics-drone-demo.mp4",
+    description: "Multi-disciplinary robotics simulation: 6-DOF articulated robotic arm pick-and-place inverse kinematics trajectory, joint angle dials, PX4 SITL drone flight HUD with artificial horizon, and ROS 2 Humble DDS topics (/vehicle_odometry, /cmd_vel).",
+    isSimulatedAnimation: true,
+    simulationNotice: "Mathematical kinematics and PX4 telemetry simulation rendered in 1080p 30fps MP4.",
+    captions: [
+      { time: 0, text: "Phase 1: 6-DOF robotic manipulator forward and inverse kinematics trajectory." },
+      { time: 7, text: "Phase 2: Gripper end-effector pick-and-place operation transferring component to PCB." },
+      { time: 14, text: "Phase 3: Quadcopter PX4 SITL flight climb to 5.0m altitude with EKF2 attitude lock." },
+      { time: 21, text: "Phase 4: ROS 2 Humble DDS topics (/vehicle_odometry, /cmd_vel) routing zero-copy commands." }
+    ],
+    keyTopics: ["6-DOF Inverse Kinematics", "Pick-and-Place Trajectory", "PX4 Autopilot SITL", "ROS 2 DDS Middleware", "Flight Telemetry HUD", "Fast-DDS Bus"]
+  },
+
+  // ── 5. Detailed Breakdown: Alcohol Detection Architecture ──
   {
     id: "alc-vid-02",
     projectId: "alcohol-detection",
     projectTitle: "AI + IoT Alcohol Detection System",
-    title: "2. Hardware Working & Sensor Interfacing",
+    title: "Hardware Working & Pinout Interfacing",
     category: "Hardware Demo",
-    duration: "3:10",
-    durationSeconds: 190,
+    duration: "0:24",
+    durationSeconds: 24,
     thumbnail: "/projects/alcohol-detection.svg",
+    videoUrl: "/videos/alcohol-detection-demo.mp4",
     description: "Detailed breakdown of ESP32 GPIO mapping, MQ-3 analog voltage output calibration, optical relay interlock, buzzer alarms, and OLED telemetry.",
     isSimulatedAnimation: true,
     simulationNotice: "Hardware bench simulation with verified pin-level connections.",
     captions: [
       { time: 0, text: "Examining the hardware architecture and circuit interconnections." },
-      { time: 5, text: "The ESP32 microcontroller processes analog inputs via its internal 12-bit ADC on GPIO 34." },
-      { time: 15, text: "The MQ-3 tin-dioxide (SnO2) heating element reaches 40°C thermal equilibrium to sample vaporized ethanol." },
-      { time: 26, text: "An airflow thermistor/pressure sensor verifies genuine pulmonary exhalation to thwart canned air spoofing." },
-      { time: 38, text: "The 5V relay module on GPIO 26 remains open until all safety checks evaluate to PERMITTED." }
+      { time: 6, text: "The ESP32 microcontroller processes analog inputs via its internal 12-bit ADC on GPIO 34." },
+      { time: 12, text: "The MQ-3 tin-dioxide (SnO2) heating element reaches 40°C thermal equilibrium." },
+      { time: 18, text: "The 5V relay module on GPIO 26 remains open until all safety checks evaluate to PERMITTED." }
     ],
     keyTopics: ["ESP32 GPIO 34 ADC", "MQ-3 SnO2 Heating Element", "Airflow Pressure Verification", "Optoisolated Relay"]
   },
-  {
-    id: "alc-vid-03",
-    projectId: "alcohol-detection",
-    projectTitle: "AI + IoT Alcohol Detection System",
-    title: "3. Complete 8-Stage Working Principle",
-    category: "Working Principle",
-    duration: "2:45",
-    durationSeconds: 165,
-    thumbnail: "/projects/alcohol-detection.svg",
-    description: "Step-by-step walkthrough of the 8 sequential safety phases: Boot → Identity Verification → Airflow Detection → Gas Sampling → Threshold Comparison → Relay Decision → Telemetry Logging.",
-    isSimulatedAnimation: true,
-    simulationNotice: "Sequential state machine simulation.",
-    captions: [
-      { time: 0, text: "Phase 1: System boot and sensor pre-heat calibration." },
-      { time: 8, text: "Phase 2: Camera verifies authorized driver in the driver seat." },
-      { time: 16, text: "Phase 3 & 4: Active breath sample detected through calibrated exhalation tube." },
-      { time: 25, text: "Phase 5 & 6: MQ-3 voltage compared against statutory blood alcohol concentration limit." },
-      { time: 34, text: "Phase 7 & 8: If threshold exceeded, buzzer alerts sound and ignition remains locked." }
-    ],
-    keyTopics: ["8-Stage State Machine", "Facial Verification Gate", "Threshold Comparator", "Fail-Safe Default"]
-  },
-  {
-    id: "alc-vid-04",
-    projectId: "alcohol-detection",
-    projectTitle: "AI + IoT Alcohol Detection System",
-    title: "4. Technical Architecture & Communication Flow",
-    category: "Architecture",
-    duration: "2:30",
-    durationSeconds: 150,
-    thumbnail: "/projects/alcohol-detection.svg",
-    description: "Edge computing architecture showing how microcontroller firmware connects to optional cloud logging and telemetry dashboards.",
-    isSimulatedAnimation: true,
-    simulationNotice: "System architecture & signal data-flow schematic.",
-    captions: [
-      { time: 0, text: "Analyzing the end-to-end signal and data flow architecture." },
-      { time: 8, text: "Sensors deliver continuous analog/digital telemetry to the ESP32 dual-core Xtensa processor." },
-      { time: 18, text: "Core 0 handles Wi-Fi/Bluetooth telemetry transport, while Core 1 executes real-time safety cutoff interrupts." },
-      { time: 30, text: "All safety violation events are logged with timestamp and driver image digest." }
-    ],
-    keyTopics: ["Dual-Core Xtensa FreeRTOS", "Edge Decision Engine", "Event Logging", "Telemetry Protocol"]
-  },
 
-  // ── 2. Digital Classroom — Assignment Checker ────────────────
-  {
-    id: "asg-vid-01",
-    projectId: "assignment-checker",
-    projectTitle: "Digital Classroom Assignment Checker",
-    title: "1. Project Overview & Workflow Architecture",
-    category: "Introduction",
-    duration: "2:05",
-    durationSeconds: 125,
-    thumbnail: "/projects/assignment-checker.svg",
-    description: "How Digital Classroom simplifies automated submission windows, grading workflows, and PDF result delivery for polytechnic institutions.",
-    isSimulatedAnimation: true,
-    simulationNotice: "Full client-side sample workflow based on project design specifications.",
-    captions: [
-      { time: 0, text: "Digital Classroom Assignment Checker: Bridging the evaluation gap for academic coursework." },
-      { time: 8, text: "Teachers schedule timed submission sessions with course IDs and maximum questions." },
-      { time: 18, text: "Students receive instant upload confirmation and session countdown clocks." },
-      { time: 28, text: "Automated rubrics and evaluation interfaces allow teachers to assign marks and generate verified PDF reports." }
-    ],
-    keyTopics: ["Role-Based Access", "Timed Exam Sessions", "Submission Tracking", "PDF Report Generator"]
-  },
-  {
-    id: "asg-vid-02",
-    projectId: "assignment-checker",
-    projectTitle: "Digital Classroom Assignment Checker",
-    title: "2. Dual Teacher & Student Interface Demonstration",
-    category: "Working Principle",
-    duration: "3:15",
-    durationSeconds: 195,
-    thumbnail: "/projects/assignment-checker.svg",
-    description: "Live demonstration of teacher creating an assignment session, student submitting code/text solutions, teacher reviewing, and PDF generation.",
-    isSimulatedAnimation: true,
-    simulationNotice: "Demonstration using sample classroom dataset.",
-    captions: [
-      { time: 0, text: "Teacher creates 'Data Structures — Binary Search Trees' session." },
-      { time: 10, text: "Session opens; student logs in and views active assignment requirements." },
-      { time: 22, text: "Student submits response; system stamps hash and timestamp to prevent late tampering." },
-      { time: 35, text: "Teacher grades assignment and system generates branded institutional PDF." }
-    ],
-    keyTopics: ["Live Submission Sandbox", "Teacher Evaluation Portal", "Cryptographic Timestamping", "PDF Compilation"]
-  },
-
-  // ── 3. 1QUIZ AI-Powered Quiz Platform ────────────────────────
-  {
-    id: "quiz-vid-01",
-    projectId: "onequiz",
-    projectTitle: "1QUIZ — AI-Powered Learning Platform",
-    title: "1. Quiz Engine & IRT Adaptive Questioning",
-    category: "Working Principle",
-    duration: "2:50",
-    durationSeconds: 170,
-    thumbnail: "/projects/quiz-game.svg",
-    description: "How 1QUIZ utilizes Item Response Theory (IRT) algorithms and real-time accuracy scoring to serve dynamically calibrated questions.",
-    isSimulatedAnimation: true,
-    simulationNotice: "Verified against actual cbt_app/core/adaptive_engine.py implementation.",
-    captions: [
-      { time: 0, text: "Welcome to the 1QUIZ adaptive testing and learning platform." },
-      { time: 8, text: "The engine builds a per-topic accuracy profile for each student across Easy, Medium, and Hard tiers." },
-      { time: 20, text: "Questions are dynamically selected using an Impact Score formula to target knowledge gaps." },
-      { time: 32, text: "Instant feedback and detailed conceptual explanations follow each answer submission." }
-    ],
-    keyTopics: ["IRT Adaptive Algorithm", "Topic Accuracy Profiling", "Impact Score Calculation", "Real-Time Scoring"]
-  },
+  // ── 6. Detailed Breakdown: 1QUIZ Multi-Model AI Router ──
   {
     id: "quiz-vid-02",
     projectId: "onequiz",
     projectTitle: "1QUIZ — AI-Powered Learning Platform",
-    title: "2. Multi-Model AI Question Generation & Auto-Routing",
+    title: "Multi-Model AI Question Generation & Routing",
     category: "Features & Roadmap",
-    duration: "2:40",
-    durationSeconds: 160,
+    duration: "0:24",
+    durationSeconds: 24,
     thumbnail: "/projects/quiz-game.svg",
+    videoUrl: "/videos/onequiz-platform-demo.mp4",
     description: "Walkthrough of core/ai_service.py auto-routing across Groq (Llama 3), Gemini, and OpenAI with Deep Thinking mode.",
     isSimulatedAnimation: true,
     simulationNotice: "Based on verified core/ai_service.py codebase.",
     captions: [
       { time: 0, text: "Exploring the unified multi-provider AI service in 1QUIZ." },
-      { time: 7, text: "The system supports Groq Llama 3 70B, Gemini 1.5 Pro, and OpenAI GPT-4o with automatic fallback routing." },
-      { time: 18, text: "System prompt enforces strict JSON schema output for zero-error database ingestion." },
-      { time: 30, text: "Deep thinking mode breaks complex engineering topics into verifiable sub-components." }
+      { time: 7, text: "The system supports Groq Llama 3 70B, Gemini 1.5 Pro, and OpenAI GPT-4o." },
+      { time: 14, text: "System prompt enforces strict JSON schema output for zero-error database ingestion." },
+      { time: 20, text: "Deep thinking mode breaks complex engineering topics into verifiable sub-components." }
     ],
     keyTopics: ["Multi-Model AI Router", "Deep Thinking Mode", "JSON MCQ Generator", "Fallback Tolerant Architecture"]
-  },
-
-  // ── 4. PINN Battery Digital Twin ─────────────────────────────
-  {
-    id: "pinn-vid-01",
-    projectId: "battery-digital-twin",
-    projectTitle: "PINN Battery Digital Twin",
-    title: "1. Physics-Informed Neural Network (PINN) Formulation",
-    category: "Architecture",
-    duration: "3:30",
-    durationSeconds: 210,
-    thumbnail: "/projects/pinn-battery.svg",
-    description: "How electro-chemical differential equations (Arrhenius kinetics, Fick diffusion, Butler-Volmer) are embedded into neural network loss gradients.",
-    isSimulatedAnimation: true,
-    simulationNotice: "Verified against BATest.AI/physics/pinn_loss.py and Attention-LSTM codebase.",
-    captions: [
-      { time: 0, text: "Introducing the Physics-Informed Neural Network (PINN) for battery degradation modeling." },
-      { time: 9, text: "Standard deep learning models overfit on limited cycle data and violate thermodynamic laws." },
-      { time: 20, text: "Our loss function integrates empirical MSE loss with physical conservation penalty terms." },
-      { time: 34, text: "This yields accurate State-of-Health (SoH) and knee-point rollover predictions up to 5,000 cycles." }
-    ],
-    keyTopics: ["Physics Loss Formulation", "Arrhenius Degradation", "Attention-LSTM Hybrid", "Knee-Point Rollover"]
-  },
-
-  // ── 5. TrustGuard Anti-Scam Super App ────────────────────────
-  {
-    id: "trust-vid-01",
-    projectId: "trustguard",
-    projectTitle: "TrustGuard — Anti-Scam Super App",
-    title: "1. Intent Classification & Behavioral Fraud Detection",
-    category: "Introduction",
-    duration: "2:20",
-    durationSeconds: 140,
-    thumbnail: "/projects/trustguard.svg",
-    description: "Overview of NLP intent classification, behavioral trust scoring, and suspicious transaction detection pipelines.",
-    isSimulatedAnimation: true,
-    simulationNotice: "Verified against SECURE_AI_PROJECT/ml/ codebase.",
-    captions: [
-      { time: 0, text: "TrustGuard: Proactive scam and fraud prevention for digital communication." },
-      { time: 8, text: "Incoming message vectors pass through local embeddings and intent classification pipelines." },
-      { time: 18, text: "A multi-dimensional trust score flags urgent social engineering patterns and impersonation scams." },
-      { time: 30, text: "Safe offline processing preserves user privacy while detecting fraudulent indicators." }
-    ],
-    keyTopics: ["Intent Classification", "Vector Embeddings", "Social Engineering Heuristics", "Privacy Preservation"]
   }
 ];
-

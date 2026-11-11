@@ -4,88 +4,13 @@ import {
   GraduationCap,
   Sparkles,
   CheckCircle2,
-  Cpu,
-  Camera,
-  Wind,
-  Bell,
-  Lock,
-  Unlock,
   FileText,
   Award
 } from 'lucide-react';
+import { AlcoholProjectShowcase } from '../AlcoholProject/AlcoholProjectShowcase';
 
 export const ThreeMainProjects: React.FC = () => {
   const [activeProjectTab, setActiveProjectTab] = useState<'alcohol' | 'assignment' | 'onequiz'>('alcohol');
-
-  // -------------------------------------------------------------
-  // PROJECT 1: ALCOHOL DETECTION 8-STAGE SIMULATION STATE
-  // -------------------------------------------------------------
-  const [alcoholStage, setAlcoholStage] = useState<number>(1);
-  const [alcoholReading, setAlcoholReading] = useState<number>(0.012); // BAC mg/L
-  const [driverVerified, setDriverVerified] = useState<boolean>(true);
-  const [airflowVerified, setAirflowVerified] = useState<boolean>(true);
-  const [ignitionState, setIgnitionState] = useState<'LOCKED' | 'PERMITTED'>('PERMITTED');
-  const [alcoholActiveTab, setAlcoholActiveTab] = useState<'overview' | 'hardware' | 'workflow' | 'safety'>('workflow');
-
-  const simulateNormalTest = () => {
-    setAlcoholStage(1);
-    setTimeout(() => {
-      setAlcoholStage(2);
-      setDriverVerified(true);
-    }, 400);
-    setTimeout(() => {
-      setAlcoholStage(3);
-    }, 800);
-    setTimeout(() => {
-      setAlcoholStage(4);
-      setAirflowVerified(true);
-    }, 1200);
-    setTimeout(() => {
-      setAlcoholStage(5);
-      setAlcoholReading(0.015);
-    }, 1600);
-    setTimeout(() => {
-      setAlcoholStage(6);
-      setIgnitionState('PERMITTED');
-    }, 2000);
-    setTimeout(() => {
-      setAlcoholStage(8);
-    }, 2400);
-  };
-
-  const simulateAlertTest = () => {
-    setAlcoholStage(1);
-    setTimeout(() => {
-      setAlcoholStage(2);
-      setDriverVerified(true);
-    }, 400);
-    setTimeout(() => {
-      setAlcoholStage(3);
-    }, 800);
-    setTimeout(() => {
-      setAlcoholStage(4);
-      setAirflowVerified(true);
-    }, 1200);
-    setTimeout(() => {
-      setAlcoholStage(5);
-      setAlcoholReading(0.088); // Exceeds threshold!
-    }, 1600);
-    setTimeout(() => {
-      setAlcoholStage(7); // Alert condition!
-      setIgnitionState('LOCKED');
-    }, 2000);
-    setTimeout(() => {
-      setAlcoholStage(8);
-    }, 2400);
-  };
-
-  const resetAlcoholSim = () => {
-    setAlcoholStage(1);
-    setAlcoholReading(0.012);
-    setDriverVerified(true);
-    setAirflowVerified(true);
-    setIgnitionState('PERMITTED');
-  };
 
   // -------------------------------------------------------------
   // PROJECT 2: DIGITAL CLASSROOM ASSIGNMENT CHECKER STATE
@@ -201,7 +126,7 @@ export const ThreeMainProjects: React.FC = () => {
             }`}
           >
             <ShieldAlert className="w-4 h-4" />
-            <span>01. AI + IoT Alcohol Detection System</span>
+            <span>01. Alcohol Detection &amp; Safety Interlock</span>
           </button>
 
           <button
@@ -230,179 +155,10 @@ export const ThreeMainProjects: React.FC = () => {
         </div>
 
         {/* ============================================================= */}
-        {/* PROJECT 01: AI + IoT BASED ALCOHOL DETECTION SYSTEM           */}
+        {/* PROJECT 01: ESP32 ALCOHOL DETECTION & SAFETY INTERLOCK        */}
         {/* ============================================================= */}
         {activeProjectTab === 'alcohol' && (
-          <div className="p-6 sm:p-10 rounded-3xl bg-[#0C1220] border-2 border-[#253247] shadow-2xl space-y-8 animate-fadeIn">
-            
-            {/* Header Title & Status */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#253247]">
-              <div>
-                <span className="text-xs font-mono text-[#38BDF8] uppercase tracking-wider">
-                  PROJECT 01 // EMBEDDED SYSTEMS &bull; IOT &bull; VEHICLE SAFETY
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-bold text-[#F8FAFC] font-sans mt-1">
-                  AI + IoT Based Alcohol Detection System
-                </h3>
-                <p className="text-xs sm:text-sm text-[#94A3B8] mt-1 font-mono">
-                  Autonomous Vehicle Ignition Interlock with AI Driver Verification &amp; MQ-3 Breath Sampling
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:items-end">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">
-                  ● Implemented (Breadboard &amp; Simulated)
-                </span>
-                <span className="text-[10px] text-[#64748B] mt-1 font-mono">
-                  Hardware: ESP32 + MQ-3 + Relay
-                </span>
-              </div>
-            </div>
-
-            {/* Interactive 8-Stage Architecture Simulator */}
-            <div className="p-6 rounded-2xl bg-[#070A12] border-2 border-[#253247] space-y-6">
-              
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#253247]">
-                <div>
-                  <span className="text-xs font-mono text-[#38BDF8] font-bold">
-                    STAGE 0{alcoholStage} OF 08 // REAL-TIME SYSTEM WORKFLOW
-                  </span>
-                  <p className="text-sm font-semibold text-[#F8FAFC]">
-                    {alcoholStage === 1 && "Stage 1: Power On & Component Self-Test"}
-                    {alcoholStage === 2 && "Stage 2: AI Camera Driver Facial Verification"}
-                    {alcoholStage === 3 && "Stage 3: Driver Breath Sample Acquisition"}
-                    {alcoholStage === 4 && "Stage 4: Airflow & Anti-Bypass Validation"}
-                    {alcoholStage === 5 && "Stage 5: MQ-3 Sensor Analog Processing"}
-                    {alcoholStage === 6 && "Stage 6: Normal Reading Threshold Evaluation"}
-                    {alcoholStage === 7 && "Stage 7: Alert Trigger & High-Decibel Buzzer"}
-                    {alcoholStage === 8 && "Stage 8: Automotive Ignition Interlock State"}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <span className={`px-3 py-1 rounded-lg text-xs font-mono font-bold flex items-center gap-1.5 ${
-                    ignitionState === 'PERMITTED' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-red-500/20 text-red-400 border border-red-500/40 animate-pulse'
-                  }`}>
-                    {ignitionState === 'PERMITTED' ? <Unlock className="w-3.5 h-3.5" /> : <Lock className="w-3.5 h-3.5" />}
-                    <span>IGNITION: {ignitionState}</span>
-                  </span>
-                </div>
-              </div>
-
-              {/* Hardware Blocks Display */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
-                <div className="p-3 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
-                  <span className="text-[#64748B] text-[10px] flex items-center gap-1"><Cpu className="w-3 h-3 text-[#38BDF8]" /> ESP32 MCU</span>
-                  <span className="text-emerald-400 font-bold">ACTIVE (240MHz)</span>
-                </div>
-                <div className="p-3 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
-                  <span className="text-[#64748B] text-[10px] flex items-center gap-1"><Camera className="w-3 h-3 text-[#8B5CF6]" /> AI CAMERA</span>
-                  <span className={driverVerified ? "text-emerald-400 font-bold" : "text-amber-400 font-bold"}>
-                    {driverVerified ? "VERIFIED DRIVER" : "VERIFYING..."}
-                  </span>
-                </div>
-                <div className="p-3 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
-                  <span className="text-[#64748B] text-[10px] flex items-center gap-1"><Wind className="w-3 h-3 text-[#38BDF8]" /> AIRFLOW SENSOR</span>
-                  <span className={airflowVerified ? "text-emerald-400 font-bold" : "text-amber-400 font-bold"}>
-                    {airflowVerified ? "EXHALATION OK" : "NO AIRFLOW"}
-                  </span>
-                </div>
-                <div className="p-3 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
-                  <span className="text-[#64748B] text-[10px] flex items-center gap-1"><Wind className="w-3 h-3 text-[#38BDF8]" /> MQ-3 SENSOR</span>
-                  <span className={alcoholReading > 0.05 ? "text-red-400 font-bold" : "text-emerald-400 font-bold"}>
-                    {alcoholReading.toFixed(3)} BAC mg/L
-                  </span>
-                </div>
-                <div className="p-3 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
-                  <span className="text-[#64748B] text-[10px] flex items-center gap-1"><Bell className="w-3 h-3 text-red-400" /> SAFETY RELAY</span>
-                  <span className={ignitionState === 'PERMITTED' ? "text-emerald-400 font-bold" : "text-red-400 font-bold"}>
-                    {ignitionState === 'PERMITTED' ? "CIRCUIT CLOSED" : "CUTOFF TRIGGERED"}
-                  </span>
-                </div>
-              </div>
-
-              {/* Interactive Demonstration Controls */}
-              <div className="flex flex-wrap items-center gap-2 pt-2">
-                <button
-                  onClick={simulateNormalTest}
-                  className="flex-1 py-2.5 px-4 rounded-xl bg-[#10B981] hover:bg-[#34d399] text-[#052e16] font-bold text-xs font-mono transition-colors shadow-md"
-                >
-                  Simulate Normal Test (Pass)
-                </button>
-                <button
-                  onClick={simulateAlertTest}
-                  className="flex-1 py-2.5 px-4 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs font-mono transition-colors shadow-md"
-                >
-                  Simulate Alcohol Spike (Alert)
-                </button>
-                <button
-                  onClick={resetAlcoholSim}
-                  className="py-2.5 px-4 rounded-xl bg-[#111B2B] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#253247] font-bold text-xs font-mono transition-colors"
-                >
-                  Reset Simulator
-                </button>
-              </div>
-
-              <p className="text-[10px] font-mono text-[#64748B] text-center">
-                * Note: Interactive portfolio demonstration using simulated sensor data. MQ-3 readings are not certified legal blood-alcohol measurements.
-              </p>
-            </div>
-
-            {/* Technical Explanation Tabs */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 border-b border-[#253247] pb-2 text-xs font-mono">
-                {(['workflow', 'hardware', 'overview', 'safety'] as const).map(tab => (
-                  <button
-                    key={tab}
-                    onClick={() => setAlcoholActiveTab(tab)}
-                    className={`px-3 py-1.5 rounded-lg uppercase ${
-                      alcoholActiveTab === tab ? 'bg-[#111B2B] text-[#38BDF8] border border-[#38BDF8]/40 font-bold' : 'text-[#94A3B8] hover:text-[#F8FAFC]'
-                    }`}
-                  >
-                    {tab}
-                  </button>
-                ))}
-              </div>
-
-              {alcoholActiveTab === 'workflow' && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-[#CBD5E1]">
-                  <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
-                    <strong className="text-[#38BDF8]">1. Driver Verification:</strong>
-                    <p>AI camera confirms that the individual providing the breath sample is the actual registered driver in the driver seat, preventing passenger substitution.</p>
-                  </div>
-                  <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
-                    <strong className="text-[#8B5CF6]">2. Airflow Anti-Bypass:</strong>
-                    <p>Pressure / thermistor airflow sensor detects active human pulmonary exhalation, thwarting canned air or hair dryer bypass attempts.</p>
-                  </div>
-                  <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
-                    <strong className="text-emerald-400">3. MQ-3 Analog Reading:</strong>
-                    <p>Heating element changes resistance in presence of ethanol gas. The ESP32 ADC pin takes 50 samples with a moving-average noise filter.</p>
-                  </div>
-                  <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247] space-y-1">
-                    <strong className="text-red-400">4. Isolated Ignition Interlock:</strong>
-                    <p>If reading &gt; 0.05 BAC, relay disengages starter solenoid. Never cuts ignition on an already moving vehicle for road safety.</p>
-                  </div>
-                </div>
-              )}
-
-              {alcoholActiveTab === 'hardware' && (
-                <div className="p-4 rounded-xl bg-[#111B2B] border border-[#253247] text-xs space-y-2 text-[#CBD5E1]">
-                  <p><strong>Microcontroller:</strong> ESP32 30-Pin NodeMCU (Dual Core Tensilica 240MHz)</p>
-                  <p><strong>Gas Sensor:</strong> MQ-3 Semiconductor Alcohol Sensor (Analog A0 + Digital D0)</p>
-                  <p><strong>Safety Switch:</strong> 5V 10A Optocoupler-Isolated Relay Module</p>
-                  <p><strong>Audio/Visual Alerts:</strong> Active 5V Piezo Buzzer + Red/Green 5mm LEDs + 0.96" I2C OLED Display</p>
-                </div>
-              )}
-
-              {alcoholActiveTab === 'safety' && (
-                <div className="p-4 rounded-xl bg-[#111B2B] border border-[#253247] text-xs space-y-2 text-[#CBD5E1]">
-                  <p><strong className="text-amber-400">Road Safety Mandate:</strong> The system is designed strictly as a pre-start interlock. Once the vehicle is moving, the relay cannot disrupt power to avoid power-steering or brake loss.</p>
-                  <p><strong className="text-[#38BDF8]">Legal Accuracy Disclaimer:</strong> MQ-3 readings are indicative laboratory demonstrations and not certified evidentiary breathalyzers.</p>
-                </div>
-              )}
-            </div>
-
-          </div>
+          <AlcoholProjectShowcase />
         )}
 
         {/* ============================================================= */}

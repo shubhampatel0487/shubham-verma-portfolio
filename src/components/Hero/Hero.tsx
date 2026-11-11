@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowDown, Mail, FileText, Send, Sparkles, Check, Copy } from 'lucide-react';
+import { ArrowDown, Mail, Film, Send, Sparkles, Check, Copy } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, WhatsAppIcon } from '../UI/Icons';
 import { personalProfile } from '../../data/portfolioData';
 
 interface HeroProps {
   currentName: string;
-  onOpenResume: () => void;
+  onOpenResume?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ currentName, onOpenResume }) => {
+export const Hero: React.FC<HeroProps> = ({ currentName }) => {
   const titles = [
     "Aspiring Robotics & AI Engineer",
     "Computer Science Graduate (2026)",
@@ -106,7 +106,7 @@ export const Hero: React.FC<HeroProps> = ({ currentName, onOpenResume }) => {
               <span className="text-[#94A3B8]">{personalProfile.alternativeTagline}</span>
             </div>
 
-            {/* Action Buttons: Explore Projects, Download Resume, Contact Me */}
+            {/* Action Buttons: Explore Projects, Watch Walkthroughs, Contact Me */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
               <a
                 href="#projects"
@@ -115,13 +115,13 @@ export const Hero: React.FC<HeroProps> = ({ currentName, onOpenResume }) => {
                 Explore Projects
               </a>
 
-              <button
-                onClick={onOpenResume}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#111B2B] text-[#F8FAFC] font-semibold text-sm hover:text-[#38BDF8] hover:bg-[#162338] border border-[#253247] transition-all transform hover:-translate-y-0.5"
+              <a
+                href="#video-library"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#111B2B] text-[#F8FAFC] font-semibold text-sm hover:text-[#38BDF8] hover:bg-[#162338] border border-[#253247] hover:border-[#38BDF8]/40 transition-all transform hover:-translate-y-0.5"
               >
-                <FileText className="w-4 h-4 text-[#38BDF8]" />
-                <span>Download Resume</span>
-              </button>
+                <Film className="w-4 h-4 text-[#38BDF8]" />
+                <span>Video Demos</span>
+              </a>
 
               <a
                 href="#contact"
@@ -193,13 +193,6 @@ export const Hero: React.FC<HeroProps> = ({ currentName, onOpenResume }) => {
                 title="Email"
               >
                 <Mail className="w-4 h-4" />
-              </a>
-              <a
-                href="/id.html/"
-                className="px-2.5 py-1.5 rounded-lg bg-[#111B2B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#253247] text-xs font-mono font-bold"
-                title="View id.html Digital Identity"
-              >
-                id.html
               </a>
             </div>
           </div>

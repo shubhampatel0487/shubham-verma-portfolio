@@ -204,3 +204,4 @@ export const GitHubIntegration: React.FC = () => {
     </section>
   );
 };
+

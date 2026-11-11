@@ -1,13 +1,13 @@
 import React from 'react';
-import { Mail, FileText, ExternalLink, ShieldCheck } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from '../UI/Icons';
+import { Mail, ExternalLink, ShieldCheck } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, WhatsAppIcon } from '../UI/Icons';
 import { personalProfile } from '../../data/portfolioData';
 
 interface ProfilesProps {
-  onOpenResume: () => void;
+  onOpenResume?: () => void;
 }
 
-export const Profiles: React.FC<ProfilesProps> = ({ onOpenResume }) => {
+export const Profiles: React.FC<ProfilesProps> = () => {
   const profileCards = [
     {
       title: "GitHub Development Space",
@@ -21,7 +21,7 @@ export const Profiles: React.FC<ProfilesProps> = ({ onOpenResume }) => {
     },
     {
       title: "LinkedIn Professional Network",
-      handle: "shubham-patel-robotics",
+      handle: "in/shubhampatel0487",
       description: "Connect for technical collaborations, robotics engineering opportunities, academic discussions, and professional networking.",
       icon: LinkedinIcon,
       actionText: "Connect on LinkedIn",
@@ -40,14 +40,14 @@ export const Profiles: React.FC<ProfilesProps> = ({ onOpenResume }) => {
       color: "border-emerald-500/40 text-emerald-400"
     },
     {
-      title: "Official Curriculum Vitae",
-      handle: personalProfile.resume.originalFilename,
-      description: "Download or preview the complete verified resume detailing education, technical stack, projects, and contact channels.",
-      icon: FileText,
-      actionText: "Preview / Download CV",
-      onAction: onOpenResume,
-      isExternal: false,
-      color: "border-amber-500/40 text-amber-400"
+      title: "Direct WhatsApp Line",
+      handle: personalProfile.contact.phone,
+      description: "Fast direct chat for project discussions, engineering collaboration, or prompt communication.",
+      icon: WhatsAppIcon,
+      actionText: "Chat on WhatsApp",
+      actionUrl: personalProfile.contact.whatsappUrl,
+      isExternal: true,
+      color: "border-emerald-500/40 text-emerald-400"
     }
   ];
 
@@ -98,25 +98,15 @@ export const Profiles: React.FC<ProfilesProps> = ({ onOpenResume }) => {
                 </div>
 
                 <div className="pt-6 mt-4 border-t border-[#253247] flex items-center justify-between">
-                  {card.actionUrl ? (
-                    <a
-                      href={card.actionUrl}
-                      target={card.isExternal ? "_blank" : undefined}
-                      rel={card.isExternal ? "noopener noreferrer" : undefined}
-                      className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#38BDF8] hover:text-[#7dd3fc] transition-colors"
-                    >
-                      <span>{card.actionText}</span>
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  ) : (
-                    <button
-                      onClick={card.onAction}
-                      className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#38BDF8] hover:text-[#7dd3fc] transition-colors"
-                    >
-                      <span>{card.actionText}</span>
-                      <FileText className="w-4 h-4" />
-                    </button>
-                  )}
+                  <a
+                    href={card.actionUrl}
+                    target={card.isExternal ? "_blank" : undefined}
+                    rel={card.isExternal ? "noopener noreferrer" : undefined}
+                    className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#38BDF8] hover:text-[#7dd3fc] transition-colors"
+                  >
+                    <span>{card.actionText}</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
 
                   <span className="text-[11px] font-mono text-[#64748B] flex items-center gap-1">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />

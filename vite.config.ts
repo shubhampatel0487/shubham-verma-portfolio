@@ -12,4 +12,4 @@ export default defineConfig({
 });
 
 // cd /home/kali/Documents/PORTFOLIO
-// // npm run dev
+// npm run dev

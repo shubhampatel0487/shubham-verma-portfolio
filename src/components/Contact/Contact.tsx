@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle2, AlertCircle, Copy, Check, MapPin, MessageSquare, Smartphone } from 'lucide-react';
-import { LinkedinIcon } from '../UI/Icons';
+import { GithubIcon, LinkedinIcon } from '../UI/Icons';
 import confetti from 'canvas-confetti';
 import { personalProfile } from '../../data/portfolioData';
 import { soundFX } from '../../utils/audio';
@@ -170,6 +170,25 @@ export const Contact: React.FC = () => {
                   </div>
                 </div>
                 <span className="text-xs font-mono bg-white/20 px-2.5 py-1 rounded-md">Connect →</span>
+              </a>
+
+              {/* Direct GitHub Profile Action Button */}
+              <a
+                href={personalProfile.contact.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-4 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white font-bold text-xs sm:text-sm transition-all border border-[#253247] hover:border-cyan-500/50 shadow-lg group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-[#070A12] border border-[#253247]">
+                    <GithubIcon className="w-5 h-5 text-cyan-400" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] uppercase tracking-wider text-slate-400 font-mono">Open Source Repositories</span>
+                    <span className="text-sm font-bold text-white">GitHub: @shubhampatel0487</span>
+                  </div>
+                </div>
+                <span className="text-xs font-mono bg-white/10 px-2.5 py-1 rounded-md text-cyan-300">View Repos →</span>
               </a>
 
               {/* Email Pill with One-Click Copy */}

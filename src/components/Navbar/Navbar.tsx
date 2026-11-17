@@ -35,6 +35,17 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
   }, [mobileMenuOpen]);
 
+  // Keyboard navigation: Close mobile menu on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -177,8 +188,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl bg-[#111B2B] text-[#F8FAFC] border border-[#253247] hover:border-[#38BDF8]/60 transition-colors"
+              className="p-2 rounded-xl bg-[#111B2B] text-[#F8FAFC] border border-[#253247] hover:border-[#38BDF8]/60 transition-colors focus:outline-none focus:ring-2 focus:ring-[#38BDF8]"
               aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="w-5 h-5 text-[#38BDF8]" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -189,7 +201,11 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-[64px] bg-[#070A12]/98 backdrop-blur-2xl z-50 px-5 py-6 border-t border-[#253247] flex flex-col justify-between lg:hidden overflow-y-auto">
+        <div 
+          className="fixed inset-x-0 top-[64px] h-[calc(100dvh-64px)] max-h-[calc(100vh-64px)] bg-[#070A12]/98 backdrop-blur-2xl z-50 px-5 py-6 border-t border-[#253247] flex flex-col justify-between lg:hidden overflow-y-auto pb-16"
+          role="dialog"
+          aria-label="Mobile Navigation Menu"
+        >
           
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-[#253247]/60">

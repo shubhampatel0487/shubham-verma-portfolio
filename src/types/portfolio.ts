@@ -14,22 +14,36 @@ export interface SkillItem {
   tags?: string[];
 }
 
+export interface DemoCodeSnippet {
+  language: string;
+  filename: string;
+  snippet: string;
+  explanation?: string;
+}
+
 export interface ProjectItem {
   id: string;
   title: string;
   tagline: string;
   overview: string;
   problemStatement: string;
+  projectObjectives?: string[];
   technologies: string[];
   keyFeatures: string[];
-  status: 'In Progress' | 'Experimental' | 'Completed' | 'Research Prototype';
-  statusBadgeColor?: 'amber' | 'blue' | 'purple' | 'emerald';
+  myContribution?: string;
+  implementationHighlights?: string[];
+  futureImprovements?: string[];
+  status: 'In Progress' | 'Experimental' | 'Completed' | 'Research Prototype' | 'Private Project' | 'Under Development' | 'Demonstration Available';
+  developmentStatus?: 'Private Project' | 'Under Development' | 'Demonstration Available';
+  statusBadgeColor?: 'amber' | 'blue' | 'purple' | 'emerald' | 'cyan' | 'red';
+  isPrivate?: boolean;
+  demoCode?: DemoCodeSnippet;
   githubUrl?: string;
   liveUrl?: string;
   architectureDetails?: string;
   engineeringLearnings?: string[];
   image: string;
-  category: 'AI & Vision' | 'Academic Systems' | 'Embedded & IoT' | 'Python Apps' | 'AI & PINNs' | 'Full Stack & Security' | 'Robotics Simulation';
+  category: 'AI & Vision' | 'Academic Systems' | 'Embedded & IoT' | 'Python Apps' | 'AI & PINNs' | 'Full Stack & Security' | 'Robotics Simulation' | 'Workforce Tech' | 'AI & EdTech';
 }
 
 export interface ExperienceItem {

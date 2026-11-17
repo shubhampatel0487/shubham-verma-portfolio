@@ -187,7 +187,7 @@ float calculateEthanolPPM(float rawADC, float ro) {
         code: `"""
 core/ai_service.py - Unified AI service supporting multiple providers.
 Supports: Groq, Gemini, OpenAI with Auto-Routing mode.
-Extracted from: /home/kali/Documents/QUIZ/cbt_app/core/ai_service.py
+DEMO CODE — REPRESENTATIONAL EXAMPLE (Conceptual Demonstration Snippet)
 """
 
 import os
@@ -258,10 +258,10 @@ class AIService:
           { name: "compute_impact()", purpose: "Calculates impact = difficulty_weight * (1 - topic_accuracy) * recency_penalty.", inputs: "question, topic_accuracy", outputs: "float impact_score" }
         ],
         code: `"""
-core/adaptive_engine.py - UPGRADED Adaptive Test Engine v2.
+core/adaptive_engine.py - Adaptive Test Engine Concept.
 Uses Item Response Theory (IRT)-inspired difficulty weighting combined
 with per-topic accuracy profiling to intelligently select questions.
-Extracted from: /home/kali/Documents/QUIZ/cbt_app/core/adaptive_engine.py
+DEMO CODE — REPRESENTATIONAL EXAMPLE (Conceptual Demonstration Snippet)
 """
 
 import random
@@ -318,7 +318,7 @@ class AdaptiveEngine:
         code: `"""
 physics/pinn_loss.py - Composite Physics-Informed Loss Engine for Battery Digital Twin.
 Unifies data fidelity loss with First-Principles electrochemical constraints.
-Extracted from: /home/kali/Documents/BATest.AI/physics/pinn_loss.py
+DEMO CODE — REPRESENTATIONAL EXAMPLE (Conceptual Demonstration Snippet)
 """
 
 from dataclasses import dataclass
@@ -435,7 +435,7 @@ class AssignmentSessionValidator:
         ],
         code: `"""
 ml/intent_model.py - Intent classification and threat query routing.
-Extracted from: /home/kali/Documents/SECURE_AI_PROJECT/ml/intent_model.py
+DEMO CODE — REPRESENTATIONAL EXAMPLE (Conceptual Demonstration Snippet)
 """
 
 from typing import Optional, List, Dict

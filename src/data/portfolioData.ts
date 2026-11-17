@@ -112,29 +112,277 @@ export const skillsData: SkillItem[] = [
 
 export const projectsData: ProjectItem[] = [
   {
-    id: "ai-face-recognition-attendance",
-    title: "AI-Based Face Recognition Attendance System",
-    tagline: "Computer Vision Pipeline with OpenCV, Flask Backend & Automated SQLite Ingestion",
-    category: "AI & Vision",
-    status: "Completed",
+    id: "quizai-learning-platform",
+    title: "QuizAI — AI-Assisted Adaptive Learning Platform",
+    tagline: "Interactive Assessment Engine with Topic-Wise Practice, Bilingual Support & Performance Analytics",
+    category: "AI & EdTech",
+    status: "Under Development",
+    developmentStatus: "Under Development",
     statusBadgeColor: "emerald",
-    overview: "A functional real-time biometric attendance system built with OpenCV and Python. It automates student registration and facial identity detection from webcam feeds, updating timestamped records in a SQLite database with a clean responsive web dashboard.",
-    problemStatement: "Manual attendance taking in institutional classrooms consumes valuable instructional time, is susceptible to proxy marking, and requires manual paperwork for attendance audits.",
-    technologies: ["Python", "OpenCV", "Flask", "SQLite", "HTML5", "CSS3", "JavaScript"],
-    keyFeatures: [
-      "Real-time face detection and feature recognition from video streams.",
-      "Automated student registration with photo dataset collection.",
-      "Integrated Flask backend with persistent SQLite attendance logging.",
-      "Responsive web interface displaying live status and attendance reports."
+    isPrivate: true,
+    overview: "An AI-assisted educational assessment platform concept designed to deliver personalized topic-wise practice, timed mock tests, and actionable performance analytics. Built to support both English and Hindi learning interfaces to make competitive and academic examination preparation widely accessible.",
+    problemStatement: "Standard quiz applications provide static, one-size-fits-all testing without adaptive difficulty adjustment, bilingual linguistic flexibility, or granular concept-gap analytics.",
+    projectObjectives: [
+      "Provide modular, topic-wise practice across technical and academic domains.",
+      "Deliver a timed mock exam environment simulating standard test conditions.",
+      "Support bilingual interface (English & Hindi) for accessible question comprehension.",
+      "Explore conceptual AI-assisted question generation and contextual explanation models.",
+      "Offer diagnostic analytics identifying high-error topics for targeted revision."
     ],
-    architectureDetails: "Video frames captured via OpenCV are preprocessed (grayscale, cascade classifier detection, Haar feature matching). Matched identities trigger authenticated SQLite INSERT statements via Flask REST endpoints.",
+    technologies: ["Python", "Flask / Django", "SQLite", "OpenAI / NLP API Concept", "HTML5", "Tailwind CSS", "JavaScript"],
+    keyFeatures: [
+      "Interactive Learning Modules: Topic-wise question drills with instant answer evaluation.",
+      "Timed Mock Examination: Timed session flow with unattempted/attempted question status tracking.",
+      "Bilingual Interface Support: Dual-language representation (English and Hindi) for broader accessibility.",
+      "Performance Analytics Engine: Diagnostic breakdown of topic accuracy, time-per-question, and mastery score.",
+      "AI-Assisted Question Concept: Conceptual integration pipeline for generating topic-specific practice questions."
+    ],
+    myContribution: "Architected the backend assessment evaluation engine, structured the bilingual question schema, implemented the diagnostic accuracy calculation algorithm, and developed the interactive test-taking interface.",
+    implementationHighlights: [
+      "Structured normalized question data models supporting multi-choice options, tags, and bilingual text.",
+      "Deterministic scoring algorithm calculating percentile and topic-wise proficiency metrics.",
+      "Responsive test-taking UI with question palette navigation and countdown timer."
+    ],
+    futureImprovements: [
+      "Integrate lightweight local open-weights LLMs for completely offline question synthesis.",
+      "Implement spaced repetition algorithms (SuperMemo SM-2) for long-term memory retention.",
+      "Expand question bank across specialized competitive and engineering curricula."
+    ],
+    demoCode: {
+      language: "python",
+      filename: "quiz_evaluator_demo.py",
+      explanation: "Conceptual illustrative demonstration of question bank scoring and performance analytics calculation.",
+      snippet: `# DEMO CODE — REPRESENTATIONAL EXAMPLE
+# This is a simplified demonstration snippet created to explain the project concept.
+# It is not the original production source code and does not expose the private implementation.
+
+class QuizAssessmentEngine:
+    def __init__(self, passing_threshold=0.60):
+        self.passing_threshold = passing_threshold
+
+    def evaluate_session(self, user_responses, question_bank):
+        """
+        Evaluates answers against question bank and computes
+        topic-wise diagnostic performance breakdown.
+        """
+        total_questions = len(question_bank)
+        correct_count = 0
+        topic_performance = {}
+
+        for question in question_bank:
+            q_id = question["id"]
+            topic = question.get("topic", "General")
+            selected = user_responses.get(q_id)
+            is_correct = (selected == question["correct_index"])
+
+            if is_correct:
+                correct_count += 1
+
+            if topic not in topic_performance:
+                topic_performance[topic] = {"correct": 0, "total": 0}
+            topic_performance[topic]["total"] += 1
+            if is_correct:
+                topic_performance[topic]["correct"] += 1
+
+        accuracy = (correct_count / total_questions) if total_questions > 0 else 0.0
+        return {
+            "score": correct_count,
+            "total": total_questions,
+            "accuracy_percent": round(accuracy * 100, 1),
+            "passed": accuracy >= self.passing_threshold,
+            "topic_diagnostics": {
+                topic: round((data["correct"] / data["total"]) * 100, 1)
+                for topic, data in topic_performance.items()
+            }
+        }`
+    },
+    architectureDetails: "Decoupled web architecture: Python web backend manages authentication, question bank persistence, and session grading; client interface manages countdown timers and question navigation via asynchronous fetch calls.",
     engineeringLearnings: [
-      "Calibrating facial recognition confidence thresholds to eliminate false positives.",
-      "Handling ambient lighting variations and video stream latency in Python.",
-      "Designing responsive tabular views with HTML/CSS."
+      "Designing responsive test-taking layouts with zero layout shift during question transitions.",
+      "Handling bilingual text rendering and font scaling across diverse display sizes.",
+      "Structuring relational database schemas for high-speed question querying and answer caching."
+    ],
+    image: "/projects/quiz-game.svg",
+    githubUrl: undefined,
+    liveUrl: undefined
+  },
+  {
+    id: "esp32-alcohol-detection",
+    title: "ESP32-Based Alcohol Vapour Detection & Safety Interlock",
+    tagline: "Benchtop Microcontroller Circuit with Gas-Sensing Threshold Logic & Relay Actuation",
+    category: "Embedded & IoT",
+    status: "Demonstration Available",
+    developmentStatus: "Demonstration Available",
+    statusBadgeColor: "cyan",
+    isPrivate: true,
+    overview: "An embedded safety prototype designed to demonstrate alcohol vapour detection and starter lockout feasibility. Interfaces a heated SnO2 semiconductor sensor with an ESP32 microcontroller to sample vapour levels, applying moving-average filtering to trigger an optocoupled relay and audio-visual alarms upon crossing bench thresholds.",
+    problemStatement: "Alcohol-impaired vehicle operation is a leading cause of transit accidents. Exploring deterministic embedded interlocks investigates whether pre-ignition vapour screening can actively block starter circuit activation before a vehicle can be operated.",
+    projectObjectives: [
+      "Interface metal-oxide semiconductor gas sensor with ESP32 12-bit ADC.",
+      "Implement digital moving-average filtering to dampen environmental line fluctuations.",
+      "Actuate an optoisolated electromechanical relay for fail-safe starter cutoff simulation.",
+      "Provide immediate audio-visual indicators (buzzer, LEDs, OLED) for driver status.",
+      "Maintain strict benchtop demonstration boundaries without claiming forensic statutory BAC validity."
+    ],
+    technologies: ["ESP32 DevKit", "C++ / Arduino IDE", "Semiconductor Gas Sensor (MQ-3)", "5V Optocoupled Relay", "OLED I2C Display", "Piezo Buzzer", "Status LEDs"],
+    keyFeatures: [
+      "Sensor-Based Vapour Sampling: Real-time analog alcohol-vapour acquisition via 12-bit ESP32 ADC.",
+      "Moving-Average Noise Filter: 16-sample digital moving-average smoothing to suppress baseline ripple.",
+      "Deterministic Cutoff Relay: Actuates an optoisolated relay (<100ms response) to break simulated ignition circuit.",
+      "Audio-Visual Feedback Workflow: Piezo buzzer tone alerts and dual-color status LEDs (Green/Red).",
+      "Benchtop Safety Boundary: Laboratory demonstration model; explicitly distinguished from certified legal breathalyzers."
+    ],
+    myContribution: "Engineered circuit breadboard schematics, authored ESP32 firmware routines, tuned moving-average digital filter thresholds, and assembled the complete interactive hardware test bench.",
+    implementationHighlights: [
+      "16-sample circular buffer digital moving-average filter running in main execution loop.",
+      "Optocoupled galvanic isolation preventing relay inductive back-EMF spikes from reaching the 3.3V logic MCU.",
+      "Rigorous four-phase state machine: Sensor Pre-heat -> Ready -> Sampling -> Interlock Decision."
+    ],
+    futureImprovements: [
+      "Integrate environmental temperature and relative humidity compensation sensors.",
+      "Explore CAN-bus protocol integration for vehicle diagnostic port communication.",
+      "Implement calibrated differential pressure transducer for anti-circumvention breath validation."
+    ],
+    demoCode: {
+      language: "cpp",
+      filename: "esp32_interlock_demo.ino",
+      explanation: "Conceptual illustrative demonstrator of ADC moving-average filter and threshold interlock lockout.",
+      snippet: `// DEMO CODE — REPRESENTATIONAL EXAMPLE
+// This is a simplified demonstration snippet created to explain the project concept.
+// It is not the original production source code and does not expose the private implementation.
+
+#include <Arduino.h>
+
+const int PIN_SENSOR_ADC   = 34;   // Analog input pin from gas sensor divider
+const int PIN_RELAY_CUTOFF = 26;   // Active-LOW relay controlling starter circuit
+const int BENCH_THRESHOLD  = 1800; // Calibrated laboratory baseline threshold
+
+const int FILTER_SAMPLES   = 16;
+int adc_history[FILTER_SAMPLES] = {0};
+int history_index = 0;
+long running_sum  = 0;
+
+void setup() {
+  pinMode(PIN_RELAY_CUTOFF, OUTPUT);
+  digitalWrite(PIN_RELAY_CUTOFF, HIGH); // Armed / Normal circuit closed
+}
+
+bool evaluateSafetyInterlock() {
+  // Update moving average filter
+  running_sum -= adc_history[history_index];
+  adc_history[history_index] = analogRead(PIN_SENSOR_ADC);
+  running_sum += adc_history[history_index];
+  history_index = (history_index + 1) % FILTER_SAMPLES;
+
+  int smoothed_adc = running_sum / FILTER_SAMPLES;
+
+  // Interlock comparator logic
+  if (smoothed_adc >= BENCH_THRESHOLD) {
+    digitalWrite(PIN_RELAY_CUTOFF, LOW); // Cutoff ignition circuit
+    return false; // Interlock active: start prohibited
+  } else {
+    digitalWrite(PIN_RELAY_CUTOFF, HIGH); // Maintain starter connection
+    return true;  // Safe: start permitted
+  }
+}`
+    },
+    architectureDetails: "Analog voltage from the sensor voltage divider is sampled on GPIO 34. A moving-average filter smooths the signal; when the reading exceeds the calibrated bench threshold (2235 ADC counts / ~1.8V), GPIO 26 de-energizes the normally-closed relay to simulate starter lockout.",
+    engineeringLearnings: [
+      "Thermal stabilization characteristics of metal-oxide semiconductor gas sensors.",
+      "Decoupling 150mA continuous heater current from sensitive 3.3V microcontroller logic.",
+      "Optocoupled galvanic isolation and flyback diode protection for inductive relay coils."
+    ],
+    image: "/projects/alcohol-detection.svg",
+    githubUrl: undefined,
+    liveUrl: undefined
+  },
+  {
+    id: "worker-management-platform",
+    title: "TrustGuard / 1WORKER — Enterprise Workforce Management App",
+    tagline: "Workforce Operations Platform for Worker Verification, Shift Attendance & Task Management",
+    category: "Workforce Tech",
+    status: "Private Project",
+    developmentStatus: "Private Project",
+    statusBadgeColor: "amber",
+    isPrivate: true,
+    overview: "A comprehensive workforce operations application concept designed for industrial, contract, and site labor environments. Provides structured worker profile registration, shift scheduling, daily check-in workflows, and operational task dispatching.",
+    problemStatement: "Distributed workforce sites frequently suffer from fragmented worker verification, inaccurate paper-based shift records, delayed daily task allocation, and lack of verified supervisor review channels.",
+    projectObjectives: [
+      "Establish a structured worker profile registration and onboarding framework.",
+      "Provide daily shift check-in and check-out tracking workflows.",
+      "Implement supervisor task allocation and real-time completion tracking.",
+      "Maintain role-based permission boundaries between workers, site supervisors, and managers.",
+      "Support transparent operational audit logging and shift summaries."
+    ],
+    technologies: ["Python", "Django", "PostgreSQL / SQLite", "REST APIs", "Redis / Background Queues", "HTML5", "Tailwind CSS"],
+    keyFeatures: [
+      "Worker Profile Management: Structured onboarding with role assignment and verified details.",
+      "Shift & Attendance Workflows: Daily check-in/check-out tracking with shift state verification.",
+      "Task Assignment & Monitoring: Supervisor task dispatching with real-time status updates.",
+      "Role-Based Access Control: Segregated views for workforce members, site supervisors, and managers.",
+      "Audit Trail & Reporting: Comprehensive logging of shift completions and operational metrics."
+    ],
+    myContribution: "Architected relational database models for workforce profiles, developed shift check-in state transition logic, built role-based access permissions, and designed responsive management views.",
+    implementationHighlights: [
+      "Normalized relational schema for worker profiles, active job sites, and daily shift logs.",
+      "Transaction-safe shift check-in state machine preventing duplicate or overlapping shifts.",
+      "Mobile-friendly dashboard interface tailored for site supervisors and field teams."
+    ],
+    futureImprovements: [
+      "Implement offline-first Progressive Web App (PWA) sync for low-connectivity job sites.",
+      "Add automated SMS/WhatsApp notification alerts for shift rosters and urgent task dispatch.",
+      "Incorporate geofenced validation checks for verified on-site check-ins."
+    ],
+    demoCode: {
+      language: "python",
+      filename: "workforce_shift_manager_demo.py",
+      explanation: "Conceptual illustrative demonstrator of worker shift state transition and duration calculation.",
+      snippet: `# DEMO CODE — REPRESENTATIONAL EXAMPLE
+# This is a simplified demonstration snippet created to explain the project concept.
+# It is not the original production source code and does not expose the private implementation.
+
+from datetime import datetime
+
+class WorkforceShiftManager:
+    def __init__(self):
+        self.active_shifts = {}
+
+    def register_check_in(self, worker_id, site_id, check_in_time=None):
+        """Records a new shift check-in if no active shift is open."""
+        check_in_time = check_in_time or datetime.utcnow()
+        if worker_id in self.active_shifts:
+            raise ValueError(f"Worker {worker_id} already has an active open shift.")
+        
+        record = {
+            "worker_id": worker_id,
+            "site_id": site_id,
+            "check_in": check_in_time,
+            "status": "IN_PROGRESS"
+        }
+        self.active_shifts[worker_id] = record
+        return record
+
+    def register_check_out(self, worker_id, check_out_time=None):
+        """Concludes an active shift and calculates total billable duration."""
+        check_out_time = check_out_time or datetime.utcnow()
+        shift = self.active_shifts.pop(worker_id, None)
+        if not shift:
+            raise ValueError(f"No active shift found for worker {worker_id}.")
+        
+        duration_seconds = (check_out_time - shift["check_in"]).total_seconds()
+        shift["check_out"] = check_out_time
+        shift["status"] = "COMPLETED"
+        shift["duration_hours"] = round(max(0.0, duration_seconds / 3600.0), 2)
+        return shift`
+    },
+    architectureDetails: "Decoupled web application: Django application framework manages relational persistence, transaction safety, and role authorization; background workers handle periodic shift rollups and notification queuing.",
+    engineeringLearnings: [
+      "Designing resilient state machines for shift lifecycle (Checked-in -> On-Duty -> Break -> Checked-out).",
+      "Handling edge-case state conflicts such as midnight shift crossovers and missed check-out punches.",
+      "Structuring role-based view permissions with strict least-privilege access."
     ],
     image: "/projects/face-recognition.svg",
-    githubUrl: "https://github.com/shubhampatel0487",
+    githubUrl: undefined,
     liveUrl: undefined
   },
   {
@@ -160,60 +408,7 @@ export const projectsData: ProjectItem[] = [
       "Safe multi-part file uploads and file sanitization routines."
     ],
     image: "/projects/assignment-checker.svg",
-    githubUrl: "https://github.com/shubhampatel0487",
-    liveUrl: undefined
-  },
-  {
-    id: "esp32-alcohol-detection",
-    title: "ESP32-Based Alcohol Vapour Detection & Safety Interlock",
-    tagline: "Benchtop Microcontroller Circuit with Gas-Sensing Threshold Logic & Relay Actuation",
-    category: "Embedded & IoT",
-    status: "Completed",
-    statusBadgeColor: "emerald",
-    overview: "An embedded safety prototype designed to demonstrate alcohol vapour detection and starter lockout feasibility. Interfaces a heated SnO2 semiconductor sensor with an ESP32 microcontroller to sample vapour levels, applying moving-average filtering to trigger a 5V optocoupled relay and audio-visual alarms upon crossing bench thresholds.",
-    problemStatement: "Alcohol-impaired vehicle operation is a leading cause of transit accidents. Exploring deterministic embedded interlocks investigates whether pre-ignition vapour screening can actively block starter circuit activation before a vehicle can be operated.",
-    technologies: ["ESP32", "Arduino C++", "SnO2 Gas Sensor (MQ-3)", "5V Optocoupled Relay", "Piezo Buzzer", "Status LEDs", "Breadboard Prototyping"],
-    keyFeatures: [
-      "Real-time analog alcohol-vapour sampling via 12-bit ESP32 SAR ADC (GPIO 34).",
-      "16-sample digital moving-average noise filter to suppress thermal line fluctuation.",
-      "Deterministic threshold comparator actuating a 5V optocoupled relay (<100ms response).",
-      "Audio-visual feedback via 2.4 kHz piezo buzzer and dual-color status LEDs (Green/Red).",
-      "Strict benchtop safety boundary (demonstration only, not connected to moving vehicle)."
-    ],
-    architectureDetails: "Analog voltage from the sensor voltage divider is sampled on GPIO 34. A moving-average filter smooths the signal; when the reading exceeds the calibrated bench threshold (2235 ADC counts / ~1.8V), GPIO 26 de-energizes the normally-closed relay to simulate starter lockout.",
-    engineeringLearnings: [
-      "Thermal stabilization characteristics of metal-oxide semiconductor gas sensors.",
-      "Decoupling 150mA continuous heater current from sensitive 3.3V microcontroller logic.",
-      "Optocoupled galvanic isolation and flyback diode protection for inductive relay coils."
-    ],
-    image: "/projects/alcohol-detection.svg",
-    githubUrl: "https://github.com/shubhampatel0487/ESP32-Alcohol-Detection-Safety",
-    liveUrl: undefined
-  },
-  {
-    id: "python-quiz-game",
-    title: "Python Quiz Game Application",
-    tagline: "Interactive Terminal Quiz Application with Modular Scoring & Question Management",
-    category: "Python Apps",
-    status: "Completed",
-    statusBadgeColor: "emerald",
-    overview: "An interactive educational quiz application built in Python. Designed with structured question handling, instant answer validation, real-time score calculation, and formatted terminal outputs.",
-    problemStatement: "Building strong computer science intuition requires mastering program control flow, data structure traversal, and user input validation from the ground up.",
-    technologies: ["Python 3", "Modular Program Design", "File I/O", "Data Structures"],
-    keyFeatures: [
-      "Dynamic Question Bank: Extensible question data structures.",
-      "Instant Answer Validation: Case-insensitive answer parsing with score tallies.",
-      "Real-Time Statistics: End-of-quiz score breakdown and percentage metrics.",
-      "Replayable Session Logic: Seamless menu loops allowing multiple gameplay sessions."
-    ],
-    architectureDetails: "Object-oriented Python script utilizing dictionary mappings for questions, options, and verified answers. Implements strict input sanitation and error handling.",
-    engineeringLearnings: [
-      "Writing modular, reusable Python functions and clean control structures.",
-      "Handling invalid user keystrokes without program crashes.",
-      "Formatting clean command-line interfaces."
-    ],
-    image: "/projects/quiz-game.svg",
-    githubUrl: "https://github.com/shubhampatel0487",
+    githubUrl: undefined,
     liveUrl: undefined
   },
   {
@@ -239,7 +434,7 @@ export const projectsData: ProjectItem[] = [
       "Deploying interactive data exploration frontends using Streamlit."
     ],
     image: "/projects/pinn-battery.svg",
-    githubUrl: "https://github.com/shubhampatel0487",
+    githubUrl: undefined,
     liveUrl: undefined
   },
   {
@@ -265,7 +460,7 @@ export const projectsData: ProjectItem[] = [
       "Implementing responsive UI components with clear safety scoring indicators."
     ],
     image: "/projects/trustguard.svg",
-    githubUrl: "https://github.com/shubhampatel0487",
+    githubUrl: undefined,
     liveUrl: undefined
   },
   {
@@ -291,7 +486,7 @@ export const projectsData: ProjectItem[] = [
       "Managing Linux system dependencies and display passthrough within containerized environments."
     ],
     image: "/projects/ros2-drone.svg",
-    githubUrl: "https://github.com/shubhampatel0487",
+    githubUrl: undefined,
     liveUrl: undefined
   }
 ];

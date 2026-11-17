@@ -17,7 +17,9 @@ import {
   Activity,
   Sliders,
   Check,
-  AlertTriangle
+  AlertTriangle,
+  Bot,
+  Layers
 } from 'lucide-react';
 
 interface DiagramNode {
@@ -463,6 +465,36 @@ export const DiagramViewer: React.FC = () => {
     URL.revokeObjectURL(svgUrl);
   };
 
+  const getBlueprintBadgeStyle = (id: string) => {
+    switch (id) {
+      case 'diag-alc-circuit':
+        return {
+          icon: <CircuitBoard className="w-3.5 h-3.5 text-cyan-400" />,
+          accent: 'bg-cyan-500/20 text-cyan-300 border-cyan-400/50',
+          selectedBorder: 'border-cyan-400 shadow-cyan-500/20 ring-cyan-400'
+        };
+      case 'diag-asg-flow':
+        return {
+          icon: <Layers className="w-3.5 h-3.5 text-emerald-400" />,
+          accent: 'bg-emerald-500/20 text-emerald-300 border-emerald-400/50',
+          selectedBorder: 'border-emerald-400 shadow-emerald-500/20 ring-emerald-400'
+        };
+      case 'diag-quiz-arch':
+        return {
+          icon: <Sparkles className="w-3.5 h-3.5 text-purple-400" />,
+          accent: 'bg-purple-500/20 text-purple-300 border-purple-400/50',
+          selectedBorder: 'border-purple-400 shadow-purple-500/20 ring-purple-400'
+        };
+      case 'diag-ros2-drone':
+      default:
+        return {
+          icon: <Bot className="w-3.5 h-3.5 text-sky-400" />,
+          accent: 'bg-sky-500/20 text-sky-300 border-sky-400/50',
+          selectedBorder: 'border-sky-400 shadow-sky-500/20 ring-sky-400'
+        };
+    }
+  };
+
   return (
     <section id="diagrams" className="py-20 sm:py-28 relative z-10 border-t border-[#253247]/60 bg-[#070D18]/95 overflow-hidden">
       
@@ -505,34 +537,41 @@ export const DiagramViewer: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">
           {diagrams.map((d, index) => {
             const isSelected = activeDiagram.id === d.id;
+            const style = getBlueprintBadgeStyle(d.id);
             return (
               <button
                 key={d.id}
                 onClick={() => handleSelectDiagram(d)}
                 className={`p-4 rounded-2xl text-left border transition-all duration-200 relative flex flex-col justify-between group cursor-pointer ${
                   isSelected
-                    ? 'bg-gradient-to-br from-[#0F1E3D] via-[#0B152B] to-[#070D1A] border-cyan-400 shadow-xl shadow-cyan-500/20 ring-1 ring-cyan-400 scale-[1.02]'
+                    ? `bg-gradient-to-br from-[#0F1E3D] via-[#0B152B] to-[#070D1A] ${style.selectedBorder} shadow-xl ring-1 scale-[1.02]`
                     : 'bg-[#0B1325]/90 border-[#253247] hover:border-slate-500 hover:bg-[#0E172A]'
                 }`}
               >
                 {/* Top Row: Index Badge & Type Badge */}
-                <div className="flex items-center justify-between mb-2.5 w-full">
-                  <span
-                    className={`w-7 h-7 rounded-lg text-xs font-mono font-bold flex items-center justify-center transition-all ${
-                      isSelected
-                        ? 'bg-cyan-400 text-slate-950 font-black shadow-md shadow-cyan-400/40'
-                        : 'bg-[#111B2B] text-slate-300 border border-[#253247] group-hover:border-slate-500'
-                    }`}
-                  >
-                    0{index + 1}
-                  </span>
+                <div className="flex items-center justify-between mb-2.5 w-full gap-2">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`w-7 h-7 rounded-lg text-xs font-mono font-bold flex items-center justify-center transition-all ${
+                        isSelected
+                          ? 'bg-cyan-400 text-slate-950 font-black shadow-md shadow-cyan-400/40'
+                          : 'bg-[#111B2B] text-slate-300 border border-[#253247] group-hover:border-slate-500'
+                      }`}
+                    >
+                      0{index + 1}
+                    </span>
+                    <span className="p-1 rounded-md bg-[#111B2B] border border-[#253247]">
+                      {style.icon}
+                    </span>
+                  </div>
 
                   <span
-                    className={`text-[10px] font-mono px-2 py-0.5 rounded-md border tracking-wider uppercase transition-colors ${
+                    className={`text-[9px] sm:text-[10px] font-mono px-2 py-0.5 rounded-md border tracking-wide uppercase font-semibold transition-colors truncate max-w-[145px] ${
                       isSelected
-                        ? 'bg-cyan-500/20 text-cyan-300 border-cyan-400/50 font-bold'
+                        ? `${style.accent} font-bold`
                         : 'bg-[#111B2B] text-slate-400 border-[#253247]'
                     }`}
+                    title={d.type}
                   >
                     {d.type}
                   </span>

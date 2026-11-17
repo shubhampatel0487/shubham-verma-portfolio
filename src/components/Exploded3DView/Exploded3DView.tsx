@@ -155,8 +155,8 @@ export const Exploded3DView: React.FC = () => {
   const isDraggingRef = useRef(false);
   const pointerStartRef = useRef({ x: 0, y: 0 });
   const prevMouseRef = useRef({ x: 0, y: 0 });
-  const orbitAngleRef = useRef({ theta: Math.PI / 4, phi: Math.PI / 4.5, radius: 7.2 });
-  const targetOrbitAngleRef = useRef({ theta: Math.PI / 4, phi: Math.PI / 4.5, radius: 7.2 });
+  const orbitAngleRef = useRef({ theta: Math.PI / 4, phi: Math.PI / 4.5, radius: 4.8 });
+  const targetOrbitAngleRef = useRef({ theta: Math.PI / 4, phi: Math.PI / 4.5, radius: 4.8 });
 
   useEffect(() => {
     explosionPercentRef.current = explosionPercent;
@@ -187,16 +187,16 @@ export const Exploded3DView: React.FC = () => {
     setIsRotating(false);
     switch (preset) {
       case 'isometric':
-        targetOrbitAngleRef.current = { theta: Math.PI / 4, phi: Math.PI / 4.5, radius: 7.2 };
+        targetOrbitAngleRef.current = { theta: Math.PI / 4, phi: Math.PI / 4.5, radius: 4.8 };
         break;
       case 'top':
-        targetOrbitAngleRef.current = { theta: 0.01, phi: 0.06, radius: 7.8 };
+        targetOrbitAngleRef.current = { theta: 0.01, phi: 0.06, radius: 5.2 };
         break;
       case 'side':
-        targetOrbitAngleRef.current = { theta: Math.PI / 2, phi: Math.PI / 2.05, radius: 7.4 };
+        targetOrbitAngleRef.current = { theta: Math.PI / 2, phi: Math.PI / 2.05, radius: 4.8 };
         break;
       case 'front':
-        targetOrbitAngleRef.current = { theta: 0.01, phi: Math.PI / 2.3, radius: 7.0 };
+        targetOrbitAngleRef.current = { theta: 0.01, phi: Math.PI / 2.3, radius: 4.6 };
         break;
     }
   };
@@ -223,10 +223,10 @@ export const Exploded3DView: React.FC = () => {
 
     // 1. Scene, Camera, Renderer
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x060913, 0.045);
+    scene.fog = new THREE.FogExp2(0x060913, 0.012);
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.set(5.2, 4.5, 6.2);
+    camera.position.set(3.8, 3.2, 4.5);
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
@@ -237,24 +237,28 @@ export const Exploded3DView: React.FC = () => {
     container.appendChild(renderer.domElement);
 
     // 2. High-Tech Studio Lighting
-    const ambientLight = new THREE.AmbientLight(0x0c1628, 2.8);
+    const ambientLight = new THREE.AmbientLight(0x1e293b, 3.2);
     scene.add(ambientLight);
 
-    const keySpot = new THREE.SpotLight(0x38bdf8, 6.5, 30, Math.PI / 3.5, 0.25, 1);
+    const keySpot = new THREE.SpotLight(0xffffff, 6.5, 30, Math.PI / 3.2, 0.25, 1);
     keySpot.position.set(6, 11, 7);
     keySpot.castShadow = true;
     keySpot.shadow.bias = -0.0005;
     scene.add(keySpot);
 
-    const purpleBacklight = new THREE.PointLight(0x8b5cf6, 4.5, 20);
+    const cyanRim = new THREE.DirectionalLight(0x38bdf8, 3.8);
+    cyanRim.position.set(-6, 6, -4);
+    scene.add(cyanRim);
+
+    const purpleBacklight = new THREE.PointLight(0x8b5cf6, 4.0, 20);
     purpleBacklight.position.set(-6, -3, -5);
     scene.add(purpleBacklight);
 
-    const emeraldFill = new THREE.PointLight(0x10b981, 2.5, 18);
+    const emeraldFill = new THREE.PointLight(0x10b981, 2.8, 18);
     emeraldFill.position.set(5, -4, -3);
     scene.add(emeraldFill);
 
-    const bottomGlow = new THREE.DirectionalLight(0x0ea5e9, 1.4);
+    const bottomGlow = new THREE.DirectionalLight(0x0ea5e9, 1.8);
     bottomGlow.position.set(0, -6, 0);
     scene.add(bottomGlow);
 
@@ -694,6 +698,13 @@ export const Exploded3DView: React.FC = () => {
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('touchend', handleTouchEnd);
 
+    // Mouse wheel zoom
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      targetOrbitAngleRef.current.radius = Math.max(2.4, Math.min(8.0, targetOrbitAngleRef.current.radius + e.deltaY * 0.003));
+    };
+    domElement.addEventListener('wheel', handleWheel, { passive: false });
+
     // -------------------------------------------------------------
     // Animation Loop
     // -------------------------------------------------------------
@@ -835,6 +846,7 @@ export const Exploded3DView: React.FC = () => {
       domElement.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
+      domElement.removeEventListener('wheel', handleWheel);
 
       if (container && renderer.domElement) {
         container.removeChild(renderer.domElement);

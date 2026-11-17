@@ -75,7 +75,7 @@ export const RoboticFabricationLab3D: React.FC = () => {
   const manualJointsRef = useRef({ j1: 0, j2: 35, j3: -45, j4: 20, gripper: 0.08 });
   const isDraggingRef = useRef(false);
   const prevMouseRef = useRef({ x: 0, y: 0 });
-  const orbitAngleRef = useRef({ theta: Math.PI / 3.8, phi: Math.PI / 4.2, radius: 6.2 });
+  const orbitAngleRef = useRef({ theta: Math.PI / 3.8, phi: Math.PI / 4.2, radius: 3.8 });
 
   useEffect(() => {
     isPlayingRef.current = isPlaying;
@@ -115,10 +115,10 @@ export const RoboticFabricationLab3D: React.FC = () => {
 
     // 1. Scene, Camera, Renderer
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x060913, 0.04);
+    scene.fog = new THREE.FogExp2(0x060913, 0.012);
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.set(4.8, 4.2, 5.5);
+    camera.position.set(3.2, 2.8, 3.8);
     camera.lookAt(0, 1.2, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
@@ -129,17 +129,21 @@ export const RoboticFabricationLab3D: React.FC = () => {
     container.appendChild(renderer.domElement);
 
     // 2. High-Tech Factory Lighting
-    const ambientLight = new THREE.AmbientLight(0x0c1628, 2.8);
+    const ambientLight = new THREE.AmbientLight(0x1e293b, 3.2);
     scene.add(ambientLight);
 
-    const mainKey = new THREE.SpotLight(0x38bdf8, 5.5, 25, Math.PI / 3.5, 0.25, 1);
-    mainKey.position.set(5, 9, 6);
+    const mainKey = new THREE.SpotLight(0xffffff, 6.0, 30, Math.PI / 3.2, 0.25, 1);
+    mainKey.position.set(5, 10, 6);
     mainKey.castShadow = true;
     mainKey.shadow.bias = -0.0005;
     scene.add(mainKey);
 
+    const cyanRim = new THREE.DirectionalLight(0x38bdf8, 3.8);
+    cyanRim.position.set(-6, 6, -4);
+    scene.add(cyanRim);
+
     const violetFill = new THREE.PointLight(0x8b5cf6, 3.5, 15);
-    violetFill.position.set(-6, 5, -3);
+    violetFill.position.set(-5, 4, -3);
     scene.add(violetFill);
 
     const laserBeamLight = new THREE.PointLight(0x38bdf8, 0, 4);
@@ -204,20 +208,23 @@ export const RoboticFabricationLab3D: React.FC = () => {
     const armRoot = new THREE.Group();
     scene.add(armRoot);
 
-    const darkMetalMat = new THREE.MeshStandardMaterial({
-      color: 0x1a2638,
-      roughness: 0.3,
-      metalness: 0.85,
+    const industrialWhiteMat = new THREE.MeshStandardMaterial({
+      color: 0xf1f5f9, // Crisp clean titanium white robot body
+      roughness: 0.25,
+      metalness: 0.35,
     });
     const jointAccentMat = new THREE.MeshStandardMaterial({
-      color: 0x0284c7,
-      roughness: 0.25,
-      metalness: 0.7,
+      color: 0x0284c7, // Vibrant cyber cyan servo casing
+      roughness: 0.2,
+      metalness: 0.75,
     });
     const linkAccentMat = new THREE.MeshStandardMaterial({
-      color: 0x334155,
-      roughness: 0.4,
+      color: 0x334155, // Matte graphite structural linkages
+      roughness: 0.35,
       metalness: 0.8,
+    });
+    const jointGlowRingMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
     });
 
     // Joint 1: Base Turntable
@@ -225,10 +232,13 @@ export const RoboticFabricationLab3D: React.FC = () => {
     baseGroup.position.y = 0.35;
     armRoot.add(baseGroup);
 
-    const baseTurret = new THREE.Mesh(new THREE.CylinderGeometry(0.65, 0.8, 0.4, 24), darkMetalMat);
+    const baseTurret = new THREE.Mesh(new THREE.CylinderGeometry(0.65, 0.8, 0.4, 24), industrialWhiteMat);
     baseTurret.position.y = 0.2;
     baseTurret.castShadow = true;
-    baseGroup.add(baseTurret);
+    const baseGlowRing = new THREE.Mesh(new THREE.TorusGeometry(0.68, 0.015, 12, 32), jointGlowRingMat);
+    baseGlowRing.rotation.x = Math.PI / 2;
+    baseGlowRing.position.y = 0.38;
+    baseGroup.add(baseTurret, baseGlowRing);
 
     // Joint 2: Shoulder Pitch
     const shoulderGroup = new THREE.Group();
@@ -240,10 +250,12 @@ export const RoboticFabricationLab3D: React.FC = () => {
     shoulderJoint.castShadow = true;
     shoulderGroup.add(shoulderJoint);
 
-    const link1 = new THREE.Mesh(new THREE.BoxGeometry(0.26, 1.4, 0.26), linkAccentMat);
+    const link1 = new THREE.Mesh(new THREE.BoxGeometry(0.28, 1.4, 0.28), industrialWhiteMat);
     link1.position.set(0, 0.7, 0);
     link1.castShadow = true;
-    shoulderGroup.add(link1);
+    const link1Stripe = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.2, 0.29), jointGlowRingMat);
+    link1Stripe.position.set(0, 0.7, 0);
+    shoulderGroup.add(link1, link1Stripe);
 
     // Joint 3: Elbow Pitch
     const elbowGroup = new THREE.Group();
@@ -255,7 +267,7 @@ export const RoboticFabricationLab3D: React.FC = () => {
     elbowJoint.castShadow = true;
     elbowGroup.add(elbowJoint);
 
-    const link2 = new THREE.Mesh(new THREE.BoxGeometry(0.2, 1.25, 0.2), darkMetalMat);
+    const link2 = new THREE.Mesh(new THREE.BoxGeometry(0.22, 1.25, 0.22), industrialWhiteMat);
     link2.position.set(0, 0.625, 0);
     link2.castShadow = true;
     elbowGroup.add(link2);
@@ -270,7 +282,7 @@ export const RoboticFabricationLab3D: React.FC = () => {
     wristGroup.add(wristJoint);
 
     // Gripper Tool Assembly with Pneumatic Fingers & Laser Head
-    const gripperBase = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.12, 0.28), darkMetalMat);
+    const gripperBase = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.12, 0.28), linkAccentMat);
     gripperBase.position.y = 0.12;
     wristGroup.add(gripperBase);
 
@@ -459,6 +471,13 @@ export const RoboticFabricationLab3D: React.FC = () => {
     domElement.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('touchend', handleTouchEnd);
+
+    // Mouse wheel zoom
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      orbitAngleRef.current.radius = Math.max(1.8, Math.min(6.5, orbitAngleRef.current.radius + e.deltaY * 0.003));
+    };
+    domElement.addEventListener('wheel', handleWheel, { passive: false });
 
     // -------------------------------------------------------------
     // Fabrication Timeline & Inverse Kinematics Loop
@@ -755,6 +774,7 @@ export const RoboticFabricationLab3D: React.FC = () => {
       domElement.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
+      domElement.removeEventListener('wheel', handleWheel);
 
       if (container && renderer.domElement) {
         container.removeChild(renderer.domElement);

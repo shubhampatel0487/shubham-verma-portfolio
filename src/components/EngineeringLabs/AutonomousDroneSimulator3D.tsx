@@ -747,13 +747,13 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
             </div>
 
             {/* Top HUD Heading Bar */}
-            <div className="absolute top-3 left-4 right-4 z-20 flex items-center justify-between text-[11px] font-mono pointer-events-none">
+            <div className="absolute top-3 left-2 right-2 sm:left-4 sm:right-4 z-20 flex flex-wrap items-center justify-between gap-1.5 text-[10px] sm:text-[11px] font-mono pointer-events-none">
               {/* Heading Tape */}
-              <div className="bg-[#0C1220]/85 backdrop-blur-md px-3 py-1.5 rounded-xl border border-[#253247] text-white flex items-center gap-2">
+              <div className="bg-[#0C1220]/85 backdrop-blur-md px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-[#253247] text-white flex items-center gap-1.5 sm:gap-2">
                 <Compass className="w-3.5 h-3.5 text-[#38BDF8]" />
                 <span className="text-[#38BDF8] font-bold">HDG:</span>
                 <span>{headingDeg.toString().padStart(3, '0')}°</span>
-                <span className="text-slate-400 text-[10px]">
+                <span className="text-slate-400 text-[9px] sm:text-[10px]">
                   {headingDeg >= 315 || headingDeg < 45
                     ? 'N'
                     : headingDeg >= 45 && headingDeg < 135
@@ -765,9 +765,9 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
               </div>
 
               {/* Navigation Status */}
-              <div className="bg-[#0C1220]/85 backdrop-blur-md px-3 py-1.5 rounded-xl border border-[#253247] text-emerald-400 flex items-center gap-2">
+              <div className="bg-[#0C1220]/85 backdrop-blur-md px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-[#253247] text-emerald-400 flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px]">
                 <Radio className="w-3.5 h-3.5 animate-pulse" />
-                <span>GPS FIX: 18 SATS (RTK)</span>
+                <span>GPS: 18 SATS (RTK)</span>
               </div>
             </div>
 
@@ -797,31 +797,31 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
             </div>
 
             {/* Left HUD: Altitude Tape */}
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 z-20 pointer-events-none bg-[#0C1220]/85 backdrop-blur-md px-2.5 py-3 rounded-xl border border-[#253247] text-xs font-mono space-y-1">
-              <span className="text-[10px] text-slate-400 uppercase block">ALTITUDE</span>
-              <div className="text-lg font-bold text-white flex items-baseline gap-1">
+            <div className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 pointer-events-none bg-[#0C1220]/85 backdrop-blur-md px-2 sm:px-2.5 py-2 sm:py-3 rounded-xl border border-[#253247] text-[11px] sm:text-xs font-mono space-y-0.5 sm:space-y-1">
+              <span className="text-[9px] sm:text-[10px] text-slate-400 uppercase block">ALTITUDE</span>
+              <div className="text-sm sm:text-lg font-bold text-white flex items-baseline gap-1">
                 <span>{altitude.toFixed(1)}</span>
-                <span className="text-xs text-[#38BDF8]">m</span>
+                <span className="text-[10px] sm:text-xs text-[#38BDF8]">m</span>
               </div>
-              <div className="text-[10px] text-slate-400">
+              <div className="text-[9px] sm:text-[10px] text-slate-400">
                 LiDAR: {Math.max(0, altitude - 0.2).toFixed(1)}m
               </div>
             </div>
 
             {/* Right HUD: Groundspeed Tape */}
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20 pointer-events-none bg-[#0C1220]/85 backdrop-blur-md px-2.5 py-3 rounded-xl border border-[#253247] text-xs font-mono space-y-1 text-right">
-              <span className="text-[10px] text-slate-400 uppercase block">GROUNDSPEED</span>
-              <div className="text-lg font-bold text-white flex items-baseline justify-end gap-1">
+            <div className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 pointer-events-none bg-[#0C1220]/85 backdrop-blur-md px-2 sm:px-2.5 py-2 sm:py-3 rounded-xl border border-[#253247] text-[11px] sm:text-xs font-mono space-y-0.5 sm:space-y-1 text-right">
+              <span className="text-[9px] sm:text-[10px] text-slate-400 uppercase block">SPEED</span>
+              <div className="text-sm sm:text-lg font-bold text-white flex items-baseline justify-end gap-1">
                 <span>{groundSpeed.toFixed(1)}</span>
-                <span className="text-xs text-[#38BDF8]">m/s</span>
+                <span className="text-[10px] sm:text-xs text-[#38BDF8]">m/s</span>
               </div>
-              <div className="text-[10px] text-slate-400">
+              <div className="text-[9px] sm:text-[10px] text-slate-400">
                 {(groundSpeed * 1.944).toFixed(1)} kts
               </div>
             </div>
 
             {/* Bottom HUD: Live Telemetry Tape */}
-            <div className="absolute bottom-3 left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-2 bg-[#0C1220]/90 backdrop-blur-md px-4 py-2.5 rounded-xl border border-[#253247] text-xs font-mono pointer-events-none">
+            <div className="absolute bottom-3 left-2 right-2 sm:left-4 sm:right-4 z-20 flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 bg-[#0C1220]/90 backdrop-blur-md px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-[#253247] text-[11px] sm:text-xs font-mono pointer-events-none">
               <div>
                 <span className="text-slate-500 text-[10px] block">PX4 FLIGHT MODE</span>
                 <span className="text-[#38BDF8] font-bold uppercase">{flightMode}</span>

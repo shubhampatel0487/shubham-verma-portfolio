@@ -153,8 +153,8 @@ export const projectsData: ProjectItem[] = [
       filename: "quiz_evaluator_demo.py",
       explanation: "Conceptual illustrative demonstration of question bank scoring and performance analytics calculation.",
       snippet: `# DEMO CODE — REPRESENTATIONAL EXAMPLE
-# This is a simplified demonstration snippet created to explain the project concept.
-# It is not the original production source code and does not expose the private implementation.
+# This is a simplified illustrative example created for demonstration and educational purposes.
+# It is not the original private project source code and does not represent the complete production implementation.
 
 class QuizAssessmentEngine:
     def __init__(self, passing_threshold=0.60):
@@ -248,8 +248,8 @@ class QuizAssessmentEngine:
       filename: "esp32_interlock_demo.ino",
       explanation: "Conceptual illustrative demonstrator of ADC moving-average filter and threshold interlock lockout.",
       snippet: `// DEMO CODE — REPRESENTATIONAL EXAMPLE
-// This is a simplified demonstration snippet created to explain the project concept.
-// It is not the original production source code and does not expose the private implementation.
+// This is a simplified illustrative example created for demonstration and educational purposes.
+// It is not the original private project source code and does not represent the complete production implementation.
 
 #include <Arduino.h>
 
@@ -338,8 +338,8 @@ bool evaluateSafetyInterlock() {
       filename: "workforce_shift_manager_demo.py",
       explanation: "Conceptual illustrative demonstrator of worker shift state transition and duration calculation.",
       snippet: `# DEMO CODE — REPRESENTATIONAL EXAMPLE
-# This is a simplified demonstration snippet created to explain the project concept.
-# It is not the original production source code and does not expose the private implementation.
+# This is a simplified illustrative example created for demonstration and educational purposes.
+# It is not the original private project source code and does not represent the complete production implementation.
 
 from datetime import datetime
 

@@ -142,7 +142,7 @@ export const CodeExplorer: React.FC = () => {
                   {activeFile.language}
                 </span>
                 <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30 uppercase font-bold tracking-wider">
-                  DEMO CODE &bull; REPRESENTATIONAL EXAMPLE
+                  DEMO CODE — REPRESENTATIONAL EXAMPLE
                 </span>
               </div>
 
@@ -178,6 +178,16 @@ export const CodeExplorer: React.FC = () => {
                   ))}
                 </div>
               </pre>
+            </div>
+
+            {/* Mandatory Demonstration Disclaimer Banner */}
+            <div className="px-5 py-3 bg-[#080E1C] border-t border-[#253247] text-[11px] font-sans text-slate-300 flex items-start gap-2.5">
+              <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono text-[9px] font-bold uppercase tracking-wider shrink-0 mt-0.5">
+                DISCLAIMER
+              </span>
+              <p className="leading-relaxed">
+                "This is a simplified illustrative example created for demonstration and educational purposes. It is not the original private project source code and does not represent the complete production implementation."
+              </p>
             </div>
 
             {/* Explanation & Function Breakdown Panel */}

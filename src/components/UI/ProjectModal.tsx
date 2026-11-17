@@ -288,7 +288,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <span className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 uppercase tracking-wider">
-                    DEMO CODE &bull; REPRESENTATIONAL EXAMPLE
+                    DEMO CODE — REPRESENTATIONAL EXAMPLE
                   </span>
                   <span className="text-xs font-mono text-cyan-400 font-semibold">
                     {project.demoCode.filename} ({project.demoCode.language.toUpperCase()})
@@ -313,8 +313,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               </div>
 
               {/* Mandatory Demonstration Disclaimer */}
-              <div className="p-3 rounded-xl bg-[#090E1A] border border-cyan-500/20 text-[11px] font-sans text-slate-400 leading-relaxed">
-                <strong className="text-cyan-400 font-mono">Demonstration Notice:</strong> This is a simplified demonstration snippet created to explain the project concept. It is not the original production source code and does not expose the private implementation.
+              <div className="p-3.5 rounded-xl bg-[#090E1A] border border-amber-500/30 text-[11px] font-sans text-slate-300 leading-relaxed">
+                <span className="font-mono font-bold text-amber-400 block mb-1">
+                  DEMO CODE — REPRESENTATIONAL EXAMPLE
+                </span>
+                <p>
+                  "This is a simplified illustrative example created for demonstration and educational purposes. It is not the original private project source code and does not represent the complete production implementation."
+                </p>
               </div>
             </div>
           )}

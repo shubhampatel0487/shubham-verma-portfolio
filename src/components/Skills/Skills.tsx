@@ -10,11 +10,11 @@ export const Skills: React.FC = () => {
   const categories = [
     { id: 'all', label: 'All Technologies', icon: Code2 },
     { id: 'programming', label: 'Programming', icon: Code2 },
-    { id: 'ai_ml', label: 'Artificial Intelligence', icon: Brain },
-    { id: 'robotics', label: 'Robotics & Control', icon: Bot },
     { id: 'embedded', label: 'Embedded Systems', icon: Cpu },
-    { id: 'web', label: 'Web & APIs', icon: Globe },
-    { id: 'tools', label: 'Tools & Linux', icon: Wrench },
+    { id: 'robotics', label: 'Robotics & Mechatronics', icon: Bot },
+    { id: 'ai_ml', label: 'AI & Machine Learning', icon: Brain },
+    { id: 'web', label: 'Web Development', icon: Globe },
+    { id: 'tools', label: 'Tools & Technologies', icon: Wrench },
   ];
 
   const filteredSkills = skillsData.filter((skill: SkillItem) => {

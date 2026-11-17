@@ -759,31 +759,31 @@ export const RoboticFabricationLab3D: React.FC = () => {
             </div>
 
             {/* Top HUD: Workstation Status Banner */}
-            <div className="absolute top-3 left-4 right-4 z-20 flex items-center justify-between text-[11px] font-mono pointer-events-none">
-              <div className="bg-[#0C1220]/85 backdrop-blur-md px-3 py-1.5 rounded-xl border border-[#253247] text-white flex items-center gap-2">
-                <Bot className="w-3.5 h-3.5 text-[#38BDF8]" />
-                <span className="text-[#38BDF8] font-bold">ROBOT STATUS:</span>
-                <span className="text-slate-200">{telemetryState}</span>
+            <div className="absolute top-3 left-2 right-2 sm:left-4 sm:right-4 z-20 flex flex-wrap items-center justify-between gap-1.5 text-[10px] sm:text-[11px] font-mono pointer-events-none">
+              <div className="bg-[#0C1220]/85 backdrop-blur-md px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-[#253247] text-white flex items-center gap-1.5 sm:gap-2 max-w-[200px] sm:max-w-none truncate">
+                <Bot className="w-3.5 h-3.5 text-[#38BDF8] shrink-0" />
+                <span className="text-[#38BDF8] font-bold shrink-0">ROBOT:</span>
+                <span className="text-slate-200 truncate">{telemetryState}</span>
               </div>
 
-              <div className="bg-[#0C1220]/85 backdrop-blur-md px-3 py-1.5 rounded-xl border border-[#253247] text-emerald-400 flex items-center gap-1.5">
-                <Activity className="w-3.5 h-3.5 animate-pulse" />
-                <span>MoveIt 2 Trajectory Active</span>
+              <div className="bg-[#0C1220]/85 backdrop-blur-md px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-[#253247] text-emerald-400 flex items-center gap-1.5">
+                <Activity className="w-3.5 h-3.5 animate-pulse shrink-0" />
+                <span className="hidden xs:inline sm:inline">Trajectory Active</span>
               </div>
             </div>
 
             {/* Bottom HUD: Live Denavit-Hartenberg Joint Angles */}
-            <div className="absolute bottom-3 left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-2 bg-[#0C1220]/90 backdrop-blur-md px-4 py-2.5 rounded-xl border border-[#253247] text-xs font-mono pointer-events-none">
-              <div className="flex items-center gap-3">
-                <span className="text-slate-400 text-[10px]">JOINT ANGLES:</span>
-                <span className="text-cyan-300 font-bold">J1: {jointAngles.j1}°</span>
-                <span className="text-cyan-300 font-bold">J2: {jointAngles.j2}°</span>
-                <span className="text-cyan-300 font-bold">J3: {jointAngles.j3}°</span>
-                <span className="text-cyan-300 font-bold">J4: {jointAngles.j4}°</span>
+            <div className="absolute bottom-3 left-2 right-2 sm:left-4 sm:right-4 z-20 flex flex-wrap items-center justify-between gap-2 bg-[#0C1220]/90 backdrop-blur-md px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-[#253247] text-[11px] sm:text-xs font-mono pointer-events-none">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                <span className="text-slate-400 text-[9px] sm:text-[10px]">JOINTS:</span>
+                <span className="text-cyan-300 font-bold">J1:{jointAngles.j1}°</span>
+                <span className="text-cyan-300 font-bold">J2:{jointAngles.j2}°</span>
+                <span className="text-cyan-300 font-bold">J3:{jointAngles.j3}°</span>
+                <span className="text-cyan-300 font-bold">J4:{jointAngles.j4}°</span>
               </div>
 
-              <div className="flex items-center gap-2 text-slate-300">
-                <span className="text-slate-500 text-[10px]">GRIPPER PWM:</span>
+              <div className="flex items-center gap-1.5 text-slate-300 text-[10px] sm:text-xs">
+                <span className="text-slate-500 text-[9px] sm:text-[10px]">PWM:</span>
                 <span className="text-emerald-400 font-bold">{gripperPwm} µs</span>
               </div>
             </div>

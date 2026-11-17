@@ -300,6 +300,34 @@ export const Exploded3DView: React.FC = () => {
     });
     scene.add(busRailsGroup);
 
+    // Holographic Vertical Scanning Ring
+    const holoScanRing = new THREE.Mesh(
+      new THREE.TorusGeometry(1.6, 0.02, 16, 64),
+      new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.65 })
+    );
+    holoScanRing.rotation.x = Math.PI / 2;
+    scene.add(holoScanRing);
+
+    // Luminous Signal Packets traveling along vertical rails
+    const packetCount = 16;
+    const packetGeo = new THREE.BufferGeometry();
+    const packetPositions = new Float32Array(packetCount * 3);
+    for (let i = 0; i < packetCount; i++) {
+      const railIdx = i % 4;
+      packetPositions[i * 3] = cornerPositions[railIdx].x;
+      packetPositions[i * 3 + 1] = (Math.random() - 0.5) * 6;
+      packetPositions[i * 3 + 2] = cornerPositions[railIdx].z;
+    }
+    packetGeo.setAttribute('position', new THREE.BufferAttribute(packetPositions, 3));
+    const packetMat = new THREE.PointsMaterial({
+      color: 0x38bdf8,
+      size: 0.08,
+      transparent: true,
+      opacity: 0.9,
+    });
+    const packetParticles = new THREE.Points(packetGeo, packetMat);
+    scene.add(packetParticles);
+
     // 5. Ambient Floating Cyber Particles
     const particleCount = 60;
     const particleGeo = new THREE.BufferGeometry();
@@ -757,6 +785,21 @@ export const Exploded3DView: React.FC = () => {
 
       // Slowly rotate particle dust
       particles.rotation.y = time * 0.05;
+
+      // Holographic scan ring animation
+      holoScanRing.position.y = Math.sin(time * 1.6) * (2.2 * Math.max(0.4, factor));
+      holoScanRing.rotation.z = time * 0.4;
+      (holoScanRing.material as THREE.MeshBasicMaterial).opacity = 0.35 + Math.sin(time * 4) * 0.2;
+
+      // Vertical signal packets animation along rails
+      const pArr = packetGeo.attributes.position.array as Float32Array;
+      for (let i = 0; i < packetCount; i++) {
+        pArr[i * 3 + 1] += 0.04;
+        if (pArr[i * 3 + 1] > 3.2) {
+          pArr[i * 3 + 1] = -3.2;
+        }
+      }
+      packetGeo.attributes.position.needsUpdate = true;
 
       // Camera Orbit Position
       const { theta, phi, radius } = orbitAngleRef.current;

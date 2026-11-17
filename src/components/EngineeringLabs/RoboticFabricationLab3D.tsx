@@ -8,6 +8,9 @@ import {
   Bot,
   Activity,
   Cpu,
+  Video,
+  Sliders,
+  RotateCcw,
 } from 'lucide-react';
 
 interface BuildStep {
@@ -60,10 +63,16 @@ export const RoboticFabricationLab3D: React.FC = () => {
   const [telemetryState, setTelemetryState] = useState('Positioning End-Effector');
   const [jointAngles, setJointAngles] = useState({ j1: 0, j2: 35, j3: -45, j4: 20 });
   const [gripperPwm, setGripperPwm] = useState(1500);
+  const [cameraMode, setCameraMode] = useState<'ORBIT' | 'TOOLHEAD' | 'TOP_DOWN'>('ORBIT');
+  const [controlMode, setControlMode] = useState<'AUTO' | 'MANUAL'>('AUTO');
+  const [manualJoints, setManualJoints] = useState({ j1: 0, j2: 35, j3: -45, j4: 20, gripper: 0.08 });
 
   // Refs for 3D Engine
   const animFrameRef = useRef<number | null>(null);
   const isPlayingRef = useRef(true);
+  const cameraModeRef = useRef<'ORBIT' | 'TOOLHEAD' | 'TOP_DOWN'>('ORBIT');
+  const controlModeRef = useRef<'AUTO' | 'MANUAL'>('AUTO');
+  const manualJointsRef = useRef({ j1: 0, j2: 35, j3: -45, j4: 20, gripper: 0.08 });
   const isDraggingRef = useRef(false);
   const prevMouseRef = useRef({ x: 0, y: 0 });
   const orbitAngleRef = useRef({ theta: Math.PI / 3.8, phi: Math.PI / 4.2, radius: 6.2 });
@@ -71,6 +80,18 @@ export const RoboticFabricationLab3D: React.FC = () => {
   useEffect(() => {
     isPlayingRef.current = isPlaying;
   }, [isPlaying]);
+
+  useEffect(() => {
+    cameraModeRef.current = cameraMode;
+  }, [cameraMode]);
+
+  useEffect(() => {
+    controlModeRef.current = controlMode;
+  }, [controlMode]);
+
+  useEffect(() => {
+    manualJointsRef.current = manualJoints;
+  }, [manualJoints]);
 
   useEffect(() => {
     const container = mountRef.current;
@@ -270,6 +291,31 @@ export const RoboticFabricationLab3D: React.FC = () => {
     fingerRight.position.set(0.09, 0.24, 0);
     wristGroup.add(fingerRight);
 
+    // Luminous Volumetric Laser Sintering Beam Mesh
+    const laserBeamGeo = new THREE.CylinderGeometry(0.012, 0.035, 0.55, 16);
+    const laserBeamMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0,
+      side: THREE.DoubleSide,
+    });
+    const laserBeam = new THREE.Mesh(laserBeamGeo, laserBeamMat);
+    laserBeam.position.y = 0.45;
+    wristGroup.add(laserBeam);
+
+    // Glowing Incandescent Melt Pool on fixture
+    const meltPoolGeo = new THREE.CircleGeometry(0.18, 24);
+    const meltPoolMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0,
+      side: THREE.DoubleSide,
+    });
+    const meltPool = new THREE.Mesh(meltPoolGeo, meltPoolMat);
+    meltPool.rotation.x = -Math.PI / 2;
+    meltPool.position.set(assemblyPos.x, assemblyPos.y + 0.32, assemblyPos.z);
+    scene.add(meltPool);
+
     // -------------------------------------------------------------
     // 5. The 4 Product Components Being Assembled
     // -------------------------------------------------------------
@@ -333,8 +379,8 @@ export const RoboticFabricationLab3D: React.FC = () => {
     inspectRing.visible = false;
     scene.add(inspectRing);
 
-    // Welding Sparks Particles System
-    const sparkCount = 35;
+    // Welding Sparks Particles System (60 energetic cascading particles)
+    const sparkCount = 60;
     const sparkGeo = new THREE.BufferGeometry();
     const sparkPos = new Float32Array(sparkCount * 3);
     const sparkVel = new Float32Array(sparkCount * 3);
@@ -344,9 +390,9 @@ export const RoboticFabricationLab3D: React.FC = () => {
       sparkPos[i * 3 + 1] = assemblyPos.y + 0.4;
       sparkPos[i * 3 + 2] = assemblyPos.z;
 
-      sparkVel[i * 3] = (Math.random() - 0.5) * 0.06;
-      sparkVel[i * 3 + 1] = 0.02 + Math.random() * 0.05;
-      sparkVel[i * 3 + 2] = (Math.random() - 0.5) * 0.06;
+      sparkVel[i * 3] = (Math.random() - 0.5) * 0.08;
+      sparkVel[i * 3 + 1] = 0.03 + Math.random() * 0.06;
+      sparkVel[i * 3 + 2] = (Math.random() - 0.5) * 0.08;
     }
     sparkGeo.setAttribute('position', new THREE.BufferAttribute(sparkPos, 3));
     const sparkMat = new THREE.PointsMaterial({
@@ -490,7 +536,18 @@ export const RoboticFabricationLab3D: React.FC = () => {
       // 0.45 - 0.75: Rotate arm across to workstation fixture
       // 0.75 - 0.95: Laser weld / seat part firmly (sparks activate!)
       // 0.95 - 1.00: Release and retract
-      if (stage >= 1 && stage <= 4) {
+      if (controlModeRef.current === 'MANUAL') {
+        baseRot = (manualJointsRef.current.j1 * Math.PI) / 180;
+        shoulderRot = (manualJointsRef.current.j2 * Math.PI) / 180;
+        elbowRot = (manualJointsRef.current.j3 * Math.PI) / 180;
+        wristRot = (manualJointsRef.current.j4 * Math.PI) / 180;
+        fingerGrip = manualJointsRef.current.gripper;
+        isSparksActive = false;
+        inspectRing.visible = false;
+        laserBeamMat.opacity = 0;
+        meltPoolMat.opacity = 0;
+        setTelemetryState('Manual 6-Axis Teaching Pendant Active');
+      } else if (stage >= 1 && stage <= 4) {
         inspectRing.visible = false;
         sparkMat.opacity = 0;
 
@@ -615,6 +672,8 @@ export const RoboticFabricationLab3D: React.FC = () => {
       // Spark Particles Emission
       if (isSparksActive) {
         sparkMat.opacity = 0.9;
+        laserBeamMat.opacity = 0.85 + Math.sin(simTime * 30) * 0.15;
+        meltPoolMat.opacity = 0.8 + Math.sin(simTime * 25) * 0.2;
         const sArr = sparkGeo.attributes.position.array as Float32Array;
         for (let i = 0; i < sparkCount; i++) {
           sArr[i * 3] += sparkVel[i * 3];
@@ -630,6 +689,8 @@ export const RoboticFabricationLab3D: React.FC = () => {
         sparkGeo.attributes.position.needsUpdate = true;
       } else {
         sparkMat.opacity = 0;
+        laserBeamMat.opacity = 0;
+        meltPoolMat.opacity = 0;
       }
 
       // Apply Rotations to Robotic Arm Hierarchy
@@ -650,12 +711,22 @@ export const RoboticFabricationLab3D: React.FC = () => {
       });
       setGripperPwm(Math.round(1000 + (fingerGrip / 0.12) * 1000));
 
-      // Orbit Camera Update
-      const { theta, phi, radius } = orbitAngleRef.current;
-      camera.position.x = radius * Math.sin(phi) * Math.sin(theta);
-      camera.position.y = radius * Math.cos(phi);
-      camera.position.z = radius * Math.sin(phi) * Math.cos(theta);
-      camera.lookAt(0, 1.1, 0);
+      // Orbit Camera Update based on cameraMode
+      if (cameraModeRef.current === 'TOOLHEAD') {
+        const toolheadPos = new THREE.Vector3();
+        wristGroup.getWorldPosition(toolheadPos);
+        camera.position.set(toolheadPos.x + 1.2, toolheadPos.y + 0.6, toolheadPos.z + 1.2);
+        camera.lookAt(toolheadPos.x, toolheadPos.y, toolheadPos.z);
+      } else if (cameraModeRef.current === 'TOP_DOWN') {
+        camera.position.set(0, 7.5, 0.01);
+        camera.lookAt(0, 0, 0);
+      } else {
+        const { theta, phi, radius } = orbitAngleRef.current;
+        camera.position.x = radius * Math.sin(phi) * Math.sin(theta);
+        camera.position.y = Math.max(0.6, radius * Math.cos(phi));
+        camera.position.z = radius * Math.sin(phi) * Math.cos(theta);
+        camera.lookAt(0, 1.1, 0);
+      }
 
       renderer.render(scene, camera);
     };
@@ -709,12 +780,27 @@ export const RoboticFabricationLab3D: React.FC = () => {
           </p>
         </div>
 
-        {/* Play/Pause & Reset Controls */}
-        <div className="flex items-center gap-2">
+        {/* Play/Pause, Manual Mode & Status Controls */}
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={() => setControlMode(prev => prev === 'AUTO' ? 'MANUAL' : 'AUTO')}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-mono text-xs font-bold border transition-all ${
+              controlMode === 'MANUAL'
+                ? 'bg-purple-500/20 text-purple-300 border-purple-500/50 shadow-md ring-1 ring-purple-400'
+                : 'bg-[#111B2B] text-slate-300 border-[#253247] hover:text-white'
+            }`}
+          >
+            <Sliders className="w-3.5 h-3.5 text-purple-400" />
+            <span>{controlMode === 'MANUAL' ? '🎛️ TEACHING MODE' : '🤖 AUTO FAB'}</span>
+          </button>
+
           <button
             onClick={() => setIsPlaying(!isPlaying)}
+            disabled={controlMode === 'MANUAL'}
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-mono text-xs font-bold border transition-all ${
-              isPlaying
+              controlMode === 'MANUAL'
+                ? 'opacity-40 cursor-not-allowed bg-[#111B2B] text-slate-500 border-[#253247]'
+                : isPlaying
                 ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 hover:bg-amber-500/30'
                 : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 hover:bg-emerald-500/30 animate-pulse'
             }`}
@@ -722,24 +808,26 @@ export const RoboticFabricationLab3D: React.FC = () => {
             {isPlaying ? (
               <>
                 <Pause className="w-3.5 h-3.5" />
-                <span>PAUSE BUILD</span>
+                <span>PAUSE</span>
               </>
             ) : (
               <>
                 <Play className="w-3.5 h-3.5 fill-current" />
-                <span>RESUME ASSEMBLY</span>
+                <span>RESUME</span>
               </>
             )}
           </button>
 
           <span
             className={`px-3 py-1.5 rounded-xl font-mono text-xs font-bold border flex items-center gap-1.5 ${
-              isAssembled
+              controlMode === 'MANUAL'
+                ? 'bg-purple-500/10 text-purple-300 border-purple-500/30'
+                : isAssembled
                 ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40 animate-pulse'
                 : 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
             }`}
           >
-            {isAssembled ? '✓ FABRICATION COMPLETE' : `FABRICATING STEP ${currentStepIdx + 1}/4`}
+            {controlMode === 'MANUAL' ? 'MANUAL 6-AXIS' : isAssembled ? '✓ FABRICATION COMPLETE' : `STEP ${currentStepIdx + 1}/4`}
           </span>
         </div>
       </div>
@@ -788,11 +876,132 @@ export const RoboticFabricationLab3D: React.FC = () => {
               </div>
             </div>
 
+            {/* Camera View Mode Switcher */}
+            <div className="absolute top-12 sm:top-14 right-2 sm:right-4 z-20 flex items-center gap-1 bg-[#0C1220]/90 backdrop-blur-md p-1 rounded-xl border border-[#253247] text-[10px] font-mono">
+              <span className="text-slate-400 px-1.5 hidden sm:inline text-[9px] uppercase font-bold flex items-center gap-1">
+                <Video className="w-3 h-3 text-cyan-400" />
+                CAM:
+              </span>
+              <button
+                onClick={() => setCameraMode('ORBIT')}
+                className={`px-2 py-1 rounded-lg transition-all ${
+                  cameraMode === 'ORBIT'
+                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-[#162338]'
+                }`}
+                title="Free 3D Orbit Camera"
+              >
+                Orbit
+              </button>
+              <button
+                onClick={() => setCameraMode('TOOLHEAD')}
+                className={`px-2 py-1 rounded-lg transition-all ${
+                  cameraMode === 'TOOLHEAD'
+                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-[#162338]'
+                }`}
+                title="End-Effector Toolhead Close-Up"
+              >
+                Toolhead
+              </button>
+              <button
+                onClick={() => setCameraMode('TOP_DOWN')}
+                className={`px-2 py-1 rounded-lg transition-all ${
+                  cameraMode === 'TOP_DOWN'
+                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-[#162338]'
+                }`}
+                title="Top-Down Engineering View"
+              >
+                Top
+              </button>
+            </div>
+
             {/* Orbit Hint */}
-            <div className="absolute top-14 left-4 z-20 pointer-events-none text-[10px] font-mono text-slate-400 bg-black/40 px-2 py-1 rounded backdrop-blur">
-              🖱️ Drag mouse to orbit in 3D &amp; inspect assembly
+            <div className="absolute top-12 sm:top-14 left-2 sm:left-4 z-20 pointer-events-none text-[10px] font-mono text-slate-400 bg-black/50 px-2.5 py-1 rounded-xl backdrop-blur border border-[#253247]/60">
+              🖱️ Drag / touch to orbit in 3D
             </div>
           </div>
+
+          {/* Manual Teaching Pendant Sliders (Rendered when in Manual Mode) */}
+          {controlMode === 'MANUAL' && (
+            <div className="p-4 rounded-2xl bg-[#070A12] border-2 border-purple-500/40 space-y-3 font-mono text-xs animate-fadeIn shadow-xl shadow-purple-500/10">
+              <div className="flex items-center justify-between border-b border-[#253247] pb-2">
+                <span className="font-bold text-purple-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                  <Sliders className="w-3.5 h-3.5 text-purple-400" />
+                  6-Axis Denavit-Hartenberg Teaching Pendant
+                </span>
+                <button
+                  onClick={() => setManualJoints({ j1: 0, j2: 35, j3: -45, j4: 20, gripper: 0.08 })}
+                  className="px-2.5 py-1 rounded-lg bg-[#111B2B] text-slate-300 hover:text-white border border-[#253247] text-[10px] flex items-center gap-1 transition-all"
+                >
+                  <RotateCcw className="w-3 h-3 text-cyan-400" /> Reset Pose
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-[11px]">
+                <div className="p-2.5 rounded-xl bg-[#0E172A]/70 border border-[#1E293B]">
+                  <div className="flex justify-between text-slate-400 mb-1">
+                    <span>J1 (Base Turret):</span>
+                    <span className="text-cyan-300 font-bold">{manualJoints.j1}°</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="-180"
+                    max="180"
+                    value={manualJoints.j1}
+                    onChange={(e) => setManualJoints(prev => ({ ...prev, j1: Number(e.target.value) }))}
+                    className="w-full accent-cyan-400 cursor-pointer"
+                  />
+                </div>
+
+                <div className="p-2.5 rounded-xl bg-[#0E172A]/70 border border-[#1E293B]">
+                  <div className="flex justify-between text-slate-400 mb-1">
+                    <span>J2 (Shoulder):</span>
+                    <span className="text-cyan-300 font-bold">{manualJoints.j2}°</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="-45"
+                    max="85"
+                    value={manualJoints.j2}
+                    onChange={(e) => setManualJoints(prev => ({ ...prev, j2: Number(e.target.value) }))}
+                    className="w-full accent-cyan-400 cursor-pointer"
+                  />
+                </div>
+
+                <div className="p-2.5 rounded-xl bg-[#0E172A]/70 border border-[#1E293B]">
+                  <div className="flex justify-between text-slate-400 mb-1">
+                    <span>J3 (Elbow Pitch):</span>
+                    <span className="text-cyan-300 font-bold">{manualJoints.j3}°</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="-90"
+                    max="45"
+                    value={manualJoints.j3}
+                    onChange={(e) => setManualJoints(prev => ({ ...prev, j3: Number(e.target.value) }))}
+                    className="w-full accent-cyan-400 cursor-pointer"
+                  />
+                </div>
+
+                <div className="p-2.5 rounded-xl bg-[#0E172A]/70 border border-[#1E293B]">
+                  <div className="flex justify-between text-slate-400 mb-1">
+                    <span>J4 (Wrist Pitch):</span>
+                    <span className="text-cyan-300 font-bold">{manualJoints.j4}°</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="-90"
+                    max="90"
+                    value={manualJoints.j4}
+                    onChange={(e) => setManualJoints(prev => ({ ...prev, j4: Number(e.target.value) }))}
+                    className="w-full accent-cyan-400 cursor-pointer"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Right Section: Step-by-Step Fabrication Stages + Finished Product Card (4 Cols) */}

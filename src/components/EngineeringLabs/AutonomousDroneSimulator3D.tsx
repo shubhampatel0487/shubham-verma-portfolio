@@ -6,10 +6,12 @@ import {
   Radio,
   ShieldCheck,
   Zap,
+  Video,
+  Sparkles,
 } from 'lucide-react';
 
 type FlightMode = 'DISARMED' | 'TAKEOFF' | 'HOVER' | 'WAYPOINT' | 'ORBIT' | 'FORWARD' | 'LAND';
-type CameraView = 'CHASE' | 'FPV' | 'TOP_DOWN';
+type CameraView = 'CHASE' | 'FPV' | 'TOP_DOWN' | 'ORBIT';
 
 export const AutonomousDroneSimulator3D: React.FC = () => {
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -334,9 +336,9 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
       motorBell.position.set(armLength, 0.07, 0);
       motorBell.castShadow = true;
 
-      // Nav LED on arm tip
+      // Nav LED on arm tip (Civil aviation: Green front-left, Red front-right, Strobe rear)
       const navLed = new THREE.Mesh(
-        new THREE.SphereGeometry(0.025, 12, 12),
+        new THREE.SphereGeometry(0.03, 12, 12),
         new THREE.MeshBasicMaterial({ color: cfg.ledColor })
       );
       navLed.position.set(armLength, -0.04, 0);
@@ -394,6 +396,28 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
     rightSkid.rotation.x = Math.PI / 2;
     rightSkid.position.set(0.45, -0.28, 0);
     droneGroup.add(leftSkid, rightSkid);
+
+    // Dynamic Holographic LiDAR Scanning Beam (Conical projection from gimbal)
+    const lidarGeo = new THREE.ConeGeometry(0.85, 3.2, 16, 1, true);
+    const lidarMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.14,
+      wireframe: true,
+      side: THREE.DoubleSide
+    });
+    const lidarBeam = new THREE.Mesh(lidarGeo, lidarMat);
+    lidarBeam.position.set(0, -1.6, 0.28);
+    droneGroup.add(lidarBeam);
+
+    // Ground Laser Footprint Ring (tracking beneath drone)
+    const groundLidarRing = new THREE.Mesh(
+      new THREE.RingGeometry(0.7, 0.85, 32),
+      new THREE.MeshBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.45, side: THREE.DoubleSide })
+    );
+    groundLidarRing.rotation.x = -Math.PI / 2;
+    groundLidarRing.position.y = 0.08;
+    scene.add(groundLidarRing);
 
     // Dynamic Propeller Downwash Dust Particles
     const particleCount = 60;
@@ -585,6 +609,21 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
         dustMat.opacity = 0;
       }
 
+      // LiDAR ground sweep & dynamic telemetry
+      if (isSpinning) {
+        lidarBeam.visible = true;
+        groundLidarRing.visible = true;
+        lidarBeam.rotation.y = time * 3.5;
+        groundLidarRing.position.x = droneGroup.position.x;
+        groundLidarRing.position.z = droneGroup.position.z;
+        const scale = Math.max(0.3, droneGroup.position.y * 0.35);
+        groundLidarRing.scale.set(scale, scale, 1);
+        (groundLidarRing.material as THREE.MeshBasicMaterial).opacity = 0.35 + Math.sin(time * 6) * 0.2;
+      } else {
+        lidarBeam.visible = false;
+        groundLidarRing.visible = false;
+      }
+
       // Camera Positioning based on View Mode
       if (cameraViewRef.current === 'CHASE') {
         const { theta, phi, radius } = orbitAngleRef.current;
@@ -601,8 +640,15 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
         const lookTarget = new THREE.Vector3(0, -0.1, 5).applyEuler(droneGroup.rotation);
         camera.lookAt(droneGroup.position.clone().add(lookTarget));
       } else if (cameraViewRef.current === 'TOP_DOWN') {
-        camera.position.set(0, 8.5, 0.01);
-        camera.lookAt(0, 0, 0);
+        camera.position.set(droneGroup.position.x, 8.5, droneGroup.position.z + 0.01);
+        camera.lookAt(droneGroup.position.x, 0, droneGroup.position.z);
+      } else {
+        // Free 3D ORBIT Mode
+        const { theta, phi, radius } = orbitAngleRef.current;
+        camera.position.x = droneGroup.position.x + radius * Math.sin(phi) * Math.sin(theta);
+        camera.position.y = Math.max(0.6, droneGroup.position.y + radius * Math.cos(phi));
+        camera.position.z = droneGroup.position.z + radius * Math.sin(phi) * Math.cos(theta);
+        camera.lookAt(droneGroup.position.x, droneGroup.position.y, droneGroup.position.z);
       }
 
       renderer.render(scene, camera);
@@ -842,9 +888,61 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
               </div>
             </div>
 
+            {/* Camera View Mode Switcher */}
+            <div className="absolute top-12 sm:top-14 right-2 sm:right-4 z-20 flex items-center gap-1 bg-[#0C1220]/90 backdrop-blur-md p-1 rounded-xl border border-[#253247] text-[10px] font-mono">
+              <span className="text-slate-400 px-1.5 hidden sm:inline text-[9px] uppercase font-bold flex items-center gap-1">
+                <Video className="w-3 h-3 text-cyan-400" />
+                CAM:
+              </span>
+              <button
+                onClick={() => setCameraView('CHASE')}
+                className={`px-2 py-1 rounded-lg transition-all ${
+                  cameraView === 'CHASE'
+                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-[#162338]'
+                }`}
+                title="Third-Person Chase Camera"
+              >
+                Chase
+              </button>
+              <button
+                onClick={() => setCameraView('FPV')}
+                className={`px-2 py-1 rounded-lg transition-all ${
+                  cameraView === 'FPV'
+                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-[#162338]'
+                }`}
+                title="Cockpit FPV Lens Camera"
+              >
+                FPV
+              </button>
+              <button
+                onClick={() => setCameraView('ORBIT')}
+                className={`px-2 py-1 rounded-lg transition-all ${
+                  cameraView === 'ORBIT'
+                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-[#162338]'
+                }`}
+                title="Free 3D Orbit Camera"
+              >
+                Orbit
+              </button>
+              <button
+                onClick={() => setCameraView('TOP_DOWN')}
+                className={`px-2 py-1 rounded-lg transition-all ${
+                  cameraView === 'TOP_DOWN'
+                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-[#162338]'
+                }`}
+                title="Top-Down Satellite Camera"
+              >
+                Top
+              </button>
+            </div>
+
             {/* Drag to rotate hint */}
-            <div className="absolute top-14 left-4 z-20 pointer-events-none text-[10px] font-mono text-slate-400 bg-black/40 px-2 py-1 rounded backdrop-blur">
-              🖱️ Drag mouse to orbit in 3D
+            <div className="absolute top-12 sm:top-14 left-2 sm:left-4 z-20 pointer-events-none text-[10px] font-mono text-slate-400 bg-black/50 px-2.5 py-1 rounded-xl backdrop-blur border border-[#253247]/60">
+              🖱️ Drag / touch to orbit in 3D
             </div>
           </div>
 
@@ -855,65 +953,77 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
                 <Navigation className="w-3.5 h-3.5 text-[#38BDF8]" />
                 AUTONOMOUS FLIGHT MISSION COMMANDS
               </span>
-              <span className="text-[10px] font-mono text-emerald-400">
+              <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-emerald-400" />
                 SITL Controller Ready
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-6 gap-2">
               <button
                 onClick={() => handleAction('TAKEOFF')}
-                className={`py-2 px-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                className={`py-2 px-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
                   flightMode === 'TAKEOFF'
                     ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20'
                     : 'bg-[#111B2B] hover:bg-[#1E293B] text-emerald-400 border border-emerald-500/30'
                 }`}
               >
-                🚀 Auto Takeoff
+                🚀 Takeoff
               </button>
 
               <button
                 onClick={() => handleAction('HOVER')}
-                className={`py-2 px-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                className={`py-2 px-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
                   flightMode === 'HOVER'
                     ? 'bg-[#38BDF8] text-slate-950 shadow-lg shadow-[#38BDF8]/20'
                     : 'bg-[#111B2B] hover:bg-[#1E293B] text-[#38BDF8] border border-[#38BDF8]/30'
                 }`}
               >
-                ⚓ Position Hold
+                ⚓ Pos Hold
               </button>
 
               <button
                 onClick={() => handleAction('WAYPOINT')}
-                className={`py-2 px-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                className={`py-2 px-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
                   flightMode === 'WAYPOINT'
                     ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/20'
                     : 'bg-[#111B2B] hover:bg-[#1E293B] text-purple-300 border border-purple-500/30'
                 }`}
               >
-                📍 Waypoint Survey
+                📍 Waypoints
               </button>
 
               <button
                 onClick={() => handleAction('ORBIT')}
-                className={`py-2 px-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                className={`py-2 px-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
                   flightMode === 'ORBIT'
                     ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/20'
                     : 'bg-[#111B2B] hover:bg-[#1E293B] text-amber-300 border border-amber-500/30'
                 }`}
               >
-                🔄 360° Orbit Recon
+                🔄 360° Orbit
+              </button>
+
+              <button
+                onClick={() => handleAction('FORWARD')}
+                className={`py-2 px-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
+                  flightMode === 'FORWARD'
+                    ? 'bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20'
+                    : 'bg-[#111B2B] hover:bg-[#1E293B] text-sky-300 border border-sky-500/30'
+                }`}
+              >
+                ⚡ Aerobatics
               </button>
 
               <button
                 onClick={() => handleAction('LAND')}
-                className={`py-2 px-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                className={`py-2 px-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
                   flightMode === 'LAND'
                     ? 'bg-red-500 text-white shadow-lg shadow-red-500/20'
                     : 'bg-[#111B2B] hover:bg-[#1E293B] text-red-400 border border-red-500/30'
                 }`}
               >
-                🏠 RTL &amp; Touchdown
+                🏠 RTL Land
               </button>
             </div>
           </div>

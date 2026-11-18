@@ -150,7 +150,7 @@ export const ThreeMainProjects: React.FC = () => {
             }`}
           >
             <Sparkles className="w-4 h-4" />
-            <span>03. 1QUIZ — AI-Powered Learning Platform</span>
+            <span>03. QuizAI / 1QUIZ — AI Learning Platform</span>
           </button>
         </div>
 
@@ -325,7 +325,7 @@ export const ThreeMainProjects: React.FC = () => {
                   PROJECT 03 // PYTHON &bull; AI LEARNING &bull; PERFORMANCE ANALYTICS
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-bold text-[#F8FAFC] font-sans mt-1">
-                  1QUIZ — AI-Powered Quiz &amp; Learning Platform
+                  QuizAI / 1QUIZ — AI-Assisted Adaptive Assessment Platform
                 </h3>
                 <p className="text-xs sm:text-sm text-[#94A3B8] mt-1 font-mono">
                   Interactive Knowledge Assessment with Real-time Scoring, Adaptive Difficulty &amp; AI Question Generation Concept
@@ -336,8 +336,8 @@ export const ThreeMainProjects: React.FC = () => {
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
                   ● Playable Experience
                 </span>
-                <span className="text-[10px] text-[#64748B] mt-1 font-mono">
-                  Historical Ref: /home/kali/Documents/QUIZ
+                <span className="text-[10px] text-emerald-400/80 mt-1 font-mono">
+                  Bilingual Interactive Assessment
                 </span>
               </div>
             </div>

@@ -12,7 +12,8 @@ import {
   CheckCircle2,
   Terminal,
   Activity,
-  Bot
+  Bot,
+  Lock
 } from 'lucide-react';
 import { GithubIcon } from '../UI/Icons';
 import { projectsData } from '../../data/portfolioData';
@@ -44,12 +45,16 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
       if (selectedFilter === 'All') {
         matchesCategory = true;
       } else if (selectedFilter === 'AI_GROUP') {
-        matchesCategory = project.category === 'AI & Vision' || project.category === 'AI & PINNs';
+        matchesCategory =
+          project.category === 'AI & Vision' ||
+          project.category === 'AI & PINNs' ||
+          project.category === 'AI & EdTech';
       } else if (selectedFilter === 'SOFTWARE_GROUP') {
         matchesCategory =
           project.category === 'Academic Systems' ||
           project.category === 'Full Stack & Security' ||
-          project.category === 'Python Apps';
+          project.category === 'Python Apps' ||
+          project.category === 'Workforce Tech';
       } else {
         matchesCategory = project.category === selectedFilter;
       }
@@ -70,6 +75,27 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
 
   const getStatusBadge = (status: ProjectItem['status']) => {
     switch (status) {
+      case 'Private Project':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-amber-500/10 text-amber-300 border border-amber-500/30 shadow-sm shadow-amber-500/10">
+            <Lock className="w-3 h-3 text-amber-400" />
+            Private Project
+          </span>
+        );
+      case 'Under Development':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-sky-500/10 text-sky-300 border border-sky-500/30 shadow-sm shadow-sky-500/10">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+            Under Development
+          </span>
+        );
+      case 'Demonstration Available':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 shadow-sm shadow-cyan-500/10">
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+            Demo Available
+          </span>
+        );
       case 'Completed':
         return (
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
@@ -84,8 +110,14 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
             In Progress
           </span>
         );
-      case 'Experimental':
       case 'Research Prototype':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/30">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+            Research Prototype
+          </span>
+        );
+      case 'Experimental':
       default:
         return (
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-amber-500/10 text-amber-400 border border-amber-500/30">
@@ -340,7 +372,16 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                   </button>
 
                   <div className="flex items-center gap-2">
-                    {project.githubUrl ? (
+                    {project.isPrivate ? (
+                      <span
+                        title="Private Project — Source Code Protected"
+                        className="px-2.5 py-1.5 rounded-xl bg-amber-500/10 text-amber-300 border border-amber-500/30 flex items-center gap-1.5 text-[11px] font-mono shadow-sm shadow-amber-500/10"
+                        aria-label="Private Project — Source Code Protected"
+                      >
+                        <Lock className="w-3.5 h-3.5 text-amber-400" />
+                        <span className="text-[10px] hidden sm:inline font-bold">Protected</span>
+                      </span>
+                    ) : project.githubUrl ? (
                       <a
                         href={project.githubUrl}
                         target="_blank"

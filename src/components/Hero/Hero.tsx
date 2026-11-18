@@ -85,11 +85,11 @@ export const Hero: React.FC<HeroProps> = ({ currentName }) => {
             </div>
 
             {/* Animated Title Typewriter */}
-            <div className="h-10 sm:h-12 flex items-center justify-center lg:justify-start">
-              <div className="px-3 py-1.5 rounded-lg bg-[#111B2B]/60 border border-[#253247] inline-flex items-center">
-                <span className="text-base sm:text-xl font-bold text-[#38BDF8] font-mono flex items-center">
+            <div className="min-h-[2.5rem] sm:min-h-[3rem] py-1 flex items-center justify-center lg:justify-start">
+              <div className="px-3 py-1.5 rounded-lg bg-[#111B2B]/60 border border-[#253247] inline-flex items-center max-w-full">
+                <span className="text-sm sm:text-base md:text-xl font-bold text-[#38BDF8] font-mono flex items-center flex-wrap">
                   {displayedText}
-                  <span className="ml-1 inline-block w-2 h-5 bg-[#38BDF8] animate-pulse" />
+                  <span className="ml-1 inline-block w-2 h-4 sm:h-5 bg-[#38BDF8] animate-pulse flex-shrink-0" />
                 </span>
               </div>
             </div>
@@ -100,24 +100,24 @@ export const Hero: React.FC<HeroProps> = ({ currentName }) => {
             </p>
 
             {/* Primary Tagline & Secondary Tagline */}
-            <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247] max-w-2xl text-xs sm:text-sm font-mono text-[#F8FAFC]">
-              <span className="text-[#38BDF8] font-bold">"{personalProfile.heroTagline}"</span>
-              <span className="text-[#64748B] mx-2">|</span>
+            <div className="p-3.5 rounded-xl bg-[#111B2B] border border-[#253247] max-w-2xl text-xs sm:text-sm font-mono text-[#F8FAFC] flex flex-col sm:flex-row sm:items-center justify-center lg:justify-start gap-1 sm:gap-0">
+              <span className="text-[#38BDF8] font-bold">&ldquo;{personalProfile.heroTagline}&rdquo;</span>
+              <span className="text-[#64748B] hidden sm:inline mx-2">|</span>
               <span className="text-[#94A3B8]">{personalProfile.alternativeTagline}</span>
             </div>
 
             {/* Action Buttons: Explore Projects, Watch Walkthroughs, Contact Me */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2 w-full">
               <a
                 href="#projects"
-                className="px-6 py-3 rounded-xl bg-[#38BDF8] hover:bg-[#7dd3fc] text-[#070A12] font-bold text-sm tracking-wide shadow-md shadow-[#38BDF8]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-[#38BDF8] hover:bg-[#7dd3fc] text-[#070A12] font-bold text-sm tracking-wide shadow-md shadow-[#38BDF8]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-center"
               >
                 Explore Projects
               </a>
 
               <a
                 href="#video-library"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#111B2B] text-[#F8FAFC] font-semibold text-sm hover:text-[#38BDF8] hover:bg-[#162338] border border-[#253247] hover:border-[#38BDF8]/40 transition-all transform hover:-translate-y-0.5"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-[#111B2B] text-[#F8FAFC] font-semibold text-sm hover:text-[#38BDF8] hover:bg-[#162338] border border-[#253247] hover:border-[#38BDF8]/40 transition-all transform hover:-translate-y-0.5 text-center"
               >
                 <Film className="w-4 h-4 text-[#38BDF8]" />
                 <span>Video Demos</span>
@@ -125,7 +125,7 @@ export const Hero: React.FC<HeroProps> = ({ currentName }) => {
 
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#111B2B] text-[#94A3B8] hover:text-[#F8FAFC] font-semibold text-sm border border-[#253247] hover:border-[#38BDF8]/40 transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-[#111B2B] text-[#94A3B8] hover:text-[#F8FAFC] font-semibold text-sm border border-[#253247] hover:border-[#38BDF8]/40 transition-all text-center"
               >
                 <Send className="w-4 h-4 text-[#8B5CF6]" />
                 <span>Contact Me</span>
@@ -133,23 +133,23 @@ export const Hero: React.FC<HeroProps> = ({ currentName }) => {
             </div>
 
             {/* Quick Copy Pill: Email & WhatsApp */}
-            <div className="pt-1 flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs font-mono">
+            <div className="pt-1 flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs font-mono max-w-full">
               <button
                 onClick={() => handleCopy(personalProfile.contact.email, 'email')}
-                className="px-3 py-1.5 rounded-lg bg-[#111B2B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#253247] flex items-center gap-1.5 transition-colors"
+                className="px-3 py-1.5 rounded-lg bg-[#111B2B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#253247] flex items-center gap-1.5 transition-colors max-w-full"
                 title="Click to copy email address"
               >
-                {copiedType === 'email' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedType === 'email' ? 'Copied Email' : personalProfile.contact.email}</span>
+                {copiedType === 'email' ? <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> : <Copy className="w-3.5 h-3.5 flex-shrink-0" />}
+                <span className="truncate max-w-[200px] sm:max-w-none">{copiedType === 'email' ? 'Copied Email' : personalProfile.contact.email}</span>
               </button>
 
               <button
                 onClick={() => handleCopy(personalProfile.contact.phone, 'phone')}
-                className="px-3 py-1.5 rounded-lg bg-[#111B2B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#253247] flex items-center gap-1.5 transition-colors"
+                className="px-3 py-1.5 rounded-lg bg-[#111B2B] text-[#94A3B8] hover:text-[#38BDF8] border border-[#253247] flex items-center gap-1.5 transition-colors max-w-full"
                 title="Click to copy phone number"
               >
-                {copiedType === 'phone' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedType === 'phone' ? 'Copied WhatsApp' : personalProfile.contact.phone}</span>
+                {copiedType === 'phone' ? <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /> : <Copy className="w-3.5 h-3.5 flex-shrink-0" />}
+                <span className="truncate">{copiedType === 'phone' ? 'Copied WhatsApp' : personalProfile.contact.phone}</span>
               </button>
             </div>
 

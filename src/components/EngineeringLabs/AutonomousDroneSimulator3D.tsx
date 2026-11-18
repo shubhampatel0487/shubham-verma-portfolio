@@ -6,10 +6,12 @@ import {
   Radio,
   ShieldCheck,
   Zap,
+  Video,
+  Sparkles,
 } from 'lucide-react';
 
 type FlightMode = 'DISARMED' | 'TAKEOFF' | 'HOVER' | 'WAYPOINT' | 'ORBIT' | 'FORWARD' | 'LAND';
-type CameraView = 'CHASE' | 'FPV' | 'TOP_DOWN';
+type CameraView = 'CHASE' | 'FPV' | 'TOP_DOWN' | 'ORBIT';
 
 export const AutonomousDroneSimulator3D: React.FC = () => {
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -17,6 +19,7 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
   // Flight State
   const [flightMode, setFlightMode] = useState<FlightMode>('HOVER');
   const [cameraView, setCameraView] = useState<CameraView>('CHASE');
+  const [showHud, setShowHud] = useState(true);
   const [altitude, setAltitude] = useState(3.5);
   const [groundSpeed, setGroundSpeed] = useState(0.0);
   const [batteryPct, setBatteryPct] = useState(96);
@@ -36,7 +39,7 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
   const cameraViewRef = useRef<CameraView>('CHASE');
   const isDraggingRef = useRef(false);
   const prevMouseRef = useRef({ x: 0, y: 0 });
-  const orbitAngleRef = useRef({ theta: Math.PI / 4, phi: Math.PI / 5, radius: 5.2 });
+  const orbitAngleRef = useRef({ theta: Math.PI / 4, phi: Math.PI / 5, radius: 3.1 });
 
   useEffect(() => {
     flightModeRef.current = flightMode;
@@ -68,10 +71,10 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
 
     // 1. Scene & Environment
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x060913, 0.045);
+    scene.fog = new THREE.FogExp2(0x060913, 0.012);
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.set(3.8, 3.2, 4.2);
+    camera.position.set(2.4, 2.2, 2.8);
     camera.lookAt(0, 1.5, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
@@ -81,23 +84,27 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
-    // 2. Lighting Setup (Aerospace Engineering Hangar)
-    const ambientLight = new THREE.AmbientLight(0x0a1428, 2.8);
+    // 2. High-Visibility Studio & Aerospace Lighting
+    const ambientLight = new THREE.AmbientLight(0x1e293b, 3.2);
     scene.add(ambientLight);
 
-    const keySun = new THREE.DirectionalLight(0x38bdf8, 3.2);
-    keySun.position.set(5, 12, 6);
+    const keySun = new THREE.DirectionalLight(0xffffff, 4.8);
+    keySun.position.set(6, 12, 7);
     keySun.castShadow = true;
     keySun.shadow.mapSize.width = 1024;
     keySun.shadow.mapSize.height = 1024;
     keySun.shadow.bias = -0.0005;
     scene.add(keySun);
 
-    const purpleFill = new THREE.PointLight(0x8b5cf6, 3.5, 20);
-    purpleFill.position.set(-6, 4, -4);
+    const cyanRim = new THREE.DirectionalLight(0x38bdf8, 3.8);
+    cyanRim.position.set(-6, 6, -5);
+    scene.add(cyanRim);
+
+    const purpleFill = new THREE.PointLight(0x8b5cf6, 3.2, 20);
+    purpleFill.position.set(5, -2, -4);
     scene.add(purpleFill);
 
-    const bottomGlow = new THREE.DirectionalLight(0x0ea5e9, 1.2);
+    const bottomGlow = new THREE.DirectionalLight(0x0284c7, 1.8);
     bottomGlow.position.set(0, -5, 0);
     scene.add(bottomGlow);
 
@@ -189,48 +196,80 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
     droneGroup.position.set(0, 3.5, 0);
     scene.add(droneGroup);
 
-    // Materials
+    // High-Contrast High-Fidelity Aerospace Materials
     const carbonMat = new THREE.MeshStandardMaterial({
-      color: 0x090d16,
+      color: 0x223049, // Sleek aerospace carbon slate - crisp, visible & reflective!
+      roughness: 0.25,
+      metalness: 0.85,
+    });
+    const canopyMat = new THREE.MeshStandardMaterial({
+      color: 0x17253d,
       roughness: 0.2,
       metalness: 0.9,
     });
+    const cyberStripeMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+    });
     const armMat = new THREE.MeshStandardMaterial({
-      color: 0x1e293b,
+      color: 0x334155, // Clear metallic carbon weave arm
       roughness: 0.3,
       metalness: 0.8,
     });
-    const motorMat = new THREE.MeshStandardMaterial({
-      color: 0xb45309, // Anodized Copper/Bronze motor bell
-      roughness: 0.25,
-      metalness: 0.9,
+    const motorBellMat = new THREE.MeshStandardMaterial({
+      color: 0xd97706, // Brilliant Anodized Gold/Amber Motor Bell
+      roughness: 0.2,
+      metalness: 0.95,
+    });
+    const copperStatorMat = new THREE.MeshStandardMaterial({
+      color: 0xb45309, // Pure Copper Stator Windings
+      roughness: 0.35,
+      metalness: 0.85,
     });
     const propMat = new THREE.MeshStandardMaterial({
-      color: 0x0284c7,
-      roughness: 0.3,
-      metalness: 0.6,
+      color: 0x0284c7, // Vibrant cyan carbon fiber blade
+      roughness: 0.2,
+      metalness: 0.7,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.92,
+    });
+    const propTipMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8, // Fluorescent aerodynamic blade tip accent
     });
     const propBlurMat = new THREE.MeshBasicMaterial({
       color: 0x38bdf8,
       transparent: true,
-      opacity: 0.25,
+      opacity: 0.32,
       side: THREE.DoubleSide,
     });
+    const thrustConeMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.15,
+      wireframe: true,
+    });
 
-    // Central Avionics Fuselage (Upper & Lower Carbon Plates)
-    const upperPlate = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.04, 0.7), carbonMat);
+    // Central Avionics Fuselage (Sculpted Canopy with Cyber Decals)
+    const upperPlate = new THREE.Mesh(new THREE.BoxGeometry(0.72, 0.05, 0.72), carbonMat);
     upperPlate.position.y = 0.08;
     upperPlate.castShadow = true;
 
-    const lowerPlate = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.04, 0.7), carbonMat);
+    // Aerodynamic Nose Wedge & Canopy Fairing
+    const canopy = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.35, 0.55, 6), canopyMat);
+    canopy.rotation.x = Math.PI / 2;
+    canopy.position.set(0, 0.14, 0.08);
+    canopy.castShadow = true;
+
+    // High-Tech Cyber Spine Racing Decal
+    const cyberSpine = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.02, 0.65), cyberStripeMat);
+    cyberSpine.position.set(0, 0.24, 0.08);
+
+    const lowerPlate = new THREE.Mesh(new THREE.BoxGeometry(0.72, 0.05, 0.72), carbonMat);
     lowerPlate.position.y = -0.08;
     lowerPlate.castShadow = true;
 
     // Battery Bay (4S LiPo with yellow warning label styling)
     const battery = new THREE.Mesh(
-      new THREE.BoxGeometry(0.35, 0.14, 0.55),
+      new THREE.BoxGeometry(0.38, 0.14, 0.58),
       new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.5 })
     );
     battery.position.y = 0;
@@ -238,48 +277,50 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
 
     // Pixhawk 6X Autopilot Enclosure
     const pixhawk = new THREE.Mesh(
-      new THREE.BoxGeometry(0.28, 0.06, 0.36),
+      new THREE.BoxGeometry(0.3, 0.07, 0.38),
       new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.2, metalness: 0.9 })
     );
-    pixhawk.position.y = 0.13;
+    pixhawk.position.y = 0.15;
     pixhawk.castShadow = true;
 
     // Pixhawk RGB Multi-Color Status Beacon LED
     const pixhawkLed = new THREE.Mesh(
-      new THREE.SphereGeometry(0.03, 16, 16),
+      new THREE.SphereGeometry(0.035, 16, 16),
       new THREE.MeshBasicMaterial({ color: 0x10b981 })
     );
-    pixhawkLed.position.set(0, 0.17, -0.05);
+    pixhawkLed.position.set(0, 0.19, -0.05);
 
     // RTK GNSS Antenna Mast
     const mastPole = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.015, 0.015, 0.28, 12),
+      new THREE.CylinderGeometry(0.018, 0.018, 0.32, 12),
       carbonMat
     );
-    mastPole.position.set(0, 0.24, -0.22);
+    mastPole.position.set(0, 0.28, -0.22);
     const mastPuck = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.1, 0.1, 0.035, 24),
-      new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.4 })
+      new THREE.CylinderGeometry(0.12, 0.12, 0.04, 24),
+      new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 })
     );
-    mastPuck.position.set(0, 0.38, -0.22);
+    mastPuck.position.set(0, 0.44, -0.22);
 
     // 2-Axis Stabilized Gimbal & Optical Camera
-    const gimbalArm = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.1, 12), carbonMat);
-    gimbalArm.position.set(0, -0.14, 0.24);
+    const gimbalArm = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.12, 12), armMat);
+    gimbalArm.position.set(0, -0.15, 0.26);
     const cameraHousing = new THREE.Mesh(
-      new THREE.SphereGeometry(0.075, 16, 16),
-      new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.8, roughness: 0.2 })
+      new THREE.SphereGeometry(0.09, 16, 16),
+      new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.9, roughness: 0.15 })
     );
-    cameraHousing.position.set(0, -0.2, 0.28);
+    cameraHousing.position.set(0, -0.22, 0.3);
     const cameraLens = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.035, 0.035, 0.04, 16),
-      new THREE.MeshStandardMaterial({ color: 0x0284c7, metalness: 0.95, roughness: 0.1 })
+      new THREE.CylinderGeometry(0.045, 0.045, 0.05, 16),
+      new THREE.MeshStandardMaterial({ color: 0x0284c7, metalness: 0.98, roughness: 0.05 })
     );
     cameraLens.rotation.x = Math.PI / 2;
-    cameraLens.position.set(0, -0.2, 0.35);
+    cameraLens.position.set(0, -0.22, 0.38);
 
     droneGroup.add(
       upperPlate,
+      canopy,
+      cyberSpine,
       lowerPlate,
       battery,
       pixhawk,
@@ -302,6 +343,7 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
     const propAssemblies: Array<{
       bladeGroup: THREE.Group;
       blurDisc: THREE.Mesh;
+      thrustCone: THREE.Mesh;
       dir: number;
     }> = [];
 
@@ -313,7 +355,7 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
 
       // Carbon Arm Tube
       const armTube = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.025, 0.025, armLength, 16),
+        new THREE.CylinderGeometry(0.028, 0.028, armLength, 16),
         armMat
       );
       armTube.rotation.z = Math.PI / 2;
@@ -323,59 +365,85 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
 
       // Motor Mount & Brushless Outrunner
       const motorBase = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.065, 0.065, 0.05, 18),
+        new THREE.CylinderGeometry(0.075, 0.075, 0.05, 18),
         carbonMat
       );
       motorBase.position.set(armLength, 0.02, 0);
-      const motorBell = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.06, 0.06, 0.06, 18),
-        motorMat
+
+      // Visible Copper Stator Core Inside
+      const statorCore = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.055, 0.055, 0.06, 16),
+        copperStatorMat
       );
-      motorBell.position.set(armLength, 0.07, 0);
+      statorCore.position.set(armLength, 0.065, 0);
+
+      // Anodized Gold/Amber Motor Bell
+      const motorBell = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.07, 0.07, 0.07, 18),
+        motorBellMat
+      );
+      motorBell.position.set(armLength, 0.08, 0);
       motorBell.castShadow = true;
 
-      // Nav LED on arm tip
+      // Nav LED on arm tip (Civil aviation: Green front-left, Red front-right, Strobe rear)
       const navLed = new THREE.Mesh(
-        new THREE.SphereGeometry(0.025, 12, 12),
+        new THREE.SphereGeometry(0.035, 12, 12),
         new THREE.MeshBasicMaterial({ color: cfg.ledColor })
       );
       navLed.position.set(armLength, -0.04, 0);
 
       // Landing Skid Strut
       const skidLeg = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.015, 0.015, 0.28, 12),
+        new THREE.CylinderGeometry(0.016, 0.016, 0.28, 12),
         carbonMat
       );
       skidLeg.position.set(armLength * 0.7, -0.16, 0);
       skidLeg.rotation.z = -0.2;
 
-      armGroup.add(motorBase, motorBell, navLed, skidLeg);
+      armGroup.add(motorBase, statorCore, motorBell, navLed, skidLeg);
 
       // Propeller Assembly
       const bladeGroup = new THREE.Group();
-      bladeGroup.position.set(armLength, 0.11, 0);
+      bladeGroup.position.set(armLength, 0.12, 0);
 
-      // 2 Propeller Blades
-      const blade1 = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.008, 0.045), propMat);
+      // 2 Aerodynamic Propeller Blades with High-Visibility Tips
+      const blade1 = new THREE.Mesh(new THREE.BoxGeometry(0.56, 0.01, 0.05), propMat);
       blade1.position.x = 0.25;
       blade1.rotation.y = cfg.dir * 0.15;
-      const blade2 = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.008, 0.045), propMat);
+      const blade1Tip = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.012, 0.052), propTipMat);
+      blade1Tip.position.x = 0.24;
+      blade1.add(blade1Tip);
+
+      const blade2 = new THREE.Mesh(new THREE.BoxGeometry(0.56, 0.01, 0.05), propMat);
       blade2.position.x = -0.25;
       blade2.rotation.y = -cfg.dir * 0.15;
-      const propNut = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.025, 0.03, 12), carbonMat);
-      propNut.position.y = 0.01;
+      const blade2Tip = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.012, 0.052), propTipMat);
+      blade2Tip.position.x = -0.24;
+      blade2.add(blade2Tip);
+
+      const propNut = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.028, 0.035, 12), armMat);
+      propNut.position.y = 0.015;
 
       bladeGroup.add(blade1, blade2, propNut);
       armGroup.add(bladeGroup);
 
       // Propeller High-Speed Motion Blur Disc
-      const blurDisc = new THREE.Mesh(new THREE.CircleGeometry(0.54, 32), propBlurMat);
+      const blurDisc = new THREE.Mesh(new THREE.CircleGeometry(0.56, 32), propBlurMat);
       blurDisc.rotation.x = -Math.PI / 2;
-      blurDisc.position.set(armLength, 0.11, 0);
+      blurDisc.position.set(armLength, 0.12, 0);
       blurDisc.visible = true;
       armGroup.add(blurDisc);
 
-      propAssemblies.push({ bladeGroup, blurDisc, dir: cfg.dir });
+      // Aerodynamic Rotor Downwash Thrust Cone
+      const thrustCone = new THREE.Mesh(
+        new THREE.ConeGeometry(0.45, 0.9, 12, 1, true),
+        thrustConeMat
+      );
+      thrustCone.rotation.x = Math.PI;
+      thrustCone.position.set(armLength, -0.35, 0);
+      armGroup.add(thrustCone);
+
+      propAssemblies.push({ bladeGroup, blurDisc, thrustCone, dir: cfg.dir });
       droneGroup.add(armGroup);
     });
 
@@ -394,6 +462,28 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
     rightSkid.rotation.x = Math.PI / 2;
     rightSkid.position.set(0.45, -0.28, 0);
     droneGroup.add(leftSkid, rightSkid);
+
+    // Dynamic Holographic LiDAR Scanning Beam (Conical projection from gimbal)
+    const lidarGeo = new THREE.ConeGeometry(0.85, 3.2, 16, 1, true);
+    const lidarMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.14,
+      wireframe: true,
+      side: THREE.DoubleSide
+    });
+    const lidarBeam = new THREE.Mesh(lidarGeo, lidarMat);
+    lidarBeam.position.set(0, -1.6, 0.28);
+    droneGroup.add(lidarBeam);
+
+    // Ground Laser Footprint Ring (tracking beneath drone)
+    const groundLidarRing = new THREE.Mesh(
+      new THREE.RingGeometry(0.7, 0.85, 32),
+      new THREE.MeshBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.45, side: THREE.DoubleSide })
+    );
+    groundLidarRing.rotation.x = -Math.PI / 2;
+    groundLidarRing.position.y = 0.08;
+    scene.add(groundLidarRing);
 
     // Dynamic Propeller Downwash Dust Particles
     const particleCount = 60;
@@ -476,6 +566,13 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('touchend', handleTouchEnd);
 
+    // Mouse wheel zoom
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      orbitAngleRef.current.radius = Math.max(1.6, Math.min(6.5, orbitAngleRef.current.radius + e.deltaY * 0.003));
+    };
+    domElement.addEventListener('wheel', handleWheel, { passive: false });
+
     // -------------------------------------------------------------
     // Flight Animation Loop (PX4 SITL Physics Simulation)
     // -------------------------------------------------------------
@@ -491,13 +588,16 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
 
       const curMode = flightModeRef.current;
 
-      // Propeller Rotation & Blur Visibility
+      // Propeller Rotation & Blur Visibility & Downwash Thrust
       const isSpinning = curMode !== 'DISARMED';
       const propSpeed = isSpinning ? (curMode === 'TAKEOFF' || curMode === 'FORWARD' ? 45 : 32) : 0;
 
       propAssemblies.forEach((p) => {
         p.bladeGroup.rotation.y += p.dir * propSpeed * delta;
         p.blurDisc.visible = isSpinning;
+        (p.thrustCone.material as THREE.MeshBasicMaterial).opacity = isSpinning
+          ? 0.18 + Math.sin(time * 24 + p.dir) * 0.08
+          : 0;
       });
 
       // Update Pixhawk LED Color
@@ -585,6 +685,21 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
         dustMat.opacity = 0;
       }
 
+      // LiDAR ground sweep & dynamic telemetry
+      if (isSpinning) {
+        lidarBeam.visible = true;
+        groundLidarRing.visible = true;
+        lidarBeam.rotation.y = time * 3.5;
+        groundLidarRing.position.x = droneGroup.position.x;
+        groundLidarRing.position.z = droneGroup.position.z;
+        const scale = Math.max(0.3, droneGroup.position.y * 0.35);
+        groundLidarRing.scale.set(scale, scale, 1);
+        (groundLidarRing.material as THREE.MeshBasicMaterial).opacity = 0.35 + Math.sin(time * 6) * 0.2;
+      } else {
+        lidarBeam.visible = false;
+        groundLidarRing.visible = false;
+      }
+
       // Camera Positioning based on View Mode
       if (cameraViewRef.current === 'CHASE') {
         const { theta, phi, radius } = orbitAngleRef.current;
@@ -601,8 +716,15 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
         const lookTarget = new THREE.Vector3(0, -0.1, 5).applyEuler(droneGroup.rotation);
         camera.lookAt(droneGroup.position.clone().add(lookTarget));
       } else if (cameraViewRef.current === 'TOP_DOWN') {
-        camera.position.set(0, 8.5, 0.01);
-        camera.lookAt(0, 0, 0);
+        camera.position.set(droneGroup.position.x, 8.5, droneGroup.position.z + 0.01);
+        camera.lookAt(droneGroup.position.x, 0, droneGroup.position.z);
+      } else {
+        // Free 3D ORBIT Mode
+        const { theta, phi, radius } = orbitAngleRef.current;
+        camera.position.x = droneGroup.position.x + radius * Math.sin(phi) * Math.sin(theta);
+        camera.position.y = Math.max(0.6, droneGroup.position.y + radius * Math.cos(phi));
+        camera.position.z = droneGroup.position.z + radius * Math.sin(phi) * Math.cos(theta);
+        camera.lookAt(droneGroup.position.x, droneGroup.position.y, droneGroup.position.z);
       }
 
       renderer.render(scene, camera);
@@ -663,6 +785,7 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
       domElement.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
+      domElement.removeEventListener('wheel', handleWheel);
 
       if (container && renderer.domElement) {
         container.removeChild(renderer.domElement);
@@ -747,104 +870,163 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
             </div>
 
             {/* Top HUD Heading Bar */}
-            <div className="absolute top-3 left-4 right-4 z-20 flex items-center justify-between text-[11px] font-mono pointer-events-none">
-              {/* Heading Tape */}
-              <div className="bg-[#0C1220]/85 backdrop-blur-md px-3 py-1.5 rounded-xl border border-[#253247] text-white flex items-center gap-2">
-                <Compass className="w-3.5 h-3.5 text-[#38BDF8]" />
-                <span className="text-[#38BDF8] font-bold">HDG:</span>
-                <span>{headingDeg.toString().padStart(3, '0')}°</span>
-                <span className="text-slate-400 text-[10px]">
-                  {headingDeg >= 315 || headingDeg < 45
-                    ? 'N'
-                    : headingDeg >= 45 && headingDeg < 135
-                    ? 'E'
-                    : headingDeg >= 135 && headingDeg < 225
-                    ? 'S'
-                    : 'W'}
-                </span>
-              </div>
-
-              {/* Navigation Status */}
-              <div className="bg-[#0C1220]/85 backdrop-blur-md px-3 py-1.5 rounded-xl border border-[#253247] text-emerald-400 flex items-center gap-2">
-                <Radio className="w-3.5 h-3.5 animate-pulse" />
-                <span>GPS FIX: 18 SATS (RTK)</span>
-              </div>
-            </div>
-
-            {/* Fighter-Jet HUD Artificial Horizon & Pitch Ladder */}
-            <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-10">
-              <div
-                className="w-48 h-48 border border-cyan-400/20 rounded-full flex items-center justify-center relative transition-transform duration-100"
-                style={{
-                  transform: `rotate(${rollDeg}deg)`,
-                }}
-              >
-                {/* Artificial Horizon Center Wings */}
-                <div className="w-36 h-[2px] bg-gradient-to-r from-transparent via-[#38BDF8]/70 to-transparent relative">
-                  <div
-                    className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-cyan-400/80"
-                    style={{ transform: `translateY(${-pitchDeg * 2}px)` }}
-                  />
-                  <div
-                    className="absolute top-4 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-cyan-400/80"
-                    style={{ transform: `translateY(${-pitchDeg * 2}px)` }}
-                  />
+            {showHud && (
+              <div className="absolute top-3 left-2 right-2 sm:left-4 sm:right-4 z-20 flex flex-wrap items-center justify-between gap-1.5 text-[10px] sm:text-[11px] font-mono pointer-events-none">
+                {/* Heading Tape */}
+                <div className="bg-[#0C1220]/85 backdrop-blur-md px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-[#253247] text-white flex items-center gap-1.5 sm:gap-2">
+                  <Compass className="w-3.5 h-3.5 text-[#38BDF8]" />
+                  <span className="text-[#38BDF8] font-bold">HDG:</span>
+                  <span>{headingDeg.toString().padStart(3, '0')}°</span>
+                  <span className="text-slate-400 text-[9px] sm:text-[10px]">
+                    {headingDeg >= 315 || headingDeg < 45
+                      ? 'N'
+                      : headingDeg >= 45 && headingDeg < 135
+                      ? 'E'
+                      : headingDeg >= 135 && headingDeg < 225
+                      ? 'S'
+                      : 'W'}
+                  </span>
                 </div>
 
-                {/* Center Crosshair Aim */}
-                <div className="absolute w-2 h-2 rounded-full border border-emerald-400 bg-emerald-400/30" />
+                {/* Navigation Status */}
+                <div className="bg-[#0C1220]/85 backdrop-blur-md px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-[#253247] text-emerald-400 flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px]">
+                  <Radio className="w-3.5 h-3.5 animate-pulse" />
+                  <span>GPS: 18 SATS (RTK)</span>
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* Discreet Center Reticle (Unobtrusive - Drone stays 100% visible) */}
+            {showHud && (
+              <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-10">
+                <div
+                  className="w-24 h-24 border border-cyan-400/20 rounded-full flex items-center justify-center relative transition-transform duration-100"
+                  style={{ transform: `rotate(${rollDeg}deg)` }}
+                >
+                  <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#38BDF8]/60 to-transparent relative" />
+                  <div className="absolute w-1.5 h-1.5 rounded-full bg-emerald-400/50" />
+                </div>
+              </div>
+            )}
 
             {/* Left HUD: Altitude Tape */}
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 z-20 pointer-events-none bg-[#0C1220]/85 backdrop-blur-md px-2.5 py-3 rounded-xl border border-[#253247] text-xs font-mono space-y-1">
-              <span className="text-[10px] text-slate-400 uppercase block">ALTITUDE</span>
-              <div className="text-lg font-bold text-white flex items-baseline gap-1">
-                <span>{altitude.toFixed(1)}</span>
-                <span className="text-xs text-[#38BDF8]">m</span>
+            {showHud && (
+              <div className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 pointer-events-none bg-[#0C1220]/85 backdrop-blur-md px-2 sm:px-2.5 py-2 sm:py-3 rounded-xl border border-[#253247] text-[11px] sm:text-xs font-mono space-y-0.5 sm:space-y-1">
+                <span className="text-[9px] sm:text-[10px] text-slate-400 uppercase block">ALTITUDE</span>
+                <div className="text-sm sm:text-lg font-bold text-white flex items-baseline gap-1">
+                  <span>{altitude.toFixed(1)}</span>
+                  <span className="text-[10px] sm:text-xs text-[#38BDF8]">m</span>
+                </div>
+                <div className="text-[9px] sm:text-[10px] text-slate-400">
+                  LiDAR: {Math.max(0, altitude - 0.2).toFixed(1)}m
+                </div>
               </div>
-              <div className="text-[10px] text-slate-400">
-                LiDAR: {Math.max(0, altitude - 0.2).toFixed(1)}m
-              </div>
-            </div>
+            )}
 
             {/* Right HUD: Groundspeed Tape */}
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20 pointer-events-none bg-[#0C1220]/85 backdrop-blur-md px-2.5 py-3 rounded-xl border border-[#253247] text-xs font-mono space-y-1 text-right">
-              <span className="text-[10px] text-slate-400 uppercase block">GROUNDSPEED</span>
-              <div className="text-lg font-bold text-white flex items-baseline justify-end gap-1">
-                <span>{groundSpeed.toFixed(1)}</span>
-                <span className="text-xs text-[#38BDF8]">m/s</span>
+            {showHud && (
+              <div className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 pointer-events-none bg-[#0C1220]/85 backdrop-blur-md px-2 sm:px-2.5 py-2 sm:py-3 rounded-xl border border-[#253247] text-[11px] sm:text-xs font-mono space-y-0.5 sm:space-y-1 text-right">
+                <span className="text-[9px] sm:text-[10px] text-slate-400 uppercase block">SPEED</span>
+                <div className="text-sm sm:text-lg font-bold text-white flex items-baseline justify-end gap-1">
+                  <span>{groundSpeed.toFixed(1)}</span>
+                  <span className="text-[10px] sm:text-xs text-[#38BDF8]">m/s</span>
+                </div>
+                <div className="text-[9px] sm:text-[10px] text-slate-400">
+                  {(groundSpeed * 1.944).toFixed(1)} kts
+                </div>
               </div>
-              <div className="text-[10px] text-slate-400">
-                {(groundSpeed * 1.944).toFixed(1)} kts
-              </div>
-            </div>
+            )}
 
             {/* Bottom HUD: Live Telemetry Tape */}
-            <div className="absolute bottom-3 left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-2 bg-[#0C1220]/90 backdrop-blur-md px-4 py-2.5 rounded-xl border border-[#253247] text-xs font-mono pointer-events-none">
-              <div>
-                <span className="text-slate-500 text-[10px] block">PX4 FLIGHT MODE</span>
-                <span className="text-[#38BDF8] font-bold uppercase">{flightMode}</span>
+            {showHud && (
+              <div className="absolute bottom-3 left-2 right-2 sm:left-4 sm:right-4 z-20 flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 bg-[#0C1220]/90 backdrop-blur-md px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-[#253247] text-[11px] sm:text-xs font-mono pointer-events-none">
+                <div>
+                  <span className="text-slate-500 text-[10px] block">PX4 FLIGHT MODE</span>
+                  <span className="text-[#38BDF8] font-bold uppercase">{flightMode}</span>
+                </div>
+                <div>
+                  <span className="text-slate-500 text-[10px] block">4S LIPO BATTERY</span>
+                  <span className="text-emerald-400 font-bold">16.2V ({batteryPct}%)</span>
+                </div>
+                <div>
+                  <span className="text-slate-500 text-[10px] block">ODOMETRY (X, Y, Z)</span>
+                  <span className="text-slate-200">
+                    [{coords.x}, {coords.y}, {coords.z}]
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-500 text-[10px] block">micro-XRCE-DDS</span>
+                  <span className="text-[#8B5CF6] font-bold">100 Hz (2.4ms)</span>
+                </div>
               </div>
-              <div>
-                <span className="text-slate-500 text-[10px] block">4S LIPO BATTERY</span>
-                <span className="text-emerald-400 font-bold">16.2V ({batteryPct}%)</span>
-              </div>
-              <div>
-                <span className="text-slate-500 text-[10px] block">ODOMETRY (X, Y, Z)</span>
-                <span className="text-slate-200">
-                  [{coords.x}, {coords.y}, {coords.z}]
-                </span>
-              </div>
-              <div>
-                <span className="text-slate-500 text-[10px] block">micro-XRCE-DDS</span>
-                <span className="text-[#8B5CF6] font-bold">100 Hz (2.4ms)</span>
-              </div>
+            )}
+
+            {/* Camera View Mode & HUD Switcher */}
+            <div className="absolute top-12 sm:top-14 right-2 sm:right-4 z-20 flex items-center gap-1 bg-[#0C1220]/90 backdrop-blur-md p-1 rounded-xl border border-[#253247] text-[10px] font-mono">
+              <span className="text-slate-400 px-1.5 hidden sm:inline text-[9px] uppercase font-bold flex items-center gap-1">
+                <Video className="w-3 h-3 text-cyan-400" />
+                CAM:
+              </span>
+              <button
+                onClick={() => setCameraView('CHASE')}
+                className={`px-2 py-1 rounded-lg transition-all ${
+                  cameraView === 'CHASE'
+                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-[#162338]'
+                }`}
+                title="Third-Person Chase Camera"
+              >
+                Chase
+              </button>
+              <button
+                onClick={() => setCameraView('FPV')}
+                className={`px-2 py-1 rounded-lg transition-all ${
+                  cameraView === 'FPV'
+                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-[#162338]'
+                }`}
+                title="Cockpit FPV Lens Camera"
+              >
+                FPV
+              </button>
+              <button
+                onClick={() => setCameraView('ORBIT')}
+                className={`px-2 py-1 rounded-lg transition-all ${
+                  cameraView === 'ORBIT'
+                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-[#162338]'
+                }`}
+                title="Free 3D Orbit Camera"
+              >
+                Orbit
+              </button>
+              <button
+                onClick={() => setCameraView('TOP_DOWN')}
+                className={`px-2 py-1 rounded-lg transition-all ${
+                  cameraView === 'TOP_DOWN'
+                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-[#162338]'
+                }`}
+                title="Top-Down Satellite Camera"
+              >
+                Top
+              </button>
+              <button
+                onClick={() => setShowHud(!showHud)}
+                className={`ml-1 px-2 py-1 rounded-lg transition-all border ${
+                  showHud
+                    ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40'
+                    : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-white'
+                }`}
+                title="Toggle HUD Telemetry Overlay"
+              >
+                {showHud ? 'HUD: ON' : 'HUD: OFF'}
+              </button>
             </div>
 
             {/* Drag to rotate hint */}
-            <div className="absolute top-14 left-4 z-20 pointer-events-none text-[10px] font-mono text-slate-400 bg-black/40 px-2 py-1 rounded backdrop-blur">
-              🖱️ Drag mouse to orbit in 3D
+            <div className="absolute top-12 sm:top-14 left-2 sm:left-4 z-20 pointer-events-none text-[10px] font-mono text-slate-400 bg-black/50 px-2.5 py-1 rounded-xl backdrop-blur border border-[#253247]/60">
+              🖱️ Drag / touch to orbit in 3D
             </div>
           </div>
 
@@ -855,65 +1037,77 @@ export const AutonomousDroneSimulator3D: React.FC = () => {
                 <Navigation className="w-3.5 h-3.5 text-[#38BDF8]" />
                 AUTONOMOUS FLIGHT MISSION COMMANDS
               </span>
-              <span className="text-[10px] font-mono text-emerald-400">
+              <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-emerald-400" />
                 SITL Controller Ready
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-6 gap-2">
               <button
                 onClick={() => handleAction('TAKEOFF')}
-                className={`py-2 px-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                className={`py-2 px-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
                   flightMode === 'TAKEOFF'
                     ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20'
                     : 'bg-[#111B2B] hover:bg-[#1E293B] text-emerald-400 border border-emerald-500/30'
                 }`}
               >
-                🚀 Auto Takeoff
+                🚀 Takeoff
               </button>
 
               <button
                 onClick={() => handleAction('HOVER')}
-                className={`py-2 px-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                className={`py-2 px-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
                   flightMode === 'HOVER'
                     ? 'bg-[#38BDF8] text-slate-950 shadow-lg shadow-[#38BDF8]/20'
                     : 'bg-[#111B2B] hover:bg-[#1E293B] text-[#38BDF8] border border-[#38BDF8]/30'
                 }`}
               >
-                ⚓ Position Hold
+                ⚓ Pos Hold
               </button>
 
               <button
                 onClick={() => handleAction('WAYPOINT')}
-                className={`py-2 px-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                className={`py-2 px-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
                   flightMode === 'WAYPOINT'
                     ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/20'
                     : 'bg-[#111B2B] hover:bg-[#1E293B] text-purple-300 border border-purple-500/30'
                 }`}
               >
-                📍 Waypoint Survey
+                📍 Waypoints
               </button>
 
               <button
                 onClick={() => handleAction('ORBIT')}
-                className={`py-2 px-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                className={`py-2 px-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
                   flightMode === 'ORBIT'
                     ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/20'
                     : 'bg-[#111B2B] hover:bg-[#1E293B] text-amber-300 border border-amber-500/30'
                 }`}
               >
-                🔄 360° Orbit Recon
+                🔄 360° Orbit
+              </button>
+
+              <button
+                onClick={() => handleAction('FORWARD')}
+                className={`py-2 px-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
+                  flightMode === 'FORWARD'
+                    ? 'bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20'
+                    : 'bg-[#111B2B] hover:bg-[#1E293B] text-sky-300 border border-sky-500/30'
+                }`}
+              >
+                ⚡ Aerobatics
               </button>
 
               <button
                 onClick={() => handleAction('LAND')}
-                className={`py-2 px-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                className={`py-2 px-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
                   flightMode === 'LAND'
                     ? 'bg-red-500 text-white shadow-lg shadow-red-500/20'
                     : 'bg-[#111B2B] hover:bg-[#1E293B] text-red-400 border border-red-500/30'
                 }`}
               >
-                🏠 RTL &amp; Touchdown
+                🏠 RTL Land
               </button>
             </div>
           </div>
